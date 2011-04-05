@@ -88,19 +88,19 @@ public ArrayList<Player> players = new ArrayList<Player>();
 	}
 	
 	private boolean outsideOfMap(Coordinate rC){
-		if (rC.coord[0] < 0 ||	rC.coord[1] < 0 ||
-				rC.coord[0] > this.charMap.size() ||
-				rC.coord[1] > this.charMap.get(0).size()) {
-				return false;
-			} else {
-				return true;
-			}
+		if ((rC.coord[0] < 0) || (rC.coord[1] < 0) ||
+			(rC.coord[0] >= this.charMap.size()) ||
+			(rC.coord[1] >= this.charMap.get(rC.coord[0]).size())) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	private boolean availableRiverSpot(Coordinate rC){
 		 if ((rC.coord[0] > 0) && (rC.coord[1] > 0) &&
-				 (this.charMap.size() > rC.coord[0]) &&
-				 (this.charMap.get(rC.coord[1]).size() > rC.coord[1]) &&
+				 (rC.coord[0] < this.charMap.size()) &&
+				 (rC.coord[1] < this.charMap.get(rC.coord[0]).size()) &&
 				 (this.charMap.get(rC.coord[0]).get(rC.coord[1]) == 'g')) {
 			return true;
 		} else {
@@ -115,9 +115,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 				riverStart[1] == riverEnd[1]){
 			this.createRiver(); //Om startpunkt = endepunkt, prøv igjen.
 		} else {
-			this.charMap.get(riverStart[0]).set(riverStart[1], 'v'); //Tegn start og endepunkt som vann
-			this.charMap.get(riverEnd[0]).set(riverEnd[1], 'v');
-			Coordinate riverS = new Coordinate(riverStart); //Lag koordinat-objekter med start og slutt.
+			Coordinate riverS = new Coordinate(riverStart); //Lager koordinat-objekter for start og slutt.
 			Coordinate riverE = new Coordinate(riverEnd);
 			stretchRiver(riverS, riverE);
 		}
@@ -149,7 +147,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 						} 
 					}
 				}
-				for (int x = 0; x < naboer.length; x++){
+				for (int x = 0; x < naboer.length; x++){ 
 					if (sjekk[x] && this.availableRiverSpot(naboer[x])){ //Her sjekker vi om vi kan legge koordinatet i Path, og gjør det om det blir godkjent.
 						Path.add(naboer[x]);
 					}
@@ -168,7 +166,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		finalPath.add(new Coordinate(a.coord[0], a.coord[1], numberOfSteps)); //Den ene enden av elven.
 		System.out.println("Path.size(): " + Path.size() + "\nAntall steg: " + numberOfSteps);
 		for (int i = numberOfSteps; i >= 0; i--){
-			for (int j = 1; j < Path.size() + 1; j++){
+			for (int j = 0; j < Path.size(); j++){
 				if (Path.get(j).coord[2] == i && 
 					Path.get(j).distance(finalPath.get(numberOfSteps - i)) == 1){
 					finalPath.add(Path.get(j)); //Hvis koordinatet som vurderes er riktig nummer i rekka (antall skritt - nåværende skritt som vurderes),
@@ -179,7 +177,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 			this.charMap.get(finalPath.get(i).coord[0]).set(finalPath.get(i).coord[1], 'v');
 		} //Printer elven
 		int bridgeCoord = (int) ((int) finalPath.size()*Math.random());
-		this.charMap.get(finalPath.get(bridgeCoord).coord[0]).set(finalPath.get(bridgeCoord).coord[1], 'v');
+		this.charMap.get(finalPath.get(bridgeCoord).coord[0]).set(finalPath.get(bridgeCoord).coord[1], 'c');
 	}//Lager en bro på måfå så ikke elven lukker av deler av kartet. Broen kan i verste fall være blokkert av noe annet.
 	
 	private void randomObject(){
