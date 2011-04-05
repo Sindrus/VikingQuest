@@ -98,7 +98,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 	}
 	
 	private boolean availableRiverSpot(Coordinate rC){
-		 if ((rC.coord[0] > 0) && (rC.coord[1] > 0) &&
+		 if ((rC.coord[0] >= 0) && (rC.coord[1] >= 0) &&
 				 (rC.coord[0] < this.charMap.size()) &&
 				 (rC.coord[1] < this.charMap.get(rC.coord[0]).size()) &&
 				 (this.charMap.get(rC.coord[0]).get(rC.coord[1]) == 'g')) {
@@ -128,16 +128,16 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		while (incomplete){
 			for (int i = 0; i < Path.size(); i++){ //Bredde-først søk algoritme
 				System.out.printf("\nStart: \t%d,%d\nEnd: \t%d,%d", a.coord[0],a.coord[1],b.coord[0],b.coord[1]);
-				System.out.printf("\ni: %d, size: %d", i, Path.size());
+				System.out.printf("\ni: %d, size: %d\n", i, Path.size());
 				boolean[] sjekk = new boolean[4];
 				for (int j = 0; j < sjekk.length; j++){
 					sjekk[j] = true;
 				}
-				Coordinate m = new Coordinate(Path.get(i).coord[0] - 1, Path.get(i).coord[1], Path.get(i).coord[2] + 1); //Lager koordinater 
-				Coordinate n = new Coordinate(Path.get(i).coord[0] + 1, Path.get(i).coord[1], Path.get(i).coord[2] + 1); // for de fire 
-				Coordinate o = new Coordinate(Path.get(i).coord[0], Path.get(i).coord[1] - 1, Path.get(i).coord[2] + 1); //nærmeste naboene.
-				Coordinate p = new Coordinate(Path.get(i).coord[0], Path.get(i).coord[1] + 1, Path.get(i).coord[2] + 1);
-				Coordinate[] naboer = new Coordinate[] {m,n,o,p}; 
+				Coordinate[] naboer = new Coordinate[] {
+						new Coordinate(Path.get(i).coord[0] - 1, Path.get(i).coord[1], Path.get(i).coord[2] + 1),//Øvre nabo
+						new Coordinate(Path.get(i).coord[0] + 1, Path.get(i).coord[1], Path.get(i).coord[2] + 1),//Nedre nabo
+						new Coordinate(Path.get(i).coord[0], Path.get(i).coord[1] - 1, Path.get(i).coord[2] + 1),//Venstre nabo
+						new Coordinate(Path.get(i).coord[0], Path.get(i).coord[1] + 1, Path.get(i).coord[2] + 1)};//Høyre nabo
 				for (int j = 0; j < sjekk.length; j++){
 					for (int x = 0; x < Path.size(); x++){
 						if (this.outsideOfMap(naboer[j]) || //Her sjekker vi om punktet eksister på kartet.
@@ -152,20 +152,20 @@ public ArrayList<Player> players = new ArrayList<Player>();
 						Path.add(naboer[x]);
 					}
 				}
-			} 
-			for (int x = 0; x < Path.size(); x++){
-				if (Path.get(x).compareYX(a)){ //Sjekker om vi har truffet mål.
-					System.out.println("ferdig!!");
-					incomplete = false;
-					break;
+				for (int x = 0; x < Path.size(); x++){
+					if (Path.get(x).compareYX(a)){ //Sjekker om vi har truffet mål.
+						System.out.println("ferdig!!");
+						incomplete = false;
+						break;
+					}
 				}
-			}
+			} 
 		} //Når While-løkka er ferdig skal Path inneholde koordinatene som lager en sti, blant mange andre koordinater.
-		ArrayList<Coordinate> finalPath = new ArrayList<Coordinate>(); //Ny ArrayList som skal kun inneholde riktig sti.
 		int numberOfSteps = Path.get(Path.size() - 1).coord[2];
+		ArrayList<Coordinate> finalPath = new ArrayList<Coordinate>(); //Ny ArrayList som skal kun inneholde riktig sti.
 		finalPath.add(new Coordinate(a.coord[0], a.coord[1], numberOfSteps)); //Den ene enden av elven.
 		System.out.println("Path.size(): " + Path.size() + "\nAntall steg: " + numberOfSteps);
-		for (int i = numberOfSteps; i >= 0; i--){
+		for (int i = numberOfSteps; i > 0; i--){
 			for (int j = 0; j < Path.size(); j++){
 				if (Path.get(j).coord[2] == i && 
 					Path.get(j).distance(finalPath.get(numberOfSteps - i)) == 1){
@@ -173,6 +173,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 				}// og avstanden mellom forrige sikre skritt og skrittet som vurderes er lik 1, så godkjennes den og blir det nye sikre skrittet.
 			}
 		}
+		finalPath.add(b);
 		for (int i = 0; i < finalPath.size(); i++){
 			this.charMap.get(finalPath.get(i).coord[0]).set(finalPath.get(i).coord[1], 'v');
 		} //Printer elven
