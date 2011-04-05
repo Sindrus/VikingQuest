@@ -20,10 +20,6 @@ public class Status extends JPanel{
 		setBounds(0, 0, 800, 25);
 		food.setSize(200, 25);
 		
-	/*	lbl1.setText("<html>" +
-				"<img src=" + Buttons.class.getResource("graphics/meat.gif") +" />" +
-				"&nbsp;Trallalla :)  "+ i +" </html>" +
-				"");*/
 		food.setText("<html>" +
 				"<img src="+ Status.class.getResource("graphics/meat.gif") + " /> " + 
 				"Food: " + Integer.toString(play.getMat())+" </html>" +
