@@ -69,7 +69,6 @@ public class Buttons extends JPanel implements ActionListener{
 		add(lbl1);
 		add(button2);
 		add(button3);
-		add(button4);
 		add(exit);
 		
 		button1.setActionCommand("KnappEn");

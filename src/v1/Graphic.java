@@ -21,7 +21,6 @@ public class Graphic extends JPanel implements grensesnitt.Grafikk {
 		height = 630;
 		width =  700;
 		map = m;
-		
 	}
 	public void reset(){
 		x=100;
