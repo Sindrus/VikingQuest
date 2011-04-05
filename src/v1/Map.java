@@ -87,7 +87,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		return (count == 4);
 	}
 	
-	private boolean nullcheck(Coordinate rC){
+	private boolean outsideOfMap(Coordinate rC){
 		if (rC.coord[0] < 0 ||	rC.coord[1] < 0 ||
 				rC.coord[0] > this.charMap.size() ||
 				rC.coord[1] > this.charMap.get(0).size()) {
@@ -98,7 +98,10 @@ public ArrayList<Player> players = new ArrayList<Player>();
 	}
 	
 	private boolean availableRiverSpot(Coordinate rC){
-		if (this.charMap.get(rC.coord[0]).get(rC.coord[1]) == 'g') {
+		 if ((rC.coord[0] > 0) && (rC.coord[1] > 0) &&
+				 (this.charMap.size() > rC.coord[0]) &&
+				 (this.charMap.get(rC.coord[1]).size() > rC.coord[1]) &&
+				 (this.charMap.get(rC.coord[0]).get(rC.coord[1]) == 'g')) {
 			return true;
 		} else {
 			return false;
@@ -108,15 +111,16 @@ public ArrayList<Player> players = new ArrayList<Player>();
 	public void createRiver(){
 		int[] riverStart = randomCoordinates(); //Startpunkt
 		int[] riverEnd = randomCoordinates(); //Endepunkt
-		if (riverStart == riverEnd){
+		if (riverStart[0] == riverEnd[0] &&
+				riverStart[1] == riverEnd[1]){
 			this.createRiver(); //Om startpunkt = endepunkt, prøv igjen.
 		} else {
 			this.charMap.get(riverStart[0]).set(riverStart[1], 'v'); //Tegn start og endepunkt som vann
 			this.charMap.get(riverEnd[0]).set(riverEnd[1], 'v');
+			Coordinate riverS = new Coordinate(riverStart); //Lag koordinat-objekter med start og slutt.
+			Coordinate riverE = new Coordinate(riverEnd);
+			stretchRiver(riverS, riverE);
 		}
-		Coordinate riverS = new Coordinate(riverStart); //Lag koordinat-objekter med start og slutt.
-		Coordinate riverE = new Coordinate(riverEnd);
-		stretchRiver(riverS, riverE);
 	}
 	
 	private void stretchRiver(Coordinate a, Coordinate b){
@@ -127,11 +131,10 @@ public ArrayList<Player> players = new ArrayList<Player>();
 			for (int i = 0; i < Path.size(); i++){ //Bredde-først søk algoritme
 				System.out.printf("\nStart: \t%d,%d\nEnd: \t%d,%d", a.coord[0],a.coord[1],b.coord[0],b.coord[1]);
 				System.out.printf("\ni: %d, size: %d", i, Path.size());
-				boolean one = true;
-				boolean two = true;
-				boolean three = true;
-				boolean four = true;
-				boolean[] sjekk = new boolean[] {one, two, three, four};
+				boolean[] sjekk = new boolean[4];
+				for (int j = 0; j < sjekk.length; j++){
+					sjekk[j] = true;
+				}
 				Coordinate m = new Coordinate(Path.get(i).coord[0] - 1, Path.get(i).coord[1], Path.get(i).coord[2] + 1); //Lager koordinater 
 				Coordinate n = new Coordinate(Path.get(i).coord[0] + 1, Path.get(i).coord[1], Path.get(i).coord[2] + 1); // for de fire 
 				Coordinate o = new Coordinate(Path.get(i).coord[0], Path.get(i).coord[1] - 1, Path.get(i).coord[2] + 1); //nærmeste naboene.
@@ -139,7 +142,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 				Coordinate[] naboer = new Coordinate[] {m,n,o,p}; 
 				for (int j = 0; j < sjekk.length; j++){
 					for (int x = 0; x < Path.size(); x++){
-						if (this.nullcheck(naboer[j]) || //Her sjekker vi om punktet eksister på kartet.
+						if (this.outsideOfMap(naboer[j]) || //Her sjekker vi om punktet eksister på kartet.
 							Path.get(x).compareYX(naboer[j])){ //Her sjekker vi om punktet eksisterer i Path allerede.
 							sjekk[j] = false; //Setter en boolean-verdi til false som vi sjekker senere for å se om koordinatet skal legges i Path.
 							break; 
