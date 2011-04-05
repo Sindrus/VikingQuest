@@ -14,6 +14,8 @@ public class Buttons extends JPanel implements ActionListener{
 	JLabel lbl1;
 	int i=0;
 	
+	
+	
 	public Buttons(){
 		button1 = new JButton("Knapp 1");
 		button2 = new JButton("Knapp 2");
