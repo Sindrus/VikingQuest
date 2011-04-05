@@ -33,7 +33,7 @@ public class Engine extends JFrame implements grensesnitt.Motor {
 		jf.setResizable(false);
 
 		JPanel jpn = new Graphic(m);
-		JPanel knapper = new Buttons();
+		JPanel knapper = new Buttons(p);
 		
 		jf.add(stat);
 		jf.add(knapper);
