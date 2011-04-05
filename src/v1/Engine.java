@@ -49,11 +49,11 @@ public class Engine extends JFrame implements grensesnitt.Motor {
 	//			jf.repaint();
 				
 				p.setGull(gull);
-				gull-=50;
+				gull-=10;
 				((Status) stat).updateStatus();
 				
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(3000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
