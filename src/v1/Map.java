@@ -118,8 +118,8 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		boolean incomplete = true;
 		while (incomplete){
 			for (int i = 0; i < Path.size(); i++){ //Bredde-først søk algoritme
-				System.out.printf("\nStart: \t%d,%d\nEnd: \t%d,%d", a.coord[0],a.coord[1],b.coord[0],b.coord[1]);
-				System.out.printf("\ni: %d, size: %d", i, Path.size());
+//				System.out.printf("\nStart: \t%d,%d\nEnd: \t%d,%d", a.coord[0],a.coord[1],b.coord[0],b.coord[1]);
+//				System.out.printf("\ni: %d, size: %d", i, Path.size());
 				boolean one = true;
 				boolean two = true;
 				boolean three = true;
