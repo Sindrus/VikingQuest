@@ -20,15 +20,16 @@ public class Status extends JPanel{
 		setBounds(0, 0, 800, 25);
 		food.setSize(200, 25);
 		
-	/*	food.setText("<html><img src=" + Status.class.getResource("graphics/test.gif") +" /> " + 
-				"Food: " + Integer.toString(play.getFood())+" </html>" +
+	/*	lbl1.setText("<html>" +
+				"<img src=" + Buttons.class.getResource("graphics/meat.gif") +" />" +
+				"&nbsp;Trallalla :)  "+ i +" </html>" +
 				"");*/
-		
-		food.setText("<html><img src=\"graphics/test.gif\" /> " + 
+		food.setText("<html>" +
+				"<img src="+ Status.class.getResource("graphics/meat.gif") + " /> " + 
 				"Food: " + Integer.toString(play.getMat())+" </html>" +
 				"");
 		
-		food.setText("Food: " + Integer.toString(play.getMat()));
+//		food.setText("Food: " + Integer.toString(play.getMat()));
 		food.setBorder(BorderFactory.createEmptyBorder(0, 50, 0, 50));
 		gold.setSize(200, 25);
 		gold.setText("Gold: " + Integer.toString(play.getGull()));
