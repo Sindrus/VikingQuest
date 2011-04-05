@@ -87,11 +87,18 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		return (count == 4);
 	}
 	
+	private boolean nullcheck(Coordinate rC){
+		if (rC.coord[0] < 0 ||	rC.coord[1] < 0 ||
+				rC.coord[0] > this.charMap.size() ||
+				rC.coord[1] > this.charMap.get(0).size()) {
+				return false;
+			} else {
+				return true;
+			}
+	}
+	
 	private boolean availableRiverSpot(Coordinate rC){
-		if (rC.coord[0] >= 0 &&	rC.coord[1] >= 0 &&
-			rC.coord[0] < this.charMap.size() &&
-			rC.coord[1] < this.charMap.get(0).size() &&
-			this.charMap.get(rC.coord[0]).get(rC.coord[1]) == 'g') {
+		if (this.charMap.get(rC.coord[0]).get(rC.coord[1]) == 'g') {
 			return true;
 		} else {
 			return false;
@@ -118,8 +125,8 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		boolean incomplete = true;
 		while (incomplete){
 			for (int i = 0; i < Path.size(); i++){ //Bredde-først søk algoritme
-//				System.out.printf("\nStart: \t%d,%d\nEnd: \t%d,%d", a.coord[0],a.coord[1],b.coord[0],b.coord[1]);
-//				System.out.printf("\ni: %d, size: %d", i, Path.size());
+				System.out.printf("\nStart: \t%d,%d\nEnd: \t%d,%d", a.coord[0],a.coord[1],b.coord[0],b.coord[1]);
+				System.out.printf("\ni: %d, size: %d", i, Path.size());
 				boolean one = true;
 				boolean two = true;
 				boolean three = true;
@@ -132,7 +139,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 				Coordinate[] naboer = new Coordinate[] {m,n,o,p}; 
 				for (int j = 0; j < sjekk.length; j++){
 					for (int x = 0; x < Path.size(); x++){
-						if (this.availableRiverSpot(naboer[j]) && //Her sjekker vi om punktet eksister på kartet.
+						if (this.nullcheck(naboer[j]) || //Her sjekker vi om punktet eksister på kartet.
 							Path.get(x).compareYX(naboer[j])){ //Her sjekker vi om punktet eksisterer i Path allerede.
 							sjekk[j] = false; //Setter en boolean-verdi til false som vi sjekker senere for å se om koordinatet skal legges i Path.
 							break; 
@@ -144,14 +151,14 @@ public ArrayList<Player> players = new ArrayList<Player>();
 						Path.add(naboer[x]);
 					}
 				}
-				for (int x = 0; x < Path.size(); x++){
-					if (Path.get(x).compareYX(a)){ //Sjekker om vi har truffet mål.
-						System.out.println("ferdig!!");
-						incomplete = false;
-						break;
-					}
-				}
 			} 
+			for (int x = 0; x < Path.size(); x++){
+				if (Path.get(x).compareYX(a)){ //Sjekker om vi har truffet mål.
+					System.out.println("ferdig!!");
+					incomplete = false;
+					break;
+				}
+			}
 		} //Når While-løkka er ferdig skal Path inneholde koordinatene som lager en sti, blant mange andre koordinater.
 		ArrayList<Coordinate> finalPath = new ArrayList<Coordinate>(); //Ny ArrayList som skal kun inneholde riktig sti.
 		int numberOfSteps = Path.get(Path.size() - 1).coord[2];
