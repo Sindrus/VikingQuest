@@ -39,15 +39,21 @@ public class Engine extends JFrame implements grensesnitt.Motor {
 		jf.add(knapper);
 		jf.add(jpn);
 		
+		int gull = 1000;
+		
 		while(true){
 			while(!stop){
 				
-				((Graphic)jpn).drawMap();
+	//			((Graphic)jpn).drawMap();
 				
-				jf.repaint();
+	//			jf.repaint();
+				
+				p.setGull(gull);
+				gull-=50;
+				((Status) stat).updateStatus();
 				
 				try {
-					Thread.sleep(20);
+					Thread.sleep(1000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

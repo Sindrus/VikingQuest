@@ -18,27 +18,36 @@ public class Status extends JPanel{
 		soldiers = new JLabel();
 		
 		setBounds(0, 0, 800, 25);
+		
+		updateStatus();
+	}
+	
+	public void updateStatus(){
 		food.setSize(200, 25);
 		
 		food.setText("<html>" +
 				"<img src="+ Status.class.getResource("graphics/meat.gif") + " /> " + 
-				"Food: " + Integer.toString(play.getMat())+" </html>" +
+				"&nbsp;Food: " + Integer.toString(play.getMat())+" </html>" +
 				"");
-		
-//		food.setText("Food: " + Integer.toString(play.getMat()));
 		food.setBorder(BorderFactory.createEmptyBorder(0, 50, 0, 50));
+		
 		gold.setSize(200, 25);
-		gold.setText("Gold: " + Integer.toString(play.getGull()));
+		gold.setText("<html>" +
+				"<img src="+ Status.class.getResource("graphics/gold.gif") + " /> " + 
+				"&nbsp;Gull: " + Integer.toString(play.getGull())+" </html>" +
+				"");
 		gold.setBorder(BorderFactory.createEmptyBorder(0, 50, 0, 50));
+		
 		soldiers.setSize(200, 25);
-		soldiers.setText("Soldiers: " + Integer.toString(play.getSoldater()));
+		soldiers.setText("<html>" +
+				"<img src="+ Status.class.getResource("graphics/statusViking.gif") + " /> " + 
+				"&nbsp;Soldater: " + Integer.toString(play.getSoldater())+" </html>" +
+				"");
 		soldiers.setBorder(BorderFactory.createEmptyBorder(0, 50, 0, 50));
 		
 		add(food);
 		add(gold);
 		add(soldiers);
 	}
-	
-	
 
 }
