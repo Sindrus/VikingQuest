@@ -130,17 +130,17 @@ public ArrayList<Player> players = new ArrayList<Player>();
 				sjekk[j] = true;
 			}
 			Coordinate[] naboer = new Coordinate[] {
-					new Coordinate(Path.get(i).coord[0] - 1, Path.get(i).coord[1], Path.get(i).coord[2] + 1),//Øvre nabo
-					new Coordinate(Path.get(i).coord[0] + 1, Path.get(i).coord[1], Path.get(i).coord[2] + 1),//Nedre nabo
-					new Coordinate(Path.get(i).coord[0], Path.get(i).coord[1] - 1, Path.get(i).coord[2] + 1),//Venstre nabo
-					new Coordinate(Path.get(i).coord[0], Path.get(i).coord[1] + 1, Path.get(i).coord[2] + 1)};//Høyre nabo
+					new Coordinate(Path.get(i).coord[0] - 1, Path.get(i).coord[1], Path.get(i).coord[2] + 1),//Upper Neighbour
+					new Coordinate(Path.get(i).coord[0] + 1, Path.get(i).coord[1], Path.get(i).coord[2] + 1),//Lower Neighbour
+					new Coordinate(Path.get(i).coord[0], Path.get(i).coord[1] - 1, Path.get(i).coord[2] + 1),//Left Neighbour
+					new Coordinate(Path.get(i).coord[0], Path.get(i).coord[1] + 1, Path.get(i).coord[2] + 1)};//Right Neighbour
 			for (int j = 0; j < sjekk.length; j++){
 				for (int x = 0; x < Path.size(); x++){
-					if (this.outsideOfMap(naboer[j]) || //Her sjekker vi om punktet eksister på kartet.
+					if (this.outsideOfMap(naboer[j]) || //Her sjekker vi om punktet er utenfor kartet.
 						Path.get(x).compareYX(naboer[j])){ //Her sjekker vi om punktet eksisterer i Path allerede.
 						sjekk[j] = false; //Setter en boolean-verdi til false som vi sjekker senere for å se om koordinatet skal legges i Path.
 						break; 
-					} 
+					}
 				}
 			}
 			for (int x = 0; x < naboer.length; x++){ 
