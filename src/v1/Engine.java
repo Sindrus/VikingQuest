@@ -5,12 +5,21 @@ import java.awt.event.KeyListener;
 
 import javax.swing.*;
 
-public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
+public class Engine extends JFrame implements grensesnitt.Motor {
 	
 	Player p;
 	
 	public static void main(String[] args){
 		Engine en = new Engine();
+	}
+	
+	public void input(char c){
+		if(c=='a' || c=='s' || c=='d' || c=='w'){
+			Move flytt = new Move();
+			flytt.executeMove(p, c);
+		}
+		else 
+			System.out.println(c);
 	}
 	
 	public Engine(){
@@ -26,6 +35,18 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 		jf.setSize(800,640);
 		jf.setResizable(false);
 		
+		jf.addKeyListener(new KeyListener() {
+			public void keyTyped(KeyEvent e) {}
+			public void keyReleased(KeyEvent e) {
+				if(e.VK_ESCAPE==KeyEvent.VK_ESCAPE)
+					System.exit(0);
+				input(e.getKeyChar());
+					
+			}
+			public void keyPressed(KeyEvent e) {}
+		});
+		
+		
 		JPanel jpn = new Graphic(m);
 		JPanel knapper = new Buttons(p);
 		
@@ -35,8 +56,6 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 		
 		int i=0;
 		while(true){
-			
-			jf.repaint();
 			
 			if(i>=6){
 				p.addGull(-10);
@@ -52,11 +71,15 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 				e.printStackTrace();
 			}
 		}
-		
-		
-		
 	}
-	public void keyPressed(KeyEvent arg0) {}
-	public void keyReleased(KeyEvent arg0) {}
-	public void keyTyped(KeyEvent arg0) {}
+	
+/*	public void keyPressed(KeyEvent arg0) {
+		System.out.println("Print");
+	}
+	public void keyReleased(KeyEvent arg0) {
+		System.out.println("Print");
+	}
+	public void keyTyped(KeyEvent key) {
+		System.out.println("Print");
+	}*/
 }
