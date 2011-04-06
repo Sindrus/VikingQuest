@@ -24,8 +24,8 @@ public class Engine extends JFrame implements grensesnitt.Motor {
 	
 	public Engine(){
 		
-		Map m = new Map(35,35);
-		Player p = new Player(m, 35, 35);
+		Map m = new Map(40,40);
+		Player p = new Player(m, 40, 40);
 		
 		JPanel stat = new Status(p);
 		
@@ -38,10 +38,9 @@ public class Engine extends JFrame implements grensesnitt.Motor {
 		jf.addKeyListener(new KeyListener() {
 			public void keyTyped(KeyEvent e) {}
 			public void keyReleased(KeyEvent e) {
-				if(e.VK_ESCAPE==KeyEvent.VK_ESCAPE)
+				if(e.getKeyCode()==27)
 					System.exit(0);
 				input(e.getKeyChar());
-					
 			}
 			public void keyPressed(KeyEvent e) {}
 		});

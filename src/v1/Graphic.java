@@ -17,7 +17,7 @@ public class Graphic extends JPanel implements grensesnitt.Grafikk {
 	public Graphic(Map m){
 		tk = Toolkit.getDefaultToolkit();
 		Dimension d=tk.getScreenSize();
-		height = 630;
+		height = 615;
 		width =  700;
 		map = m;
 	}
@@ -29,11 +29,26 @@ public class Graphic extends JPanel implements grensesnitt.Grafikk {
 	public void paint(Graphics g){
 		g.clearRect(0, 25, width, height);
 		
+		int[] coords = new int[2];
+		
+		for(int i=0;i<map.charMap.size();i++){
+			for(int j=0;j<map.charMap.get(i).size();j++){
+				if(map.charMap.get(i).get(j)=='p'){
+					coords[0] = i;
+					coords[1] = j;
+				}
+			}
+		}
+		System.out.println("["+coords[0]+"],["+coords[1]+"]");
+		int antx=(width/20);
+		int anty=(height/20);
+		System.out.println("Start: ["+antx+"],["+anty+"]");
+		
 		gress = tk.getImage(getClass().getResource("graphics/gress.jpg"));
 		viking = tk.getImage(getClass().getResource("graphics/vikings.jpg"));
 		
-		for(int i=25, x=0;i<615;i+=20, x++){
-			for(int j=0, y=0;j<700;j+=20, y++){
+		for(int i=25, x=anty;i<height;i+=20, x++){
+			for(int j=0, y=antx;j<width;j+=20, y++){
 				if(map.charMap.get(x).get(y)=='p')
 					g.drawImage(viking,j,i,this);
 				else
