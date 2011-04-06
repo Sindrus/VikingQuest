@@ -50,7 +50,13 @@ private Map cMap;
 		this.gull+=gold;
 	}
 
-
+	
+	public void buySoldater(){
+		this.addGull(-20);
+		this.addSoldater(10);
+	}
+	
+	
 	public int getMat() {
 		return mat;
 	}

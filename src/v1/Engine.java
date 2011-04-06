@@ -5,12 +5,16 @@ import javax.swing.*;
 public class Engine extends JFrame implements grensesnitt.Motor {
 	
 	static boolean stop=false;
+	Player p;
+	
 	public static void stopp(){
 		stop = true;
 	}
 	public static void start(){
 		stop = false;
 	}
+	
+	
 	
 	public static void main(String[] args){
 		Engine en = new Engine();
@@ -39,8 +43,8 @@ public class Engine extends JFrame implements grensesnitt.Motor {
 		jf.add(knapper);
 		jf.add(jpn);
 		
-		int gull = 1000;
 		
+		int i=0;
 		while(true){
 			while(!stop){
 				
@@ -48,12 +52,17 @@ public class Engine extends JFrame implements grensesnitt.Motor {
 				
 	//			jf.repaint();
 				
-				p.setGull(gull);
-				gull-=10;
+//				if(i>=6){
+//					p.addGull(-10);
+//					i=0;
+//				}
+//				i++;
+				
+
 				((Status) stat).updateStatus();
 				
 				try {
-					Thread.sleep(3000);
+					Thread.sleep(500);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
