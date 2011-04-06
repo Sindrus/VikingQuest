@@ -114,15 +114,17 @@ public class Buttons extends JPanel{
 		lbl3.addMouseListener(ml3Reset);
 		lbl4.addMouseListener(ml4Reset);
 		
+
+		lbl1.setBorder(BorderFactory.createEmptyBorder(20, 50, 0, 50));
+		lbl2.setBorder(BorderFactory.createEmptyBorder(20, 50, 0, 50));
+		lbl3.setBorder(BorderFactory.createEmptyBorder(20, 50, 0, 50));
+		lbl4.setBorder(BorderFactory.createEmptyBorder(20, 50, 0, 50));
+		
 		labelsReset();
 		add(exit);
 	}
 	
 	public void labelsReset(){
-		lbl1.setBorder(BorderFactory.createEmptyBorder(20, 50, 0, 50));
-		lbl2.setBorder(BorderFactory.createEmptyBorder(20, 50, 0, 50));
-		lbl3.setBorder(BorderFactory.createEmptyBorder(20, 50, 0, 50));
-		lbl4.setBorder(BorderFactory.createEmptyBorder(20, 50, 0, 50));
 		
 		lbl1.setText("1 ");
 		lbl1.setBounds(5, 120, 100, 25);
@@ -148,13 +150,10 @@ public class Buttons extends JPanel{
 		add(lbl2);
 		add(lbl3);
 		add(lbl4);
+		add(exit);
 	}
 	
 	public void labelsMarket(){
-		lbl1.setBorder(BorderFactory.createEmptyBorder(20, 50, 0, 50));
-		lbl2.setBorder(BorderFactory.createEmptyBorder(20, 50, 0, 50));
-		lbl3.setBorder(BorderFactory.createEmptyBorder(20, 50, 0, 50));
-		lbl4.setBorder(BorderFactory.createEmptyBorder(20, 50, 0, 50));
 		
 		lbl1.setText("<html> kjøp " +
 				"<img src="+ Status.class.getResource("graphics/meat.gif") + " /> ");
@@ -181,5 +180,6 @@ public class Buttons extends JPanel{
 		add(lbl2);
 		add(lbl3);
 		add(lbl4);
+		add(exit);
 	}
 }
