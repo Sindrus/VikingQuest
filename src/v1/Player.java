@@ -82,6 +82,9 @@ private Map cMap;
 
 
 	public void setcMap(Map cMap) {
+		if (this.cMap != null){
+			this.cMap.players.remove(this);
+		} 	
 		this.cMap = cMap;
 	}
 }

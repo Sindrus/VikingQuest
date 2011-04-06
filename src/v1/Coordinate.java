@@ -4,8 +4,7 @@ public class Coordinate {
 Integer[] coord = new Integer[3];
 	
 	public Coordinate(int[] a){
-		this.coord[0] = (Integer) a[0];
-		this.coord[1] = (Integer) a[1];
+		this((Integer) a[0],(Integer) a[1]);
 		this.coord[2] = 0;
 	}
 	
@@ -16,13 +15,12 @@ Integer[] coord = new Integer[3];
 	}
 	
 	public Coordinate(int y, int x, int z){
-		this.coord[0] = (Integer) y;
-		this.coord[1] = (Integer) x;
+		this((Integer) y,(Integer) x);
 		this.coord[2] = (Integer) z;
 	}
 	
 	public double distance(Coordinate a){
-		return Math.sqrt(Math.pow((a.coord[0] - this.coord[0]), 2) + Math.pow((a.coord[1] - this.coord[1]), 2));
+		return Math.sqrt((Math.pow((a.coord[0] - this.coord[0]), 2)) + (Math.pow((a.coord[1] - this.coord[1]), 2)));
 	}
 	
 	public boolean compare2(Coordinate a){
