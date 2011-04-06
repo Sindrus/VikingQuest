@@ -80,7 +80,7 @@ public class Buttons extends JPanel{
 		ml1Marked = new MouseListener(){
 			public void mouseClicked(MouseEvent e) {
 				p.addGull(-20);
-				p.addSoldater(10);
+				p.addMat(10);
 			}
 			public void mouseEntered(MouseEvent e) {}
 			public void mouseExited(MouseEvent e) {}
@@ -88,7 +88,10 @@ public class Buttons extends JPanel{
 			public void mouseReleased(MouseEvent e) {}
 		};
 		ml2Marked = new MouseListener(){
-			public void mouseClicked(MouseEvent e) {}
+			public void mouseClicked(MouseEvent e) {
+				p.addGull(-20);
+				p.addSoldater(10);
+			}
 			public void mouseEntered(MouseEvent e) {}
 			public void mouseExited(MouseEvent e) {}
 			public void mousePressed(MouseEvent e) {}
@@ -159,9 +162,10 @@ public class Buttons extends JPanel{
 				"<img src="+ Status.class.getResource("graphics/meat.gif") + " /> ");
 		lbl1.setBounds(5, 120, 100, 25);
 		lbl1.removeMouseListener(lbl1.getMouseListeners()[0]);
-		lbl1.addMouseListener(ml2Marked);
+		lbl1.addMouseListener(ml1Marked);
 		
-		lbl2.setText(" ");
+		lbl2.setText("<html> kjøp " +
+				"<img src="+ Status.class.getResource("graphics/statusViking.gif") + " /> ");
 		lbl2.setBounds(5, 120, 100, 25);
 		lbl2.removeMouseListener(lbl2.getMouseListeners()[0]);
 		lbl2.addMouseListener(ml2Marked);

@@ -11,7 +11,7 @@ private Map cMap;
 		this.setPlayerPos();
 		return playerPos;
 	}
-		
+	
 	private void setPlayerPos(){
 		for (int i = 0; i < this.cMap.charMap.size(); i++){
 			for (int j = 0; j < this.cMap.charMap.get(i).size(); j++){
@@ -36,11 +36,11 @@ private Map cMap;
 		oldMap.players.remove(this);
 		this.cMap = null;
 	}
-
+	
 	public int getGull() {
 		return gull;
 	}
-
+	
 	public void setGull(int gold) {
 		this.gull = gold;
 	}
@@ -52,7 +52,7 @@ private Map cMap;
 	public int getMat() {
 		return mat;
 	}
-
+	
 	public void setMat(int food) {
 		this.mat = food;
 	}
@@ -60,13 +60,11 @@ private Map cMap;
 	public void addMat(int food){
 		this.mat +=food;
 	}
-
-
+	
 	public int getSoldater() {
 		return soldater;
 	}
-
-
+	
 	public void setSoldater(int soldier) {
 		this.soldater = soldier;
 	}
@@ -74,13 +72,11 @@ private Map cMap;
 	public void addSoldater(int soldiers){
 		this.soldater+=soldiers;
 	}
-
-
+	
 	public Map getcMap() {
 		return cMap;
 	}
-
-
+	
 	public void setcMap(Map cMap) {
 		this.cMap = cMap;
 	}
