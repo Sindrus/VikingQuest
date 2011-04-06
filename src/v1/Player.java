@@ -42,8 +42,12 @@ private Map cMap;
 	}
 
 
-	public void setGull(int gull) {
-		this.gull = gull;
+	public void setGull(int gold) {
+		this.gull = gold;
+	}
+	
+	public void addGull(int gold){
+		this.gull+=gold;
 	}
 
 
@@ -52,8 +56,12 @@ private Map cMap;
 	}
 
 
-	public void setMat(int mat) {
-		this.mat = mat;
+	public void setMat(int food) {
+		this.mat = food;
+	}
+	
+	public void addFMat(int food){
+		this.mat +=food;
 	}
 
 
@@ -62,8 +70,12 @@ private Map cMap;
 	}
 
 
-	public void setSoldater(int soldater) {
-		this.soldater = soldater;
+	public void setSoldater(int soldier) {
+		this.soldater = soldier;
+	}
+	
+	public void addSoldater(int soldiers){
+		this.soldater+=soldiers;
 	}
 
 
