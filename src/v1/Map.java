@@ -181,43 +181,52 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		if(random < 0.08){
 			this.createRiver();		
 		} else if (random < 0.15){
-			createMarket();
+			createMarket(0);
 		} else if (random < 0.4){
-			createVillage();
+			createVillage(0);
 		} else {
-			createObstruction();
+			createObstruction(0);
 		}
 	}
 	
-	private void createVillage(){
-		int[] randomCoordinate = randomCoordinates();
-		if (this.availableSpot(randomCoordinate)){
-			this.charMap.get(randomCoordinate[0]).set(randomCoordinate[1], 'l');
-		} else {
-			this.createMarket();
-		}
-	}
-	
-	private void createObstruction(){
-		int[] randomCoordinate = randomCoordinates();
-		double random = Math.random();
-		if (this.availableSpot(randomCoordinate)){
-			if (random < 0.5){
-				this.charMap.get(randomCoordinate[0]).set(randomCoordinate[1], 's');
+	private void createVillage(int i){
+		while (i < 10){
+			int[] randomCoordinate = randomCoordinates();
+			if (this.availableSpot(randomCoordinate)){
+				this.charMap.get(randomCoordinate[0]).set(randomCoordinate[1], 'l');
 			} else {
-				this.charMap.get(randomCoordinate[0]).set(randomCoordinate[1], 't');
+				i++;
+				this.createMarket(i);
 			}
-		} else {
-			this.createObstruction();
 		}
 	}
 	
-	private void createMarket(){
-		int[] randomCoordinate = randomCoordinates();
-		if (this.availableSpot(randomCoordinate)){
-			this.charMap.get(randomCoordinate[0]).set(randomCoordinate[1], 'm');
-		} else {
-			this.createMarket();
+	private void createObstruction(int i){
+		while (i < 10){
+			int[] randomCoordinate = randomCoordinates();
+			double random = Math.random();
+			if (this.availableSpot(randomCoordinate)){
+				if (random < 0.5){
+					this.charMap.get(randomCoordinate[0]).set(randomCoordinate[1], 's');
+				} else {
+					this.charMap.get(randomCoordinate[0]).set(randomCoordinate[1], 't');
+				}
+			} else {
+				i++;
+				this.createObstruction(i);
+			}
+		}
+	}
+	
+	private void createMarket(int i){
+		while (i < 10){
+			int[] randomCoordinate = randomCoordinates();
+			if (this.availableSpot(randomCoordinate)){
+				this.charMap.get(randomCoordinate[0]).set(randomCoordinate[1], 'm');
+			} else {
+				i++;
+				this.createMarket(i);
+			}
 		}
 	}
 	
