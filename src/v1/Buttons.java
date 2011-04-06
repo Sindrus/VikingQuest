@@ -79,7 +79,8 @@ public class Buttons extends JPanel{
 	//	For Markeder
 		ml1Marked = new MouseListener(){
 			public void mouseClicked(MouseEvent e) {
-				p.buySoldater();
+				p.addGull(-20);
+				p.addSoldater(10);
 			}
 			public void mouseEntered(MouseEvent e) {}
 			public void mouseExited(MouseEvent e) {}
@@ -108,7 +109,6 @@ public class Buttons extends JPanel{
 			public void mouseReleased(MouseEvent e) {}
 		};
 		
-
 		lbl1.addMouseListener(ml1Reset);
 		lbl2.addMouseListener(ml2Reset);
 		lbl3.addMouseListener(ml3Reset);
@@ -155,8 +155,6 @@ public class Buttons extends JPanel{
 		lbl2.setBorder(BorderFactory.createEmptyBorder(20, 50, 0, 50));
 		lbl3.setBorder(BorderFactory.createEmptyBorder(20, 50, 0, 50));
 		lbl4.setBorder(BorderFactory.createEmptyBorder(20, 50, 0, 50));
-		
-		
 		
 		lbl1.setText("<html> kjøp " +
 				"<img src="+ Status.class.getResource("graphics/meat.gif") + " /> ");

@@ -41,7 +41,6 @@ private Map cMap;
 		return gull;
 	}
 
-
 	public void setGull(int gold) {
 		this.gull = gold;
 	}
@@ -49,24 +48,16 @@ private Map cMap;
 	public void addGull(int gold){
 		this.gull+=gold;
 	}
-
-	
-	public void buySoldater(){
-		this.addGull(-20);
-		this.addSoldater(10);
-	}
-	
 	
 	public int getMat() {
 		return mat;
 	}
 
-
 	public void setMat(int food) {
 		this.mat = food;
 	}
 	
-	public void addFMat(int food){
+	public void addMat(int food){
 		this.mat +=food;
 	}
 
