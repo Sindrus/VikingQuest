@@ -1,7 +1,11 @@
 package v1;
 
 public class Move implements grensesnitt.Flytt{
-
+	
+	public void executeMove(Player p,char c){
+		
+	}
+	
 	@Override
 	public boolean isSomethingBlocking() {
 		// TODO Auto-generated method stub

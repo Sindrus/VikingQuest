@@ -1,8 +1,11 @@
 package v1;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import javax.swing.*;
 
-public class Engine extends JFrame implements grensesnitt.Motor {
+public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 	
 	static boolean stop=false;
 	Player p;
@@ -48,9 +51,9 @@ public class Engine extends JFrame implements grensesnitt.Motor {
 		while(true){
 			while(!stop){
 				
-	//			((Graphic)jpn).drawMap();
+				((Graphic)jpn).drawMap();
 				
-	//			jf.repaint();
+				jf.repaint();
 				
 //				if(i>=6){
 //					p.addGull(-10);
@@ -69,5 +72,12 @@ public class Engine extends JFrame implements grensesnitt.Motor {
 				}
 			}
 		}
+		
+		
+		
 	}
+	
+	public void keyPressed(KeyEvent arg0) {}
+	public void keyReleased(KeyEvent arg0) {}
+	public void keyTyped(KeyEvent arg0) {}
 }
