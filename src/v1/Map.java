@@ -67,24 +67,21 @@ public ArrayList<Player> players = new ArrayList<Player>();
 	}
 	
 	private boolean availableSpot(int[] rC){
-		int[][] i = new int[4][];
-		i[0] = new int[] {1,0};
-		i[1] = new int[] {0,1};
-		i[2] = new int[] {-1,0};
-		i[3] = new int[] {0,-1};
+		Coordinate[] i = new Coordinate[] {
+				new Coordinate(rC[0] - 1, rC[1]),//Øvre nabo
+				new Coordinate(rC[0] + 1, rC[1]),//Nedre nabo
+				new Coordinate(rC[0], rC[1] - 1),//Venstre nabo
+				new Coordinate(rC[0], rC[1] + 1)};//Høyre nabo
 		int count = 0;
 		for (int j = 0; j < 4; j++){
-			if (rC[0] + i[j][0] >= 0 &&
-				rC[1] + i[j][1] >= 0 &&
-				rC[0] + i[j][0] < this.charMap.size() &&
-				rC[1] + i[j][1] < this.charMap.get(0).size()) {
-				if (this.charMap.get(rC[0] + i[j][0]).get(rC[1] + i[j][1]) == 'g' &&
-					this.charMap.get(rC[0]).get(rC[1]) == 'g' ){
+			if (this.charMap.get(rC[0]).get(rC[1]) == 'g'){
+				if (!this.outsideOfMap(i[j]) && 
+						this.charMap.get(i[j].coord[0]).get(i[j].coord[1]) == 'g'){
 					count++;
 				}
 			}
 		}
-		return (count == 4);
+		return (count > 2);
 	}
 	
 	private boolean outsideOfMap(Coordinate rC){
