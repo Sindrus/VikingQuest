@@ -7,8 +7,8 @@ public ArrayList<ArrayList<Character>> charMap = new ArrayList<ArrayList<Charact
 public ArrayList<Player> players = new ArrayList<Player>();
 
 	public void updateMap(Coordinate c, Player p){
-		int xTemp = p.getPlayerPos()[1];
-		int yTemp = p.getPlayerPos()[0];
+		int xTemp = p.getPlayerPos().coord[1];
+		int yTemp = p.getPlayerPos().coord[0];
 		if ((this.charMap.get(yTemp + 1).get(xTemp) == 'v') &&
 				(this.charMap.get(yTemp - 1).get(xTemp) == 'v')){
 				this.charMap.get(yTemp).set(xTemp + c.coord[1], 'p');

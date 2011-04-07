@@ -38,8 +38,7 @@ public class Move implements grensesnitt.Flytt{
 		}
 	}
 
-
-	public boolean isMarktNearby(Map m, Player p, char c) {
+	public boolean isMarketNearby(Map m, Player p, char c) {
 		Coordinate retning = new Coordinate (0,0);
 		if (c == 'w'){
 			retning.coord[0] = -1;
@@ -74,6 +73,4 @@ public class Move implements grensesnitt.Flytt{
 			return false;
 		}
 	}
-	
-
 }
