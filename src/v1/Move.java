@@ -2,7 +2,7 @@ package v1;
 
 public class Move implements grensesnitt.Flytt{
 	
-	public void executeMove(Map m, Player p, char c){
+	public void executeMove(Player p, char c){
 		Coordinate retning = new Coordinate (0,0);
 		if (c == 'w'){
 			retning.coord[0] = -1;
@@ -13,12 +13,12 @@ public class Move implements grensesnitt.Flytt{
 		}else {
 			retning.coord[1] = 1;
 		}
-		if (!isSomethingBlocking(m,p,c)){
-			m.updateMap(retning, p);
+		if (!isSomethingBlocking(p,c)){
+			p.getcMap().updateMap(retning, p);
 		}
 	}
 
-	public boolean isSomethingBlocking(Map m, Player p, char c) {
+	public boolean isSomethingBlocking(Player p, char c) {
 		Coordinate retning = new Coordinate (0,0);
 		if (c == 'w'){
 			retning.coord[0] = -1;
@@ -29,16 +29,16 @@ public class Move implements grensesnitt.Flytt{
 		}else {
 			retning.coord[1] = 1;
 		}
-		if (!m.outsideOfMap(retning) && (
-				m.charMap.get(retning.coord[0]).get(retning.coord[1]) == 'g' ||
-				m.charMap.get(retning.coord[0]).get(retning.coord[1]) == 'c')){
+		if (!p.getcMap().outsideOfMap(retning) && (
+				p.getcMap().charMap.get(retning.coord[0]).get(retning.coord[1]) == 'g' ||
+				p.getcMap().charMap.get(retning.coord[0]).get(retning.coord[1]) == 'c')){
 			return false;
 		} else {
 			return true;
 		}
 	}
 
-	public boolean isMarketNearby(Map m, Player p, char c) {
+	public boolean isMarketNearby(Player p, char c) {
 		Coordinate retning = new Coordinate (0,0);
 		if (c == 'w'){
 			retning.coord[0] = -1;
@@ -49,14 +49,14 @@ public class Move implements grensesnitt.Flytt{
 		}else {
 			retning.coord[1] = 1;
 		}
-		if (m.charMap.get(retning.coord[0]).get(retning.coord[0]) == 'm'){
+		if (p.getcMap().charMap.get(retning.coord[0]).get(retning.coord[0]) == 'm'){
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	public boolean isVillageNearby(Map m, Player p, char c) {
+	public boolean isVillageNearby(Player p, char c) {
 		Coordinate retning = new Coordinate (0,0);
 		if (c == 'w'){
 			retning.coord[0] = -1;
@@ -67,10 +67,11 @@ public class Move implements grensesnitt.Flytt{
 		}else {
 			retning.coord[1] = 1;
 		}
-		if (m.charMap.get(retning.coord[0]).get(retning.coord[0]) == 'l'){
+		if (p.getcMap().charMap.get(retning.coord[0]).get(retning.coord[0]) == 'l'){
 			return true;
 		} else {
 			return false;
 		}
 	}
+	
 }
