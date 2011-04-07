@@ -8,6 +8,26 @@ Integer[] coord = new Integer[3];
 		this.coord[2] = 0;
 	}
 	
+	public Coordinate plus(Coordinate a){
+		Coordinate b = new Coordinate(0,0);
+		b.coord[0] = this.coord[0] + a.coord[0];
+		b.coord[0] = this.coord[1] + a.coord[1];
+		return b;
+	}
+	
+	public Coordinate(char c){
+		Coordinate r = new Coordinate(0,0);
+		if (c == 'w'){
+			r.coord[0] = - 1;
+		} else if (c == 'a'){
+			r.coord[1] = - 1;
+		} else if (c == 's'){
+			r.coord[0] = 1;
+		} else if (c == 'd') {
+			r.coord[1] = 1;
+		}
+	}
+	
 	public Coordinate(Coordinate a){
 		this.coord[0] = a.coord[0];
 		this.coord[1] = a.coord[1];
