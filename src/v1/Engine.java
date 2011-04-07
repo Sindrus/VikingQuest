@@ -8,6 +8,7 @@ import javax.swing.*;
 public class Engine extends JFrame implements grensesnitt.Motor {
 	
 	Player p;
+	Map m;
 	
 	public static void main(String[] args){
 		Engine en = new Engine();
@@ -16,7 +17,7 @@ public class Engine extends JFrame implements grensesnitt.Motor {
 	public void input(char c){
 		if(c=='a' || c=='s' || c=='d' || c=='w'){
 			Move flytt = new Move();
-			flytt.executeMove(p, c);
+			flytt.executeMove(m, p, c);
 		}
 		else 
 			System.out.println(c);
@@ -73,14 +74,4 @@ public class Engine extends JFrame implements grensesnitt.Motor {
 			}
 		}
 	}
-	
-/*	public void keyPressed(KeyEvent arg0) {
-		System.out.println("Print");
-	}
-	public void keyReleased(KeyEvent arg0) {
-		System.out.println("Print");
-	}
-	public void keyTyped(KeyEvent key) {
-		System.out.println("Print");
-	}*/
 }

@@ -6,8 +6,6 @@ import javax.swing.*;
 
 public class Graphic extends JPanel implements grensesnitt.Grafikk {
 	
-	private int x=100,y=100,radius=50;
-	private int dx=2,dy=2;
 	private int height,width;
 	private Toolkit tk;
 	
@@ -17,14 +15,9 @@ public class Graphic extends JPanel implements grensesnitt.Grafikk {
 	
 	public Graphic(Map m){
 		tk = Toolkit.getDefaultToolkit();
-		Dimension d=tk.getScreenSize();
 		height = 615;
 		width =  700;
 		map = m;
-	}
-	public void reset(){
-		x=100;
-		y=100;
 	}
 	
 	public void paint(Graphics g){
