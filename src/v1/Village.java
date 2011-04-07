@@ -21,7 +21,7 @@ private int gull, soldater, mat;
 		return gull;
 	}
 	
-	public void setSoldater(int soldier) {
-		this.soldater = soldier;
+	public void addSoldater(int soldier) {
+		this.soldater += soldier;
 	}
 }

@@ -164,9 +164,13 @@ public ArrayList<Player> players = new ArrayList<Player>();
 				}
 			}
 			if (((this.charMap.get(bridge.coord[0] + 1).get(bridge.coord[1]) == 'v') &&
-					(this.charMap.get(bridge.coord[0] - 1).get(bridge.coord[1]) == 'v')) ||
+					(this.charMap.get(bridge.coord[0] - 1).get(bridge.coord[1]) == 'v') &&
+					((this.charMap.get(bridge.coord[0]).get(bridge.coord[1] + 1) == 'g') &&
+					(this.charMap.get(bridge.coord[0]).get(bridge.coord[1] - 1) == 'g'))) ||
 					((this.charMap.get(bridge.coord[0]).get(bridge.coord[1] + 1) == 'v') &&
-					(this.charMap.get(bridge.coord[0]).get(bridge.coord[1] - 1) == 'v'))){
+					(this.charMap.get(bridge.coord[0]).get(bridge.coord[1] - 1) == 'v') &&
+					(this.charMap.get(bridge.coord[0] + 1).get(bridge.coord[1]) == 'g') &&
+					(this.charMap.get(bridge.coord[0] - 1).get(bridge.coord[1]) == 'g'))){
 				this.charMap.get(bridge.coord[0]).set(bridge.coord[1], 'c');
 			} else {
 				i++;
