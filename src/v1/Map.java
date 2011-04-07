@@ -43,9 +43,13 @@ public ArrayList<Player> players = new ArrayList<Player>();
 				new Coordinate(rC[0] - 1, rC[1]),//Øvre nabo
 				new Coordinate(rC[0] + 1, rC[1]),//Nedre nabo
 				new Coordinate(rC[0], rC[1] - 1),//Venstre nabo
-				new Coordinate(rC[0], rC[1] + 1)};//Høyre nabo
+				new Coordinate(rC[0], rC[1] + 1),//Høyre nabo
+				new Coordinate(rC[0] + 1, rC[1] + 1),
+				new Coordinate(rC[0] + 1, rC[1] - 1),
+				new Coordinate(rC[0] - 1, rC[1] + 1),
+				new Coordinate(rC[0] - 1, rC[1] - 1)};
 		int count = 0;
-		for (int j = 0; j < 4; j++){
+		for (int j = 0; j < i.length; j++){
 			if (this.charMap.get(rC[0]).get(rC[1]) == 'g'){
 				if (!this.outsideOfMap(i[j]) && 
 						this.charMap.get(i[j].coord[0]).get(i[j].coord[1]) == 'g'){
@@ -53,7 +57,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 				}
 			}
 		}
-		return (count >= 3);
+		return (count >= 7);
 	}
 	
 	public boolean outsideOfMap(Coordinate rC){
@@ -145,25 +149,37 @@ public ArrayList<Player> players = new ArrayList<Player>();
 	}//Lager en bro på måfå så ikke elven lukker av deler av kartet. Broen kan i verste fall være blokkert av noe annet.
 	
 	private void createBridge(ArrayList<Coordinate> river, int i){
+		Bro:
 		while (i < 20){
-			Coordinate bridge = river.get((int) ((int) river.size()*Math.random()));
+			Coordinate bridge = new Coordinate(river.get((int) ((int) river.size()*Math.random())));
+			Coordinate naboer[] = new Coordinate[] {
+					new Coordinate(bridge.coord[0] - 1, bridge.coord[1]),//Øvre nabo
+					new Coordinate(bridge.coord[0] + 1, bridge.coord[1]),//Nedre nabo
+					new Coordinate(bridge.coord[0], bridge.coord[1] - 1),//Venstre nabo
+					new Coordinate(bridge.coord[0], bridge.coord[1] + 1)};//Høyre nabo
+			for (int j = 0; j < naboer.length; j++){
+				if (this.outsideOfMap(naboer[j])){
+					i++;
+					break Bro;
+				}
+			}
 			if (((this.charMap.get(bridge.coord[0] + 1).get(bridge.coord[1]) == 'v') &&
 					(this.charMap.get(bridge.coord[0] - 1).get(bridge.coord[1]) == 'v')) ||
 					((this.charMap.get(bridge.coord[0]).get(bridge.coord[1] + 1) == 'v') &&
 					(this.charMap.get(bridge.coord[0]).get(bridge.coord[1] - 1) == 'v'))){
 				this.charMap.get(bridge.coord[0]).set(bridge.coord[1], 'c');
 			} else {
+				i++;
 				this.createBridge(river, i);
 			}
 		}
-		
 	}
 	
 	private void randomObject(){
 		double random = Math.random();
-		if(random < 0.08){
+		if(random < 0.10){
 			this.createRiver();		
-		} else if (random < 0.15){
+		} else if (random < 0.25){
 			createMarket(0);
 		} else if (random < 0.4){
 			createVillage(0);
