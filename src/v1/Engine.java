@@ -30,7 +30,6 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 		m = new Map(50,50);
 		p = new Player(m, 50, 50);
 		
-		
 		JFrame jf = new JFrame("VikingQuest");
 		jf.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		jf.setSize(800,640);
