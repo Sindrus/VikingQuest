@@ -30,7 +30,6 @@ public class Engine extends JFrame implements grensesnitt.Motor {
 		JPanel stat = new Status(p);
 		
 		JFrame jf = new JFrame("VikingQuest");
-		jf.setVisible(true);
 		jf.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		jf.setSize(800,640);
 		jf.setResizable(false);
@@ -45,15 +44,18 @@ public class Engine extends JFrame implements grensesnitt.Motor {
 			public void keyPressed(KeyEvent e) {}
 		});
 		
-		
 		JPanel jpn = new Graphic(m);
 		JPanel knapper = new Buttons(p);
+
+		jf.setVisible(true);
 		
 		jf.add(stat);
 		jf.add(knapper);
 		jf.add(jpn);
+
 		
 		int i=0;
+
 		while(true){
 			
 			if(i>=6){
