@@ -71,7 +71,7 @@ private boolean dead = false;
 	}
 	
 	public void addSoldater(int soldiers){
-		this.soldater+=soldiers;
+		this.soldater += soldiers;
 	}
 	
 	public Map getcMap() {

@@ -30,6 +30,8 @@ public class Move /*implements grensesnitt.Flytt*/{
 		}else {
 			retning.coord[1] = 1;
 		}
+		if (p == null) System.out.println("p var null");
+		if (p == null) System.out.println("p var null");
 		if (!p.getcMap().outsideOfMap(retning) && (
 				p.getcMap().charMap.get(retning.coord[0]).get(retning.coord[1]) == 'g' ||
 				p.getcMap().charMap.get(retning.coord[0]).get(retning.coord[1]) == 'c')){
