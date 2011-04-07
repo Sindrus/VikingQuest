@@ -33,11 +33,10 @@ public class Graphic extends JPanel implements grensesnitt.Grafikk {
 				}
 			}
 		}
+		
 		System.out.println("["+coords[0]+"],["+coords[1]+"]");
-		System.out.println("Width/40: " + (width/40) + " Height/40: " + (height/40));
 		int antx=coords[0]-(width/40);
 		int anty=coords[1]-(height/40);
-		System.out.println("Start: ["+antx+"],["+anty+"]");
 		
 		gress = tk.getImage(getClass().getResource("graphics/gress.jpg"));
 		viking = tk.getImage(getClass().getResource("graphics/vikings.jpg"));

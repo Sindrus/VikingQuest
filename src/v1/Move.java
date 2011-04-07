@@ -1,8 +1,8 @@
 package v1;
 
-public class Move implements grensesnitt.Flytt{
+public class Move /*implements grensesnitt.Flytt*/{
 	
-	public void executeMove(Player p, char c){
+	public static void executeMove(Player p, char c){
 		Coordinate retning = new Coordinate (0,0);
 		if (c == 'w'){
 			retning.coord[0] = -1;
@@ -10,15 +10,16 @@ public class Move implements grensesnitt.Flytt{
 			retning.coord[1] = -1;
 		}else if (c == 's'){
 			retning.coord[0] = 1;
-		}else {
+		}else
 			retning.coord[1] = 1;
-		}
+		
+		
 		if (!isSomethingBlocking(p,c)){
 			p.getcMap().updateMap(retning, p);
 		}
 	}
 
-	public boolean isSomethingBlocking(Player p, char c) {
+	public static boolean isSomethingBlocking(Player p, char c) {
 		Coordinate retning = new Coordinate (0,0);
 		if (c == 'w'){
 			retning.coord[0] = -1;
@@ -38,7 +39,7 @@ public class Move implements grensesnitt.Flytt{
 		}
 	}
 
-	public boolean isMarketNearby(Player p, char c) {
+	public static boolean isMarketNearby(Player p, char c) {
 		Coordinate retning = new Coordinate (0,0);
 		if (c == 'w'){
 			retning.coord[0] = -1;
@@ -56,7 +57,7 @@ public class Move implements grensesnitt.Flytt{
 		}
 	}
 
-	public boolean isVillageNearby(Player p, char c) {
+	public static boolean isVillageNearby(Player p, char c) {
 		Coordinate retning = new Coordinate (0,0);
 		if (c == 'w'){
 			retning.coord[0] = -1;

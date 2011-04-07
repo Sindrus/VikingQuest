@@ -5,10 +5,13 @@ import java.awt.event.KeyListener;
 
 import javax.swing.*;
 
-public class Engine extends JFrame implements grensesnitt.Motor {
+public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 	
 	Player p;
 	Map m;
+	JPanel stat;
+	JPanel knapper;
+	JPanel graphicMap;
 	
 	public static void main(String[] args){
 		Engine en = new Engine();
@@ -16,8 +19,7 @@ public class Engine extends JFrame implements grensesnitt.Motor {
 	
 	public void input(char c){
 		if(c=='a' || c=='s' || c=='d' || c=='w'){
-			Move flytt = new Move();
-			flytt.executeMove(p, c);
+			Move.executeMove(this.p, c);
 		}
 		else 
 			System.out.println(c);
@@ -25,34 +27,24 @@ public class Engine extends JFrame implements grensesnitt.Motor {
 	
 	public Engine(){
 		
-		Map m = new Map(40,40);
-		Player p = new Player(m, 40, 40);
+		m = new Map(50,50);
+		p = new Player(m, 50, 50);
 		
-		JPanel stat = new Status(p);
 		
 		JFrame jf = new JFrame("VikingQuest");
 		jf.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		jf.setSize(800,640);
 		jf.setResizable(false);
 		
-		jf.addKeyListener(new KeyListener() {
-			public void keyTyped(KeyEvent e) {}
-			public void keyReleased(KeyEvent e) {
-				if(e.getKeyCode()==27)
-					System.exit(0);
-				input(e.getKeyChar());
-			}
-			public void keyPressed(KeyEvent e) {}
-		});
+		graphicMap = new Graphic(m);
+		knapper = new Buttons(p);
+		stat = new Status(p);
 		
-		JPanel jpn = new Graphic(m);
-		JPanel knapper = new Buttons(p);
-
+		jf.addKeyListener(this);
 		jf.add(stat);
 		jf.add(knapper);
-		jf.add(jpn);
+		jf.add(graphicMap);
 		jf.setVisible(true);
-
 		
 		int i=0;
 
@@ -73,4 +65,14 @@ public class Engine extends JFrame implements grensesnitt.Motor {
 			}
 		}
 	}
+	
+	public void keyPressed(KeyEvent e) {}
+	public void keyReleased(KeyEvent e) {
+		if(e.getKeyCode()==27)
+			System.exit(0);
+		Move.executeMove(p, e.getKeyChar());
+		
+		((Graphic)graphicMap).repaint();
+	}
+	public void keyTyped(KeyEvent e) {}
 }
