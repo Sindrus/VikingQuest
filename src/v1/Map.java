@@ -4,30 +4,23 @@ import java.util.ArrayList;
 
 public class Map implements grensesnitt.Kart{
 public ArrayList<ArrayList<Character>> charMap = new ArrayList<ArrayList<Character>>();
-private int dy; 
-private int dx;
 public ArrayList<Player> players = new ArrayList<Player>();
 
-	public void updateMap(char c, Player p){
-		if (c == 'w'){
-			this.dy = -1;
-			this.dx = 0;
-		} else if (c == 'a'){
-			this.dy = 0;
-			this.dx = -1;
-		} else if (c == 's'){
-			this.dy = 1;
-			this.dx = 0;
-		} else if (c == 'd'){
-			this.dy = 0;
-			this.dx = 1;
-		} else {
-			this.dy = 0;
-			this.dx = 0;
-		}
-		this.move(c,p);
-		this.dy = 0;
-		this.dx = 0;
+	public void updateMap(Coordinate c, Player p){
+		int xTemp = p.getPlayerPos()[1];
+		int yTemp = p.getPlayerPos()[0];
+		if ((this.charMap.get(yTemp + 1).get(xTemp) == 'v') &&
+				(this.charMap.get(yTemp - 1).get(xTemp) == 'v')){
+				this.charMap.get(yTemp).set(xTemp + c.coord[1], 'p');
+				this.charMap.get(yTemp).set(xTemp, 'c');
+			} else if ((this.charMap.get(yTemp).get(xTemp + 1) == 'v') &&
+				(this.charMap.get(yTemp).get(xTemp - 1) == 'v')){
+				this.charMap.get(yTemp + c.coord[0]).set(xTemp, 'p');
+				this.charMap.get(yTemp).set(xTemp, 'c');
+			} else {
+				this.charMap.get(yTemp).set(xTemp, 'g');
+				this.charMap.get(yTemp + c.coord[0]).set(xTemp + c.coord[1], 'p');	
+			}
 	}
 
 	public Map(int x, int y){
@@ -38,27 +31,6 @@ public ArrayList<Player> players = new ArrayList<Player>();
 			}
 		}
 		generateMap();
-		this.dy = 0;
-		this.dx = 0;
-	}
-
-	private void move(char c, Player p){
-		int xTemp = p.getPlayerPos()[1];
-		int yTemp = p.getPlayerPos()[0];
-		if ((c == 'a' || c == 'd') && 
-			(this.charMap.get(yTemp + 1).get(xTemp) == 'v') &&
-			(this.charMap.get(yTemp - 1).get(xTemp) == 'v')){
-			this.charMap.get(yTemp).set(xTemp + dx, 'p');
-			this.charMap.get(yTemp).set(xTemp, 'c');
-		} else if ((c == 'w' || c == 's') && 
-			(this.charMap.get(yTemp).get(xTemp + 1) == 'v') &&
-			(this.charMap.get(yTemp).get(xTemp - 1) == 'v')){
-			this.charMap.get(yTemp + dy).set(xTemp, 'p');
-			this.charMap.get(yTemp).set(xTemp, 'c');
-		} else {
-			this.charMap.get(yTemp).set(xTemp, 'g');
-			this.charMap.get(yTemp + dy).set(xTemp + dx, 'p');	
-		}
 	}
 	
 	private int[] randomCoordinates(){
@@ -81,10 +53,10 @@ public ArrayList<Player> players = new ArrayList<Player>();
 				}
 			}
 		}
-		return (count > 2);
+		return (count >= 3);
 	}
 	
-	private boolean outsideOfMap(Coordinate rC){
+	public boolean outsideOfMap(Coordinate rC){
 		if ((rC.coord[0] < 0) || (rC.coord[1] < 0) ||
 			(rC.coord[0] >= this.charMap.size()) ||
 			(rC.coord[1] >= this.charMap.get(rC.coord[0]).size())) {
@@ -130,17 +102,17 @@ public ArrayList<Player> players = new ArrayList<Player>();
 				sjekk[j] = true;
 			}
 			Coordinate[] naboer = new Coordinate[] {
-					new Coordinate(Path.get(i).coord[0] - 1, Path.get(i).coord[1], Path.get(i).coord[2] + 1),//Øvre nabo
-					new Coordinate(Path.get(i).coord[0] + 1, Path.get(i).coord[1], Path.get(i).coord[2] + 1),//Nedre nabo
-					new Coordinate(Path.get(i).coord[0], Path.get(i).coord[1] - 1, Path.get(i).coord[2] + 1),//Venstre nabo
-					new Coordinate(Path.get(i).coord[0], Path.get(i).coord[1] + 1, Path.get(i).coord[2] + 1)};//Høyre nabo
+					new Coordinate(Path.get(i).coord[0] - 1, Path.get(i).coord[1], Path.get(i).coord[2] + 1),//Upper Neighbour
+					new Coordinate(Path.get(i).coord[0] + 1, Path.get(i).coord[1], Path.get(i).coord[2] + 1),//Lower Neighbour
+					new Coordinate(Path.get(i).coord[0], Path.get(i).coord[1] - 1, Path.get(i).coord[2] + 1),//Left Neighbour
+					new Coordinate(Path.get(i).coord[0], Path.get(i).coord[1] + 1, Path.get(i).coord[2] + 1)};//Right Neighbour
 			for (int j = 0; j < sjekk.length; j++){
 				for (int x = 0; x < Path.size(); x++){
-					if (this.outsideOfMap(naboer[j]) || //Her sjekker vi om punktet eksister på kartet.
+					if (this.outsideOfMap(naboer[j]) || //Her sjekker vi om punktet er utenfor kartet.
 						Path.get(x).compareYX(naboer[j])){ //Her sjekker vi om punktet eksisterer i Path allerede.
 						sjekk[j] = false; //Setter en boolean-verdi til false som vi sjekker senere for å se om koordinatet skal legges i Path.
 						break; 
-					} 
+					}
 				}
 			}
 			for (int x = 0; x < naboer.length; x++){ 
