@@ -1,5 +1,6 @@
 package grensesnitt;
 
+import v1.Coordinate;
 import v1.Player;
 
 /*
@@ -23,5 +24,5 @@ public interface Kart {
 	// ArrayList<ArrayList<character>> charMap
 	// public void Map(int x, int y);		//Constructor, skal initialisere ArrayListen og området som er synlig
 	
-	public void updateMap(char c, Player P);		//Oppdaterer kartet iforhold til playerinput char c
+	public void updateMap(Coordinate c, Player P);		//Oppdaterer kartet iforhold til playerinput char c
 }

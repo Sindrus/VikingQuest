@@ -1,35 +1,24 @@
 package v1;
 
 public class Village implements grensesnitt.Bosetning{
+private int gull, soldater, mat;
 
-	@Override
 	public void Village() {
-		// TODO Auto-generated method stub
-		
+		soldater = (int) (51*(Math.random()));
+		gull = (int) (soldater/4);
+		mat = (int) (soldater/2);
 	}
 
-	@Override
 	public int getSoldater() {
-		// TODO Auto-generated method stub
-		return 0;
+		return soldater;
 	}
 
-	@Override
-	public int getSkatter() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
 	public int getMat() {
-		// TODO Auto-generated method stub
-		return 0;
+		return mat;
 	}
 
-	@Override
 	public int getGull() {
-		// TODO Auto-generated method stub
-		return 0;
+		return gull;
 	}
 
 }

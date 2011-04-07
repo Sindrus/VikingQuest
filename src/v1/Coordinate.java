@@ -8,6 +8,12 @@ Integer[] coord = new Integer[3];
 		this.coord[2] = 0;
 	}
 	
+	public Coordinate(Coordinate a){
+		this.coord[0] = a.coord[0];
+		this.coord[1] = a.coord[1];
+		this.coord[2] = a.coord[2];
+	}
+	
 	public Coordinate(int y, int x){
 		this.coord[0] = (Integer) y;
 		this.coord[1] = (Integer) x;
