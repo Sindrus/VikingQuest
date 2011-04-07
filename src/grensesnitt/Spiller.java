@@ -1,5 +1,7 @@
 package grensesnitt;
 
+import v1.Coordinate;
+
 /*
  * 	//Klassen tar seg av kamper og handler med markeder
  *	Private int gull;
@@ -12,6 +14,6 @@ package grensesnitt;
 
 public interface Spiller {
 	
-	int[] getPlayerPos();	//Returnerer koordinatene til spillern
+	Coordinate getPlayerPos();	//Returnerer koordinatene til spillern
 	
 }

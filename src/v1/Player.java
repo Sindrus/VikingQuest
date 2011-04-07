@@ -1,13 +1,14 @@
 package v1;
 
 public class Player implements grensesnitt.Spiller {
-private int[] playerPos = new int[2];
+private Coordinate playerPos = new Coordinate(0,0);
 private int gull;
 private int mat;
 private int soldater;
 private Map cMap;
+private boolean dead = false;
 
-	public int[] getPlayerPos() {
+	public Coordinate getPlayerPos() {
 		this.setPlayerPos();
 		return playerPos;
 	}
@@ -16,8 +17,8 @@ private Map cMap;
 		for (int i = 0; i < this.cMap.charMap.size(); i++){
 			for (int j = 0; j < this.cMap.charMap.get(i).size(); j++){
 				if (this.cMap.charMap.get(i).get(j) == 'p'){
-					this.playerPos[0] = i;
-					this.playerPos[1] = j;
+					this.playerPos.coord[0] = i;
+					this.playerPos.coord[1] = j;
 				}
 			}
 		}
@@ -83,4 +84,13 @@ private Map cMap;
 		} 	
 		this.cMap = cMap;
 	}
+
+	public boolean isDead() {
+		return dead;
+	}
+
+	public void setDead(boolean dead) {
+		this.dead = dead;
+	}
+	
 }

@@ -7,8 +7,8 @@ public ArrayList<ArrayList<Character>> charMap = new ArrayList<ArrayList<Charact
 public ArrayList<Player> players = new ArrayList<Player>();
 
 	public void updateMap(Coordinate c, Player p){
-		int xTemp = p.getPlayerPos()[1];
-		int yTemp = p.getPlayerPos()[0];
+		int xTemp = p.getPlayerPos().coord[1];
+		int yTemp = p.getPlayerPos().coord[0];
 		if ((this.charMap.get(yTemp + 1).get(xTemp) == 'v') &&
 				(this.charMap.get(yTemp - 1).get(xTemp) == 'v')){
 				this.charMap.get(yTemp).set(xTemp + c.coord[1], 'p');
@@ -141,9 +141,23 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		for (int i = 0; i < finalPath.size(); i++){
 			this.charMap.get(finalPath.get(i).coord[0]).set(finalPath.get(i).coord[1], 'v');
 		} //Printer elven
-		int bridgeCoord = (int) ((int) finalPath.size()*Math.random());
-		this.charMap.get(finalPath.get(bridgeCoord).coord[0]).set(finalPath.get(bridgeCoord).coord[1], 'c');
+		this.createBridge(finalPath, 0);
 	}//Lager en bro på måfå så ikke elven lukker av deler av kartet. Broen kan i verste fall være blokkert av noe annet.
+	
+	private void createBridge(ArrayList<Coordinate> river, int i){
+		while (i < 20){
+			Coordinate bridge = river.get((int) ((int) river.size()*Math.random()));
+			if (((this.charMap.get(bridge.coord[0] + 1).get(bridge.coord[1]) == 'v') &&
+					(this.charMap.get(bridge.coord[0] - 1).get(bridge.coord[1]) == 'v')) ||
+					((this.charMap.get(bridge.coord[0]).get(bridge.coord[1] + 1) == 'v') &&
+					(this.charMap.get(bridge.coord[0]).get(bridge.coord[1] - 1) == 'v'))){
+				this.charMap.get(bridge.coord[0]).set(bridge.coord[1], 'c');
+			} else {
+				this.createBridge(river, i);
+			}
+		}
+		
+	}
 	
 	private void randomObject(){
 		double random = Math.random();
