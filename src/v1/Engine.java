@@ -27,7 +27,7 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 	
 	public Engine(){
 		
-		m = new Map(50,50);
+		m = new Map(50, 50);
 		p = new Player(m, 50, 50);
 		
 		JFrame jf = new JFrame("VikingQuest");
