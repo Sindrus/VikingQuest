@@ -17,7 +17,7 @@ public class Engine extends JFrame implements grensesnitt.Motor {
 	public void input(char c){
 		if(c=='a' || c=='s' || c=='d' || c=='w'){
 			Move flytt = new Move();
-			flytt.executeMove(m, p, c);
+			flytt.executeMove(p, c);
 		}
 		else 
 			System.out.println(c);
@@ -48,11 +48,10 @@ public class Engine extends JFrame implements grensesnitt.Motor {
 		JPanel jpn = new Graphic(m);
 		JPanel knapper = new Buttons(p);
 
-		jf.setVisible(true);
-		
 		jf.add(stat);
 		jf.add(knapper);
 		jf.add(jpn);
+		jf.setVisible(true);
 
 		
 		int i=0;

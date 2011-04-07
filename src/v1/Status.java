@@ -13,17 +13,19 @@ public class Status extends JPanel{
 	
 	public Status(Player p){
 		play = p;
-		food = new JLabel();
-		gold = new JLabel();
-		soldiers = new JLabel();
+		food = new JLabel(" ");
+		gold = new JLabel(" ");
+		soldiers = new JLabel(" ");
 		
 		setBounds(0, 0, 800, 25);
 		
 		updateStatus();
+		food.setSize(200, 25);
+		gold.setSize(200, 25);
+		soldiers.setSize(200, 25);
 	}
 	
 	public void updateStatus(){
-		food.setSize(200, 25);
 		
 		food.setText("<html>" +
 				"<img src="+ Status.class.getResource("graphics/meat.gif") + " /> " + 
@@ -31,14 +33,12 @@ public class Status extends JPanel{
 				"");
 		food.setBorder(BorderFactory.createEmptyBorder(0, 50, 0, 50));
 		
-		gold.setSize(200, 25);
 		gold.setText("<html>" +
 				"<img src="+ Status.class.getResource("graphics/gold.gif") + " /> " + 
 				"&nbsp;Gull: " + Integer.toString(play.getGull())+" </html>" +
 				"");
 		gold.setBorder(BorderFactory.createEmptyBorder(0, 50, 0, 50));
 		
-		soldiers.setSize(200, 25);
 		soldiers.setText("<html>" +
 				"<img src="+ Status.class.getResource("graphics/statusViking.gif") + " /> " + 
 				"&nbsp;Soldater: " + Integer.toString(play.getSoldater())+" </html>" +
