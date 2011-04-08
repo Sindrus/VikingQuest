@@ -213,19 +213,18 @@ public ArrayList<Player> players = new ArrayList<Player>();
 				new Coordinate(rC.coord[0] + 1, rC.coord[1]),//Nedre nabo
 				new Coordinate(rC.coord[0], rC.coord[1] - 1),//Venstre nabo
 				new Coordinate(rC.coord[0], rC.coord[1] + 1)};//Høyre nabo
-		Boolean[] sjekk = new Boolean[] {true, true, true, true};
+		Boolean sjekk = true;
 		for (int x = 0; x < 4; x++){
 			if (!this.outsideOfMap(i[x])){
 				if(isWater(this, i[x])){
-					sjekk[x] = false;
+					sjekk = false;
+					break;
 				}
 					
 			}
 		}
 		if (isGrass(this, rC)){
-			if (sjekk[0] && sjekk[1]){
-				return true;
-			} else if (sjekk[2] && sjekk[3]){
+			if (sjekk){ 
 				return true;
 			} else {
 				return false;
@@ -296,14 +295,14 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		for (int i = 0; i < finalPath.size(); i++){
 			this.charMap.get(finalPath.get(i).coord[0]).set(finalPath.get(i).coord[1], 'v');
 		} //Printer elven
-		this.createBridge((Coordinate[]) finalPath.toArray(), 0);
+		this.createBridge(finalPath, 0);
 	}//Lager en bro på måfå så ikke elven lukker av deler av kartet. Broen kan i verste fall være blokkert av noe annet.
 	
-	private void createBridge(Coordinate[] river, int i){
+	private void createBridge(ArrayList<Coordinate> river, int i){
 		boolean needBridge = true;
 		Bro:
 		while (needBridge && i < 20){
-			Coordinate bridge = new Coordinate(river[(int) (river.length*Math.random())]);
+			Coordinate bridge = new Coordinate(river.get((int) (river.size()*Math.random())));
 			Coordinate naboer[] = new Coordinate[] {
 				new Coordinate(bridge.coord[0] - 1, bridge.coord[1]),//Øvre nabo
 				new Coordinate(bridge.coord[0] + 1, bridge.coord[1]),//Nedre nabo
@@ -316,7 +315,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 				}
 			}
 			if ((isWater(this, naboer[0]) &&
-				isWater(this, naboer[1])&&
+				isWater(this, naboer[1]) &&
 				isGrass(this, naboer[2]) &&
 				isGrass(this, naboer[3])) ||
 				(isWater(this, naboer[2]) &&
@@ -325,8 +324,8 @@ public ArrayList<Player> players = new ArrayList<Player>();
 				isGrass(this, naboer[1]))){
 				this.charMap.get(bridge.coord[0]).set(bridge.coord[1], 'c');
 			} 
-			for (int x = 0; x < river.length; x++){
-				if (isBridge(this, river[x])){
+			for (int x = 0; x < river.size(); x++){
+				if (isBridge(this, river.get(x))){
 					needBridge = false;
 				}
 			}
