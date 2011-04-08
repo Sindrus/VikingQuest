@@ -17,11 +17,12 @@ import v1.Player;
  *	Stein:		‘s’
  *	Marked:		’m’
  *	Bro:		'c'
+ *  Spiller_på_bro 'k'
  *
  */
 
 public interface Kart {
-	// ArrayList<ArrayList<character>> charMap
+	// ArrayList<ArrayList<Character>> charMap
 	// public void Map(int x, int y);		//Constructor, skal initialisere ArrayListen og området som er synlig
 	
 	public void updateMap(Coordinate c, Player P);		//Oppdaterer kartet iforhold til playerinput char c

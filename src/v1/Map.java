@@ -163,8 +163,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 	}
 	
 	public static boolean isWater(Map m, Coordinate rC){
-		if (!m.outsideOfMap(rC) &&
-			m.charMap.get(rC.coord[0]).get(rC.coord[1]) == 'v'){
+		if (m.charMap.get(rC.coord[0]).get(rC.coord[1]) == 'v'){
 			return true;
 		} else {
 			return false;
@@ -216,8 +215,11 @@ public ArrayList<Player> players = new ArrayList<Player>();
 				new Coordinate(rC.coord[0], rC.coord[1] + 1)};//Høyre nabo
 		Boolean[] sjekk = new Boolean[] {true, true, true, true};
 		for (int x = 0; x < 4; x++){
-			if (isWater(this, i[x])){
-				sjekk[x] = false;
+			if (!this.outsideOfMap(i[x])){
+				if(isWater(this, i[x])){
+					sjekk[x] = false;
+				}
+					
 			}
 		}
 		if (isGrass(this, rC)){
@@ -294,14 +296,14 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		for (int i = 0; i < finalPath.size(); i++){
 			this.charMap.get(finalPath.get(i).coord[0]).set(finalPath.get(i).coord[1], 'v');
 		} //Printer elven
-		this.createBridge(finalPath, 0);
+		this.createBridge((Coordinate[]) finalPath.toArray(), 0);
 	}//Lager en bro på måfå så ikke elven lukker av deler av kartet. Broen kan i verste fall være blokkert av noe annet.
 	
-	private void createBridge(ArrayList<Coordinate> river, int i){
+	private void createBridge(Coordinate[] river, int i){
 		boolean needBridge = true;
 		Bro:
 		while (needBridge && i < 20){
-			Coordinate bridge = new Coordinate(river.get((int) ((int) river.size()*Math.random())));
+			Coordinate bridge = new Coordinate(river[(int) (river.length*Math.random())]);
 			Coordinate naboer[] = new Coordinate[] {
 				new Coordinate(bridge.coord[0] - 1, bridge.coord[1]),//Øvre nabo
 				new Coordinate(bridge.coord[0] + 1, bridge.coord[1]),//Nedre nabo
@@ -323,8 +325,8 @@ public ArrayList<Player> players = new ArrayList<Player>();
 				isGrass(this, naboer[1]))){
 				this.charMap.get(bridge.coord[0]).set(bridge.coord[1], 'c');
 			} 
-			for (int x = 0; x < river.size(); x++){
-				if (isBridge(this, river.get(x))){
+			for (int x = 0; x < river.length; x++){
+				if (isBridge(this, river[x])){
 					needBridge = false;
 				}
 			}
