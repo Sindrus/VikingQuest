@@ -25,6 +25,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 	
 	public void increaseRows(Player p){
 		int Rows = this.charMap.size();
+		System.out.println("p.getPlayerPos().coord[0] " + p.getPlayerPos().coord[0] + " Rows: " + Rows);
 		if (p.getPlayerPos().coord[0] < 20){
 			this.increaseRows2(-1);
 		} else if (p.getPlayerPos().coord[0] > (Rows - 20)){
@@ -36,22 +37,22 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		int Coloumns = this.charMap.get(0).size();
 		if (p.getPlayerPos().coord[1] < 20){
 			this.increaseColoumns2(-1);
-		} else if (p.getPlayerPos().coord[1] > (Coloumns - 20)){
+		} else if (p.getPlayerPos().coord[1] > (Coloumns - 25)){
 			this.increaseColoumns2(1);
 		}
 	}
 		
 	private void increaseRows2(int y){
 		if (y < 0){
-			this.charMap.add(0, new ArrayList<Character>(this.charMap.get(0).size()));
-			for (int j = 0; j < this.charMap.get(0).size(); j++){
-				this.charMap.get(0).set(j, 'g');
+			this.charMap.add(0, new ArrayList<Character>());
+			for (int j = 0; j < this.charMap.get(1).size(); j++){
+				this.charMap.get(0).add('g');
 				this.generateRow(0);
 			}
 		} else if (y > 0){
-			this.charMap.add(this.charMap.size(), new ArrayList<Character>(this.charMap.get(0).size()));
-			for (int j = 0; j < this.charMap.get(0).size(); j++){
-				this.charMap.get(this.charMap.size() - 1).set(j, 'g');
+			this.charMap.add(new ArrayList<Character>());
+			for (int j = 0; j < this.charMap.get(this.charMap.size()-2).size(); j++){
+				this.charMap.get(this.charMap.size() - 1).add('g');
 				this.generateRow(this.charMap.size());
 			}
 		}
@@ -68,9 +69,9 @@ public ArrayList<Player> players = new ArrayList<Player>();
 			}
 			this.generateColoumn(0);
 		} else if (x > 0){
-			int i = this.charMap.get(0).size();
-			for (int j = 0; j < this.charMap.get(0).size(); j++){
-				this.charMap.get(j).add(i, 'g');
+		//	int i = this.charMap.get(0).size()-1;
+			for (int j = 0; j < this.charMap.size(); j++){
+				this.charMap.get(j).add('g');
 			}
 			this.generateColoumn(this.charMap.get(0).size());
 		}
