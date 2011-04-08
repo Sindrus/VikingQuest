@@ -71,6 +71,11 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 			System.exit(0);
 		Move.executeMove(p, e.getKeyChar());
 		
+		if(Move.isMarketNearby(p, e.getKeyChar())){
+			((Buttons)knapper).labelsMarket();
+		}
+		else((Buttons)knapper).labelsReset();
+		
 		((Graphic)graphicMap).repaint();
 	}
 	public void keyTyped(KeyEvent e) {}

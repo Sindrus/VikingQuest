@@ -47,9 +47,7 @@ public class Buttons extends JPanel{
  */
 	//	Nullstiller
 		ml1Reset = new MouseListener(){
-			public void mouseClicked(MouseEvent e) {
-				labelsMarket();
-			}
+			public void mouseClicked(MouseEvent e) {}
 			public void mouseEntered(MouseEvent e) {}
 			public void mouseExited(MouseEvent e) {}
 			public void mousePressed(MouseEvent e) {}
@@ -115,7 +113,7 @@ public class Buttons extends JPanel{
 	
 	public void labelsReset(){
 		
-		lbl1.setText("1 ");
+		lbl1.setText(" ");
 		lbl1.setBounds(5, 120, 100, 25);
 		lbl1.removeMouseListener(lbl1.getMouseListeners()[0]);
 		lbl1.addMouseListener(ml1Reset);
