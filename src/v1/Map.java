@@ -25,7 +25,6 @@ public ArrayList<Player> players = new ArrayList<Player>();
 	
 	public void increaseRows(Player p){
 		int Rows = this.charMap.size();
-		System.out.println("p.getPlayerPos().coord[0] " + p.getPlayerPos().coord[0] + " Rows: " + Rows);
 		if (p.getPlayerPos().coord[0] < 20){
 			this.increaseRows2(-1);
 		} else if (p.getPlayerPos().coord[0] > (Rows - 20)){
@@ -69,7 +68,6 @@ public ArrayList<Player> players = new ArrayList<Player>();
 			}
 			this.generateColoumn(0);
 		} else if (x > 0){
-		//	int i = this.charMap.get(0).size()-1;
 			for (int j = 0; j < this.charMap.size(); j++){
 				this.charMap.get(j).add('g');
 			}
