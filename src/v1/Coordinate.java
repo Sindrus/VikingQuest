@@ -61,8 +61,8 @@ Integer[] coord = new Integer[3];
 	}
 	
 	public boolean compareYX(Coordinate a){
-		if (this.coord[0] == a.coord[0] &&
-				this.coord[1] == a.coord[1]){
+		if (this.coord[0].equals(a.coord[0]) &&
+				this.coord[1].equals(a.coord[1])){
 				return true;
 			} else {
 				return false;

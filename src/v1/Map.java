@@ -3,23 +3,26 @@ package v1;
 import java.util.ArrayList;
 
 public class Map implements grensesnitt.Kart{
+public double riverChance = 0.1;
+public double marketChance = 0.15;
+public double villageChance = 0.2;
+public double percentageOccupied = 0.2;
 public ArrayList<ArrayList<Character>> charMap = new ArrayList<ArrayList<Character>>();
 public ArrayList<Player> players = new ArrayList<Player>();
 
 	public void updateMap(Coordinate c, Player p){
-		int xTemp = p.getPlayerPos().coord[1];
-		int yTemp = p.getPlayerPos().coord[0];
-		if ((this.charMap.get(yTemp + 1).get(xTemp) == 'v') &&
-				(this.charMap.get(yTemp - 1).get(xTemp) == 'v')){
-				this.charMap.get(yTemp).set(xTemp + c.coord[1], 'p');
-				this.charMap.get(yTemp).set(xTemp, 'c');
-			} else if ((this.charMap.get(yTemp).get(xTemp + 1) == 'v') &&
-				(this.charMap.get(yTemp).get(xTemp - 1) == 'v')){
-				this.charMap.get(yTemp + c.coord[0]).set(xTemp, 'p');
-				this.charMap.get(yTemp).set(xTemp, 'c');
+		Coordinate player = new Coordinate(p.getPlayerPos());
+		if (wasBridge(this, player)){
+			if (isBridge(this, Coordinate.plus(c, player))){
+				this.charMap.get(player.coord[0]).set(player.coord[1], 'c');
+				this.charMap.get(Coordinate.plus(c, player).coord[0]).set(Coordinate.plus(c, player).coord[1], 'k');
 			} else {
-				this.charMap.get(yTemp).set(xTemp, 'g');
-				this.charMap.get(yTemp + c.coord[0]).set(xTemp + c.coord[1], 'p');	
+				this.charMap.get(player.coord[0]).set(player.coord[1], 'c');
+				this.charMap.get(Coordinate.plus(c, player).coord[0]).set(Coordinate.plus(c, player).coord[1], 'p');
+			}
+			} else {
+				this.charMap.get(player.coord[0]).set(player.coord[1], 'g');
+				this.charMap.get(Coordinate.plus(c, player).coord[0]).set(Coordinate.plus(c, player).coord[1], 'p');
 			}
 	}
 	
@@ -37,6 +40,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		if (p.getPlayerPos().coord[1] < 20){
 			this.increaseColoumns2(-1);
 		} else if (p.getPlayerPos().coord[1] > (Coloumns - 21)){
+		} else if (p.getPlayerPos().coord[1] > (Coloumns - 25)){
 			this.increaseColoumns2(1);
 		}
 	}
@@ -47,6 +51,11 @@ public ArrayList<Player> players = new ArrayList<Player>();
 			for (int j = 0; j < this.charMap.get(0).size(); j++){
 				this.charMap.get(0).set(j, 'g');
 			}
+			this.charMap.add(0, new ArrayList<Character>());
+			for (int j = 0; j < this.charMap.get(1).size(); j++){
+				this.charMap.get(0).add('g');
+				this.generateRow(0);
+			}
 			this.generateRow(0);
 		} else if (y > 0){
 			int i = this.charMap.size();
@@ -54,6 +63,11 @@ public ArrayList<Player> players = new ArrayList<Player>();
 			this.charMap.add(i, new ArrayList<Character>(x));
 			for (int j = 0; j < x; j++){
 				this.charMap.get(i - 1).set(j, 'g');
+			}
+			this.charMap.add(new ArrayList<Character>());
+			for (int j = 0; j < this.charMap.get(this.charMap.size()-2).size(); j++){
+				this.charMap.get(this.charMap.size() - 1).add('g');
+				this.generateRow(this.charMap.size());
 			}
 			this.generateRow(i);
 		}
@@ -74,6 +88,9 @@ public ArrayList<Player> players = new ArrayList<Player>();
 			for (int j = 0; j < i; j++){
 				this.charMap.get(j).add(i, 'g');
 			}
+			for (int j = 0; j < this.charMap.size(); j++){
+				this.charMap.get(j).add('g');
+			}
 			this.generateColoumn(this.charMap.get(0).size());
 		}
 	}
@@ -92,26 +109,25 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		generateMap();
 	}
 	
-	private int[] randomCoordinates(){
-		int[] a = new int[] { (int) (this.charMap.size()*Math.random()), (int) (this.charMap.get(0).size()*Math.random())};
+	private Coordinate randomCoordinates(){
+		Coordinate a = new Coordinate( (int) (this.charMap.size()*Math.random()), (int) (this.charMap.get(0).size()*Math.random()));
 		return a;
 	}
 	
-	private boolean availableSpot(int[] rC){
+	private boolean availableSpot(Coordinate rC){
 		Coordinate[] i = new Coordinate[] {
-				new Coordinate(rC[0] - 1, rC[1]),//Øvre nabo
-				new Coordinate(rC[0] + 1, rC[1]),//Nedre nabo
-				new Coordinate(rC[0], rC[1] - 1),//Venstre nabo
-				new Coordinate(rC[0], rC[1] + 1),//Høyre nabo
-				new Coordinate(rC[0] + 1, rC[1] + 1),
-				new Coordinate(rC[0] + 1, rC[1] - 1),
-				new Coordinate(rC[0] - 1, rC[1] + 1),
-				new Coordinate(rC[0] - 1, rC[1] - 1)};
+				new Coordinate(rC.coord[0] - 1, rC.coord[1]),//Øvre nabo
+				new Coordinate(rC.coord[0] + 1, rC.coord[1]),//Nedre nabo
+				new Coordinate(rC.coord[0], rC.coord[1] - 1),//Venstre nabo
+				new Coordinate(rC.coord[0], rC.coord[1] + 1),//Høyre nabo
+				new Coordinate(rC.coord[0] + 1, rC.coord[1] + 1),
+				new Coordinate(rC.coord[0] + 1, rC.coord[1] - 1),
+				new Coordinate(rC.coord[0] - 1, rC.coord[1] + 1),
+				new Coordinate(rC.coord[0] - 1, rC.coord[1] - 1)};
 		int count = 0;
 		for (int j = 0; j < i.length; j++){
-			if (this.charMap.get(rC[0]).get(rC[1]) == 'g'){
-				if (!this.outsideOfMap(i[j]) && 
-					this.charMap.get(i[j].coord[0]).get(i[j].coord[1]) == 'g'){
+			if (isGrass(this, rC)){
+				if (isGrass(this, i[j])){
 					count++;
 				}
 			}
@@ -132,6 +148,14 @@ public ArrayList<Player> players = new ArrayList<Player>();
 	public static boolean isGrass(Map m, Coordinate rC){
 		if (!m.outsideOfMap(rC) &&
 			m.charMap.get(rC.coord[0]).get(rC.coord[1]) == 'g'){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public static boolean wasBridge(Map m, Coordinate rC){
+		if (m.charMap.get(rC.coord[0]).get(rC.coord[1]) == 'k'){
 			return true;
 		} else {
 			return false;
@@ -175,6 +199,15 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		}
 	}
 	
+	public static boolean isBridge(Map m, Coordinate rC){
+		if (!m.outsideOfMap(rC) && 
+			m.charMap.get(rC.coord[0]).get(rC.coord[1]) == 'c'){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	private boolean availableRiverSpot(Coordinate rC){
 		Coordinate[] i = new Coordinate[] {
 				new Coordinate(rC.coord[0] - 1, rC.coord[1]),//Øvre nabo
@@ -201,15 +234,12 @@ public ArrayList<Player> players = new ArrayList<Player>();
 	}
 	
 	private void createRiver(){
-		int[] riverStart = randomCoordinates(); //Startpunkt
-		int[] riverEnd = randomCoordinates(); //Endepunkt
-		if (riverStart[0] == riverEnd[0] &&
-				riverStart[1] == riverEnd[1]){
+		Coordinate riverStart = randomCoordinates(); //Startpunkt
+		Coordinate riverEnd = randomCoordinates(); //Endepunkt
+		if (riverStart.compareYX(riverEnd)){
 			this.createRiver(); //Om startpunkt = endepunkt, prøv igjen.
 		} else {
-			Coordinate riverS = new Coordinate(riverStart); //Lager koordinat-objekter for start og slutt.
-			Coordinate riverE = new Coordinate(riverEnd);
-			stretchRiver(riverS, riverE);
+			stretchRiver(riverStart, riverEnd);
 		}
 	}
 	
@@ -268,14 +298,15 @@ public ArrayList<Player> players = new ArrayList<Player>();
 	}//Lager en bro på måfå så ikke elven lukker av deler av kartet. Broen kan i verste fall være blokkert av noe annet.
 	
 	private void createBridge(ArrayList<Coordinate> river, int i){
+		boolean needBridge = true;
 		Bro:
-		while (i < 20){
+		while (needBridge && i < 20){
 			Coordinate bridge = new Coordinate(river.get((int) ((int) river.size()*Math.random())));
 			Coordinate naboer[] = new Coordinate[] {
-					new Coordinate(bridge.coord[0] - 1, bridge.coord[1]),//Øvre nabo
-					new Coordinate(bridge.coord[0] + 1, bridge.coord[1]),//Nedre nabo
-					new Coordinate(bridge.coord[0], bridge.coord[1] - 1),//Venstre nabo
-					new Coordinate(bridge.coord[0], bridge.coord[1] + 1)};//Høyre nabo
+				new Coordinate(bridge.coord[0] - 1, bridge.coord[1]),//Øvre nabo
+				new Coordinate(bridge.coord[0] + 1, bridge.coord[1]),//Nedre nabo
+				new Coordinate(bridge.coord[0], bridge.coord[1] - 1),//Venstre nabo
+				new Coordinate(bridge.coord[0], bridge.coord[1] + 1)};//Høyre nabo
 			for (int j = 0; j < naboer.length; j++){
 				if (this.outsideOfMap(naboer[j])){
 					i++;
@@ -283,15 +314,21 @@ public ArrayList<Player> players = new ArrayList<Player>();
 				}
 			}
 			if ((isWater(this, naboer[0]) &&
-					isWater(this, naboer[1])&&
-					isGrass(this, naboer[2]) &&
-					isGrass(this, naboer[3])) ||
-					(isWater(this, naboer[2]) &&
-					isWater(this, naboer[3]) &&
-					isGrass(this, naboer[0]) &&
-					isGrass(this, naboer[1]))){
+				isWater(this, naboer[1])&&
+				isGrass(this, naboer[2]) &&
+				isGrass(this, naboer[3])) ||
+				(isWater(this, naboer[2]) &&
+				isWater(this, naboer[3]) &&
+				isGrass(this, naboer[0]) &&
+				isGrass(this, naboer[1]))){
 				this.charMap.get(bridge.coord[0]).set(bridge.coord[1], 'c');
-			} else {
+			} 
+			for (int x = 0; x < river.size(); x++){
+				if (isBridge(this, river.get(x))){
+					needBridge = false;
+				}
+			}
+			if (needBridge){
 				i++;
 				this.createBridge(river, i);
 			}
@@ -300,11 +337,11 @@ public ArrayList<Player> players = new ArrayList<Player>();
 	
 	private void randomObject(){
 		double random = Math.random();
-		if(random < 0.10){
+		if(random < this.riverChance){
 			this.createRiver();		
-		} else if (random < 0.15){
+		} else if (random < this.marketChance){
 			createMarket(0);
-		} else if (random < 0.20){
+		} else if (random < this.villageChance){
 			createVillage(0);
 		} else {
 			createObstruction(0);
@@ -313,9 +350,9 @@ public ArrayList<Player> players = new ArrayList<Player>();
 	
 	private void createVillage(int i){
 		while (i < 10){
-			int[] randomCoordinate = randomCoordinates();
+			Coordinate randomCoordinate = randomCoordinates();
 			if (this.availableSpot(randomCoordinate)){
-				this.charMap.get(randomCoordinate[0]).set(randomCoordinate[1], 'l');
+				this.charMap.get(randomCoordinate.coord[0]).set(randomCoordinate.coord[1], 'l');
 				break;
 			} else {
 				i++;
@@ -326,13 +363,13 @@ public ArrayList<Player> players = new ArrayList<Player>();
 	
 	private void createObstruction(int i){
 		while (i < 10){
-			int[] randomCoordinate = randomCoordinates();
+			Coordinate randomCoordinate = randomCoordinates();
 			double random = Math.random();
 			if (this.availableSpot(randomCoordinate)){
 				if (random < 0.5){
-					this.charMap.get(randomCoordinate[0]).set(randomCoordinate[1], 's');
+					this.charMap.get(randomCoordinate.coord[0]).set(randomCoordinate.coord[1], 's');
 				} else {
-					this.charMap.get(randomCoordinate[0]).set(randomCoordinate[1], 't');
+					this.charMap.get(randomCoordinate.coord[0]).set(randomCoordinate.coord[1], 't');
 				}
 				break;
 			} else {
@@ -344,9 +381,9 @@ public ArrayList<Player> players = new ArrayList<Player>();
 	
 	private void createMarket(int i){
 		while (i < 10){
-			int[] randomCoordinate = randomCoordinates();
+			Coordinate randomCoordinate = randomCoordinates();
 			if (this.availableSpot(randomCoordinate)){
-				this.charMap.get(randomCoordinate[0]).set(randomCoordinate[1], 'm');
+				this.charMap.get(randomCoordinate.coord[0]).set(randomCoordinate.coord[1], 'm');
 				break;
 			} else {
 				i++;
@@ -359,7 +396,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		int a = 0;
 		for (int i = 0; i < this.charMap.size(); i++){
 			for (int j = 0; j < this.charMap.get(0).size(); j++){
-				if (this.charMap.get(i).get(j) == 'g'){
+				if (isGrass(this, new Coordinate(i, j))){
 					a += 1;
 				}
 			}
@@ -368,7 +405,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 	}
 	
 	private void generateMap(){
-		int spaceToBeOccupied = (int) (this.charMap.size()*this.charMap.get(0).size()*0.2 - 1);
+		int spaceToBeOccupied = (int) (this.charMap.size()*this.charMap.get(0).size()*this.percentageOccupied - 1);
 		int totalSpace = (int) this.charMap.size()*this.charMap.get(0).size();
 		while(this.spaceAvailable() > (totalSpace - spaceToBeOccupied)){
 			this.randomObject();

@@ -69,6 +69,13 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 	public void keyReleased(KeyEvent e) {
 		if(e.getKeyCode()==27)
 			System.exit(0);
+		
+
+		p.getcMap().increaseColoumns(p);
+		p.getcMap().increaseRows(p);
+		
+		
+		
 		Move.executeMove(p, e.getKeyChar());
 		
 		if(Move.isMarketNearby(p, e.getKeyChar())){

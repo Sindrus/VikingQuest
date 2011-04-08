@@ -6,8 +6,6 @@ public class Move /*implements grensesnitt.Flytt*/{
 		Coordinate retning = new Coordinate(c);
 		if (!isSomethingBlocking(p,c)){
 			p.getcMap().updateMap(retning, p);
-			p.getcMap().increaseColoumns(p);
-			p.getcMap().increaseRows(p);
 		}
 	}
 
