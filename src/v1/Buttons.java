@@ -112,6 +112,12 @@ public class Buttons extends JPanel{
 	}
 	
 	public void labelsReset(){
+
+/*		remove(lbl1);
+		remove(lbl2);
+		remove(lbl3);
+		remove(lbl4);
+		remove(exit);*/
 		
 		lbl1.setText(" ");
 		lbl1.setBounds(5, 120, 100, 25);
@@ -141,6 +147,12 @@ public class Buttons extends JPanel{
 	}
 	
 	public void labelsMarket(){
+		
+	/*	remove(lbl1);
+		remove(lbl2);
+		remove(lbl3);
+		remove(lbl4);
+		remove(exit);*/
 		
 		lbl1.setText("<html> kjøp " +
 				"<img src="+ Status.class.getResource("graphics/meat.gif") + " /> ");

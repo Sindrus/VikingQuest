@@ -26,6 +26,9 @@ public class Status extends JPanel{
 	}
 	
 	public void updateStatus(){
+		remove(food);
+		remove(gold);
+		remove(soldiers);
 		
 		food.setText("<html>" +
 				"<img src="+ Status.class.getResource("graphics/meat.gif") + " /> " + 

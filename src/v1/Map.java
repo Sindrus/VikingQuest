@@ -261,6 +261,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 					(this.charMap.get(bridge.coord[0] + 1).get(bridge.coord[1]) == 'g') &&
 					(this.charMap.get(bridge.coord[0] - 1).get(bridge.coord[1]) == 'g'))){
 				this.charMap.get(bridge.coord[0]).set(bridge.coord[1], 'c');
+				break;
 			} else {
 				i++;
 				this.createBridge(river, i);
@@ -270,11 +271,11 @@ public ArrayList<Player> players = new ArrayList<Player>();
 	
 	private void randomObject(){
 		double random = Math.random();
-		if(random < 0.24){
+		if(random < 0.10){
 			this.createRiver();		
-		} else if (random < 0.25){
+		} else if (random < 0.15){
 			createMarket(0);
-		} else if (random < 0.4){
+		} else if (random < 0.20){
 			createVillage(0);
 		} else {
 			createObstruction(0);
@@ -286,6 +287,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 			int[] randomCoordinate = randomCoordinates();
 			if (this.availableSpot(randomCoordinate)){
 				this.charMap.get(randomCoordinate[0]).set(randomCoordinate[1], 'l');
+				break;
 			} else {
 				i++;
 				this.createMarket(i);
@@ -303,6 +305,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 				} else {
 					this.charMap.get(randomCoordinate[0]).set(randomCoordinate[1], 't');
 				}
+				break;
 			} else {
 				i++;
 				this.createObstruction(i);
@@ -315,6 +318,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 			int[] randomCoordinate = randomCoordinates();
 			if (this.availableSpot(randomCoordinate)){
 				this.charMap.get(randomCoordinate[0]).set(randomCoordinate[1], 'm');
+				break;
 			} else {
 				i++;
 				this.createMarket(i);
@@ -335,7 +339,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 	}
 	
 	private void generateMap(){
-		int spaceToBeOccupied = (int) (this.charMap.size()*this.charMap.get(0).size()*0.3 - 1);
+		int spaceToBeOccupied = (int) (this.charMap.size()*this.charMap.get(0).size()*0.2 - 1);
 		int totalSpace = (int) this.charMap.size()*this.charMap.get(0).size();
 		while(this.spaceAvailable() > (totalSpace - spaceToBeOccupied)){
 			this.randomObject();

@@ -9,9 +9,9 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 	
 	Player p;
 	Map m;
-	JPanel stat;
-	JPanel knapper;
-	JPanel graphicMap;
+	Status stat;
+	Buttons knapper;
+	Graphic graphicMap;
 	
 	public static void main(String[] args){
 		Engine en = new Engine();
@@ -55,7 +55,7 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 			}
 			i++;
 			
-			((Status) stat).updateStatus();
+			stat.updateStatus();
 			
 			try {
 				Thread.sleep(500);
@@ -72,11 +72,12 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 		Move.executeMove(p, e.getKeyChar());
 		
 		if(Move.isMarketNearby(p, e.getKeyChar())){
-			((Buttons)knapper).labelsMarket();
+			knapper.labelsMarket();
 		}
-		else((Buttons)knapper).labelsReset();
+		else
+			knapper.labelsReset();
 		
-		((Graphic)graphicMap).repaint();
+		graphicMap.repaint();
 	}
 	public void keyTyped(KeyEvent e) {}
 }
