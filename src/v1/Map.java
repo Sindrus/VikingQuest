@@ -23,93 +23,61 @@ public ArrayList<Player> players = new ArrayList<Player>();
 			}
 	}
 	
-	private int increaseRows(Player p){
+	public void increaseRows(Player p){
 		int Rows = this.charMap.size();
-		if (p.getPlayerPos().coord[0] < 12){
-			return -1;
-		} else if (p.getPlayerPos().coord[0] > (Rows - 12)){
-			return 1;
-		} else {
-			return 0;
+		if (p.getPlayerPos().coord[0] < 20){
+			this.increaseRows2(-1);
+		} else if (p.getPlayerPos().coord[0] > (Rows - 20)){
+			this.increaseRows2(1);
 		}
 	}
-	
-	private int increaseColoumns(Player p){
+
+	public void increaseColoumns(Player p){
 		int Coloumns = this.charMap.get(0).size();
-		if (p.getPlayerPos().coord[1] < 12){
-			return -1;
-		} else if (p.getPlayerPos().coord[1] > (Coloumns - 12)){
-			return 1;
-		} else {
-			return 0;
+		if (p.getPlayerPos().coord[1] < 20){
+			this.increaseColoumns2(-1);
+		} else if (p.getPlayerPos().coord[1] > (Coloumns - 20)){
+			this.increaseColoumns2(1);
 		}
 	}
 		
 	private void increaseRows2(int y){
-		int Rows = this.charMap.size() + 1;
-		int Coloumns = this.charMap.get(0).size();
-		ArrayList<ArrayList<Character>>  newCharMap = new ArrayList<ArrayList<Character>>();
-		for (int i = 0; i < Rows; i++){
-			newCharMap.add(new ArrayList<Character>());
-			for (int j = 0; j < Coloumns; j++){
-				newCharMap.get(i).add('g');
-			}
-		}
 		if (y < 0){
-			for (int i = 0; i < (Rows - 1); i++){
-				for (int j = 0; j < Coloumns; j++){
-					newCharMap.get(i).set(j, this.charMap.get(i).get(j)); 
-				}
+			this.charMap.add(0, new ArrayList<Character>(this.charMap.get(0).size()));
+			for (int j = 0; j < this.charMap.get(0).size(); j++){
+				this.charMap.get(0).set(j, 'g');
+				this.generateRow(0);
 			}
-			this.charMap = newCharMap;
-			this.generateRow(y);
 		} else if (y > 0){
-			for (int i = 0; i < (Rows - 2); i++){
-				for (int j = 0; j < Coloumns; j++){
-					newCharMap.get(i + 1).set(j, this.charMap.get(i).get(j)); 
-				}
+			this.charMap.add(this.charMap.size(), new ArrayList<Character>(this.charMap.get(0).size()));
+			for (int j = 0; j < this.charMap.get(0).size(); j++){
+				this.charMap.get(this.charMap.size() - 1).set(j, 'g');
+				this.generateRow(this.charMap.size());
 			}
-			this.charMap = newCharMap;
-			this.generateRow(y);
 		}
-
 	}
 	
 	private void generateRow(int y){
-		
+		//Fyll
 	}
 	
-	private void increaseColoumns2(int x){
-		int Rows = this.charMap.size();
-		int Coloumns = this.charMap.get(0).size() + 1;
-		ArrayList<ArrayList<Character>>  newCharMap = new ArrayList<ArrayList<Character>>();
-		for (int i = 0; i < Rows; i++){
-			newCharMap.add(new ArrayList<Character>());
-			for (int j = 0; j < Coloumns; j++){
-				newCharMap.get(i).add('g');
-			}
-		}
+	private void increaseColoumns2(int x){		
 		if (x < 0){
-			for (int i = 0; i < Rows; i++){
-				for (int j = 0; j < (Coloumns - 1); j++){
-					newCharMap.get(i).set(j, this.charMap.get(i).get(j)); 
-				}
+			for (int j = 0; j < this.charMap.size(); j++){
+				this.charMap.get(j).add(0, 'g');
 			}
-			this.charMap = newCharMap;
-			this.generateColoumn(x);
+			this.generateColoumn(0);
 		} else if (x > 0){
-			for (int i = 0; i < Rows; i++){
-				for (int j = 0; j < (Coloumns - 1); j++){
-					newCharMap.get(i).set(j + 1, this.charMap.get(i).get(j)); 
-				}
+			int i = this.charMap.get(0).size();
+			for (int j = 0; j < this.charMap.get(0).size(); j++){
+				this.charMap.get(j).add(i, 'g');
 			}
-			this.charMap = newCharMap;
-			this.generateColoumn(x);
+			this.generateColoumn(this.charMap.get(0).size());
 		}
 	}
 	
 	private void generateColoumn(int x){
-		
+		//Fyll
 	}
 
 	public Map(int x, int y){
