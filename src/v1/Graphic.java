@@ -13,6 +13,7 @@ public class Graphic extends JPanel implements grensesnitt.Grafikk {
 	private Image viking;
 	private Image village;
 	private Image marked;
+	private Image bridge;
 	private Map map;
 	
 	public Graphic(Map m){
@@ -44,6 +45,7 @@ public class Graphic extends JPanel implements grensesnitt.Grafikk {
 		viking = tk.getImage(getClass().getResource("graphics/vikings.jpg"));
 		village = tk.getImage(getClass().getResource("graphics/village.gif"));
 		marked = tk.getImage(getClass().getResource("graphics/marked.gif"));
+		bridge = tk.getImage(getClass().getResource("graphics/bridge.gif"));
 		
 		for(int i=25, x=antx;i<height;i+=20, x++){
 			for(int j=0, y=anty;j<width;j+=20, y++){
@@ -55,6 +57,8 @@ public class Graphic extends JPanel implements grensesnitt.Grafikk {
 					g.drawImage(village,j ,i, this);
 				else if(map.charMap.get(x).get(y)=='m')
 					g.drawImage(marked, j, i, this);
+				else if(map.charMap.get(x).get(y)=='c')
+					g.drawImage(bridge, j, i, this);
 				else if(map.charMap.get(x).get(y)=='v'){
 					g.setColor(Color.blue);
 					g.fillRect(j, i, 20, 20);

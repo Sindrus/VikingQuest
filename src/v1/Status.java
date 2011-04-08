@@ -29,7 +29,7 @@ public class Status extends JPanel{
 		
 		food.setText("<html>" +
 				"<img src="+ Status.class.getResource("graphics/meat.gif") + " /> " + 
-				"&nbsp;Food: " + Integer.toString(play.getMat())+" </html>" +
+				"&nbsp;Mat: " + Integer.toString(play.getMat())+" </html>" +
 				"");
 		food.setBorder(BorderFactory.createEmptyBorder(0, 50, 0, 50));
 		

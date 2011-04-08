@@ -97,20 +97,6 @@ public class Buttons extends JPanel{
 			public void mousePressed(MouseEvent e) {}
 			public void mouseReleased(MouseEvent e) {}
 		};
-		ml3Marked = new MouseListener(){
-			public void mouseClicked(MouseEvent e) {}
-			public void mouseEntered(MouseEvent e) {}
-			public void mouseExited(MouseEvent e) {}
-			public void mousePressed(MouseEvent e) {}
-			public void mouseReleased(MouseEvent e) {}
-		};
-		ml4Marked = new MouseListener(){
-			public void mouseClicked(MouseEvent e) {}
-			public void mouseEntered(MouseEvent e) {}
-			public void mouseExited(MouseEvent e) {}
-			public void mousePressed(MouseEvent e) {}
-			public void mouseReleased(MouseEvent e) {}
-		};
 		
 		lbl1.addMouseListener(ml1Reset);
 		lbl2.addMouseListener(ml2Reset);
@@ -170,7 +156,7 @@ public class Buttons extends JPanel{
 		lbl2.removeMouseListener(lbl2.getMouseListeners()[0]);
 		lbl2.addMouseListener(ml2Marked);
 		
-		lbl3.setText(" ");
+/*		lbl3.setText(" ");
 		lbl3.setBounds(5, 120, 100, 25);
 		lbl3.removeMouseListener(lbl3.getMouseListeners()[0]);
 		lbl3.addMouseListener(ml3Marked);
@@ -178,7 +164,7 @@ public class Buttons extends JPanel{
 		lbl4.setText(" ");
 		lbl4.setBounds(5, 120, 100, 25);
 		lbl4.removeMouseListener(lbl4.getMouseListeners()[0]);
-		lbl4.addMouseListener(ml4Marked);
+		lbl4.addMouseListener(ml4Marked);*/
 		
 		add(lbl1);
 		add(lbl2);
