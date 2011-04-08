@@ -36,7 +36,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		int Coloumns = this.charMap.get(0).size();
 		if (p.getPlayerPos().coord[1] < 20){
 			this.increaseColoumns2(-1);
-		} else if (p.getPlayerPos().coord[1] > (Coloumns - 20)){
+		} else if (p.getPlayerPos().coord[1] > (Coloumns - 21)){
 			this.increaseColoumns2(1);
 		}
 	}
@@ -46,14 +46,16 @@ public ArrayList<Player> players = new ArrayList<Player>();
 			this.charMap.add(0, new ArrayList<Character>(this.charMap.get(0).size()));
 			for (int j = 0; j < this.charMap.get(0).size(); j++){
 				this.charMap.get(0).set(j, 'g');
-				this.generateRow(0);
 			}
+			this.generateRow(0);
 		} else if (y > 0){
-			this.charMap.add(this.charMap.size(), new ArrayList<Character>(this.charMap.get(0).size()));
-			for (int j = 0; j < this.charMap.get(0).size(); j++){
-				this.charMap.get(this.charMap.size() - 1).set(j, 'g');
-				this.generateRow(this.charMap.size());
+			int i = this.charMap.size();
+			int x = this.charMap.get(0).size();
+			this.charMap.add(i, new ArrayList<Character>(x));
+			for (int j = 0; j < x; j++){
+				this.charMap.get(i - 1).set(j, 'g');
 			}
+			this.generateRow(i);
 		}
 	}
 	
@@ -69,7 +71,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 			this.generateColoumn(0);
 		} else if (x > 0){
 			int i = this.charMap.get(0).size();
-			for (int j = 0; j < this.charMap.get(0).size(); j++){
+			for (int j = 0; j < i; j++){
 				this.charMap.get(j).add(i, 'g');
 			}
 			this.generateColoumn(this.charMap.get(0).size());
@@ -109,7 +111,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		for (int j = 0; j < i.length; j++){
 			if (this.charMap.get(rC[0]).get(rC[1]) == 'g'){
 				if (!this.outsideOfMap(i[j]) && 
-						this.charMap.get(i[j].coord[0]).get(i[j].coord[1]) == 'g'){
+					this.charMap.get(i[j].coord[0]).get(i[j].coord[1]) == 'g'){
 					count++;
 				}
 			}
@@ -127,12 +129,72 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		}
 	}
 	
-	private boolean availableRiverSpot(Coordinate rC){
-		 if ((rC.coord[0] >= 0) && (rC.coord[1] >= 0) &&
-				 (rC.coord[0] < this.charMap.size()) &&
-				 (rC.coord[1] < this.charMap.get(rC.coord[0]).size()) &&
-				 (this.charMap.get(rC.coord[0]).get(rC.coord[1]) == 'g')) {
+	public static boolean isGrass(Map m, Coordinate rC){
+		if (!m.outsideOfMap(rC) &&
+			m.charMap.get(rC.coord[0]).get(rC.coord[1]) == 'g'){
 			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public static boolean isWater(Map m, Coordinate rC){
+		if (!m.outsideOfMap(rC) &&
+			m.charMap.get(rC.coord[0]).get(rC.coord[1]) == 'v'){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public static boolean isMarket(Map m, Coordinate rC){
+		if (!m.outsideOfMap(rC) &&
+			m.charMap.get(rC.coord[0]).get(rC.coord[1]) == 'm'){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public static boolean isVillage(Map m, Coordinate rC){
+		if (!m.outsideOfMap(rC) &&
+			m.charMap.get(rC.coord[0]).get(rC.coord[1]) == 'l'){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public static boolean isObstruction(Map m, Coordinate rC){
+		if (!m.outsideOfMap(rC) && 
+			(m.charMap.get(rC.coord[0]).get(rC.coord[1]) == 't' ||
+			m.charMap.get(rC.coord[0]).get(rC.coord[1]) == 's')){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	private boolean availableRiverSpot(Coordinate rC){
+		Coordinate[] i = new Coordinate[] {
+				new Coordinate(rC.coord[0] - 1, rC.coord[1]),//Øvre nabo
+				new Coordinate(rC.coord[0] + 1, rC.coord[1]),//Nedre nabo
+				new Coordinate(rC.coord[0], rC.coord[1] - 1),//Venstre nabo
+				new Coordinate(rC.coord[0], rC.coord[1] + 1)};//Høyre nabo
+		Boolean[] sjekk = new Boolean[] {true, true, true, true};
+		for (int x = 0; x < 4; x++){
+			if (isWater(this, i[x])){
+				sjekk[x] = false;
+			}
+		}
+		if (isGrass(this, rC)){
+			if (sjekk[0] && sjekk[1]){
+				return true;
+			} else if (sjekk[2] && sjekk[3]){
+				return true;
+			} else {
+				return false;
+			}
 		} else {
 			return false;
 		}
@@ -169,7 +231,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 					new Coordinate(Path.get(i).coord[0], Path.get(i).coord[1] + 1, Path.get(i).coord[2] + 1)};//Right Neighbour
 			for (int j = 0; j < sjekk.length; j++){
 				for (int x = 0; x < Path.size(); x++){
-					if (this.outsideOfMap(naboer[j]) || //Her sjekker vi om punktet er utenfor kartet.
+					if (this.outsideOfMap(naboer[j]) || //Her sjekker vi om punktet er utenfor kartet.	
 						Path.get(x).compareYX(naboer[j])){ //Her sjekker vi om punktet eksisterer i Path allerede.
 						sjekk[j] = false; //Setter en boolean-verdi til false som vi sjekker senere for å se om koordinatet skal legges i Path.
 						break; 
@@ -220,16 +282,15 @@ public ArrayList<Player> players = new ArrayList<Player>();
 					break Bro;
 				}
 			}
-			if (((this.charMap.get(bridge.coord[0] + 1).get(bridge.coord[1]) == 'v') &&
-					(this.charMap.get(bridge.coord[0] - 1).get(bridge.coord[1]) == 'v') &&
-					((this.charMap.get(bridge.coord[0]).get(bridge.coord[1] + 1) == 'g') &&
-					(this.charMap.get(bridge.coord[0]).get(bridge.coord[1] - 1) == 'g'))) ||
-					((this.charMap.get(bridge.coord[0]).get(bridge.coord[1] + 1) == 'v') &&
-					(this.charMap.get(bridge.coord[0]).get(bridge.coord[1] - 1) == 'v') &&
-					(this.charMap.get(bridge.coord[0] + 1).get(bridge.coord[1]) == 'g') &&
-					(this.charMap.get(bridge.coord[0] - 1).get(bridge.coord[1]) == 'g'))){
+			if ((isWater(this, naboer[0]) &&
+					isWater(this, naboer[1])&&
+					isGrass(this, naboer[2]) &&
+					isGrass(this, naboer[3])) ||
+					(isWater(this, naboer[2]) &&
+					isWater(this, naboer[3]) &&
+					isGrass(this, naboer[0]) &&
+					isGrass(this, naboer[1]))){
 				this.charMap.get(bridge.coord[0]).set(bridge.coord[1], 'c');
-				break;
 			} else {
 				i++;
 				this.createBridge(river, i);
