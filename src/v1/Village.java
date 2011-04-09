@@ -2,13 +2,23 @@ package v1;
 
 public class Village implements grensesnitt.Bosetning{
 private int gull, soldater, mat;
+private boolean destroyed;
 
-public Village() {
-this.soldater = (int) (51*(Math.random()));
-this.gull = (int) (soldater/4);
-this.mat = (int) (soldater/2);
+	public Village() {
+		this.soldater = (int) (51*(Math.random()));
+		this.gull = (int) (soldater/4);
+		this.mat = (int) (soldater/2);
+		destroyed = false;
 	}
-
+	
+	public boolean isDestroyed(){
+		return destroyed;
+	}
+	
+	public void setDestroyed(boolean tf){
+		destroyed = tf;
+	}
+	
 	public int getSoldater() {
 		return soldater;
 	}
