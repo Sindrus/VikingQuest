@@ -47,14 +47,14 @@ public ArrayList<Player> players = new ArrayList<Player>();
 	private void increaseRows2(int y){
 		if (y < 0){
 			this.charMap.add(0, new ArrayList<Character>());
-			for (int j = 0; j < this.charMap.get(0).size(); j++){
+			for (int j = 0; j < this.charMap.get(1).size(); j++){
 				this.charMap.get(0).add('g');
 			}
 			this.generateRow(0);
 		} else if (y > 0){
 			this.charMap.add(new ArrayList<Character>());
-			for (int j = 0; j < charMap.get(0).size(); j++){
-				this.charMap.get(charMap.get(0).size()-1).add('g');
+			for (int j = 0; j < charMap.get(2).size(); j++){
+				this.charMap.get(charMap.size()-1).add('g');
 			}
 			this.generateRow(this.charMap.size());
 		}
