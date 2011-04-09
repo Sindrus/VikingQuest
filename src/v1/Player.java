@@ -16,7 +16,7 @@ private boolean dead = false;
 	private void setPlayerPos(){
 		for (int i = 0; i < this.cMap.charMap.size(); i++){
 			for (int j = 0; j < this.cMap.charMap.get(i).size(); j++){
-				if (this.cMap.charMap.get(i).get(j) == 'p'){
+				if (this.cMap.charMap.get(i).get(j) == 'p' || this.cMap.charMap.get(i).get(j) == 'k'){
 					this.playerPos.coord[0] = i;
 					this.playerPos.coord[1] = j;
 				}

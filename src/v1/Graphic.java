@@ -35,7 +35,7 @@ public class Graphic extends JPanel implements grensesnitt.Grafikk {
 		
 		for(int i=0;i<map.charMap.size();i++){
 			for(int j=0;j<map.charMap.get(i).size();j++){
-				if(map.charMap.get(i).get(j)=='p'){
+				if(map.charMap.get(i).get(j)=='p' || map.charMap.get(i).get(j)=='k'){
 					coords[0] = i;
 					coords[1] = j;
 				}

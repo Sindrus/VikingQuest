@@ -101,6 +101,7 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 			}
 			System.out.println();
 		}
+		
 	}
 	public void keyTyped(KeyEvent e) {}
 }
