@@ -39,6 +39,7 @@ public class Combat implements Kampsystem {
 		} else if (village.getSoldater() == 0){
 			player.addGull(village.getGull());
 			player.addMat(village.getMat());
+			village.setDestroyed(true);
 		}
 	}
 }
