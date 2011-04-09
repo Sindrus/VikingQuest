@@ -58,8 +58,6 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 			stat.updateStatus();
 			stat.repaint();
 			
-	//		graphicMap.repaint();
-			
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
@@ -86,9 +84,23 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 			knapper.setEnableMarked(false);
 			knapper.updateButtons();
 		}
+		
+		if(Move.isVillageNearby(p, e.getKeyChar())){
+			Combat combat = new Combat();
+			combat.villageCombar(p, new Village());
+			System.out.println("Da var det krig ja!");
+		}
 
 		knapper.repaint();
 		graphicMap.repaint();
+		
+		Integer[] pos = p.getPlayerPos().coord;
+		for(int i=pos[0]-2;i<pos[0]+2;i++){
+			for(int j=pos[1]-2;j<pos[1]+2;j++){
+				System.out.print(m.charMap.get(i).get(j));
+			}
+			System.out.println();
+		}
 	}
 	public void keyTyped(KeyEvent e) {}
 }
