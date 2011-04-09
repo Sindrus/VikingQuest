@@ -95,7 +95,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		generateMap();
 	}
 	
-	private Coordinate randomCoordinates(){
+	private Coordinate randomCoordinate(){
 		Coordinate a = new Coordinate( (int) (this.charMap.size()*Math.random()), (int) (this.charMap.get(0).size()*Math.random()));
 		return a;
 	}
@@ -261,8 +261,8 @@ public ArrayList<Player> players = new ArrayList<Player>();
 	}
 	
 	private void createRiver(){
-		Coordinate riverStart = randomCoordinates(); //Startpunkt
-		Coordinate riverEnd = randomCoordinates(); //Endepunkt
+		Coordinate riverStart = randomCoordinate(); //Startpunkt
+		Coordinate riverEnd = randomCoordinate(); //Endepunkt
 		if (riverStart.compareYX(riverEnd)){
 			this.createRiver(); //Om startpunkt = endepunkt, prøv igjen.
 		} else {
@@ -415,7 +415,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 	
 	private void createVillage(int i){
 		while (i < 10){
-			Coordinate randomCoordinate = randomCoordinates();
+			Coordinate randomCoordinate = randomCoordinate();
 			if (this.availableSpot(randomCoordinate)){
 				setVillage(this, randomCoordinate);
 				break;
@@ -428,7 +428,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 	
 	private void createObstruction(int i){
 		while (i < 10){
-			Coordinate randomCoordinate = randomCoordinates();
+			Coordinate randomCoordinate = randomCoordinate();
 			double random = Math.random();
 			if (this.availableSpot(randomCoordinate)){
 				if (random < 0.5){
@@ -446,7 +446,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 	
 	private void createMarket(int i){
 		while (i < 10){
-			Coordinate randomCoordinate = randomCoordinates();
+			Coordinate randomCoordinate = randomCoordinate();
 			if (this.availableSpot(randomCoordinate)){
 				setMarket(this, randomCoordinate);
 				break;

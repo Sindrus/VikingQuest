@@ -3,10 +3,10 @@ package v1;
 public class Village implements grensesnitt.Bosetning{
 private int gull, soldater, mat;
 
-	public Village() {
-		this.soldater = (int) (51*(Math.random()));
-		this.gull = (int) (soldater/4);
-		this.mat = (int) (soldater/2);
+public Village() {
+this.soldater = (int) (51*(Math.random()));
+this.gull = (int) (soldater/4);
+this.mat = (int) (soldater/2);
 	}
 
 	public int getSoldater() {

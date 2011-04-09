@@ -1,6 +1,6 @@
 package v1;
 
-public class Move /*implements grensesnitt.Flytt*/{
+public class Move{
 	
 	public static void executeMove(Player p, char c){
 		Coordinate retning = new Coordinate(c);
