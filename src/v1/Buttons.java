@@ -6,15 +6,15 @@ import java.awt.event.*;
 
 public class Buttons extends JPanel{
 	
-	JLabel exit;
-	JLabel lbl1;
-	JLabel lbl2;
-	JLabel lbl3;
-	JLabel lbl4;
-	Player p;
-	boolean enableMarked;
-	MouseListener ml1;
-	MouseListener ml2;
+	private JLabel exit;
+	private JLabel lbl1;
+	private JLabel lbl2;
+	private JLabel lbl3;
+	private JLabel lbl4;
+	private Player p;
+	private boolean enableMarked;
+	private MouseListener ml1;
+	private MouseListener ml2;
 	
 	public void setEnableMarked(boolean tf){
 		enableMarked = tf;
@@ -91,9 +91,7 @@ public class Buttons extends JPanel{
 		remove(lbl3);
 		remove(lbl4);
 		remove(exit);
-/*
- * ==Initialiserer de forskjellige mouseListener måtene==		
- */
+
 		if(enableMarked){
 			lbl1.setText("<html> kjøp " +
 					"<img src="+ Status.class.getResource("graphics/meat.gif") + " /> ");
@@ -105,16 +103,6 @@ public class Buttons extends JPanel{
 			lbl1.setText(" ");
 			lbl2.setText(" ");
 		}
-		
-/*		lbl3.setText(" ");
-		lbl3.setBounds(5, 120, 100, 25);
-		lbl3.removeMouseListener(lbl3.getMouseListeners()[0]);
-		lbl3.addMouseListener(ml3Marked);
-		
-		lbl4.setText(" ");
-		lbl4.setBounds(5, 120, 100, 25);
-		lbl4.removeMouseListener(lbl4.getMouseListeners()[0]);
-		lbl4.addMouseListener(ml4Marked);*/
 		
 		add(lbl1);
 		add(lbl2);
