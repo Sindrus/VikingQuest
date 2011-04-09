@@ -16,6 +16,8 @@ public class Graphic extends JPanel implements grensesnitt.Grafikk {
 	private Image marked;
 	private Image bridge;
 	private Image vikingOnBridge;
+	private Image tree;
+	private Image stone;
 	private Map map;
 	
 	public Graphic(Map m,Player p){
@@ -49,7 +51,9 @@ public class Graphic extends JPanel implements grensesnitt.Grafikk {
 		village = tk.getImage(getClass().getResource("graphics/village.gif"));
 		marked = tk.getImage(getClass().getResource("graphics/marked.gif"));
 		bridge = tk.getImage(getClass().getResource("graphics/bridge.gif"));
-		vikingOnBridge = tk.getImage(getClass().getResource("graphic/vikingOnBridge.gif"));
+		vikingOnBridge = tk.getImage(getClass().getResource("graphics/vikingOnBridge.gif"));
+		tree = tk.getImage(getClass().getResource("graphics/tree.gif"));
+		stone = tk.getImage(getClass().getResource("graphics/stone.gif"));
 		
 	
 		for(int i=25, x=antx;i<height;i+=20, x++){
@@ -64,6 +68,10 @@ public class Graphic extends JPanel implements grensesnitt.Grafikk {
 					g.drawImage(village,j ,i, this);
 				else if(map.charMap.get(x).get(y)=='m')
 					g.drawImage(marked, j, i, this);
+				else if(map.charMap.get(x).get(y)=='t')
+					g.drawImage(tree, j, i, this);
+				else if(map.charMap.get(x).get(y)=='s')
+					g.drawImage(stone, j, i, this);
 				else if(map.charMap.get(x).get(y)=='c')
 					g.drawImage(bridge, j, i, this);
 				else if(map.charMap.get(x).get(y)=='v'){
