@@ -14,15 +14,15 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		Coordinate player = new Coordinate(p.getPlayerPos());
 		if (wasBridge(this, player)){
 			if (isBridge(this, Coordinate.plus(c, player))){
-				this.charMap.get(player.coord[0]).set(player.coord[1], 'c');
-				this.charMap.get(Coordinate.plus(c, player).coord[0]).set(Coordinate.plus(c, player).coord[1], 'k');
+				setBridge(this, player);
+				setPlayerOnBridge(this, Coordinate.plus(c, player));
 			} else {
-				this.charMap.get(player.coord[0]).set(player.coord[1], 'c');
-				this.charMap.get(Coordinate.plus(c, player).coord[0]).set(Coordinate.plus(c, player).coord[1], 'p');
+				setBridge(this, player);
+				setPlayer(this, Coordinate.plus(c, player));
 			}
 			} else {
-				this.charMap.get(player.coord[0]).set(player.coord[1], 'g');
-				this.charMap.get(Coordinate.plus(c, player).coord[0]).set(Coordinate.plus(c, player).coord[1], 'p');
+				setGrass(this, player);
+				setPlayer(this, Coordinate.plus(c, player));
 			}
 	}
 	
@@ -190,16 +190,56 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		}
 	}
 	
+	private static void setBridge(Map m, Coordinate rC){
+		m.charMap.get(rC.coord[0]).set(rC.coord[1], 'c');
+	}
+	
+	private static void setWater(Map m, Coordinate rC){
+		m.charMap.get(rC.coord[0]).set(rC.coord[1], 'v');
+	}
+	
+	private static void setVillage(Map m, Coordinate rC){
+		m.charMap.get(rC.coord[0]).set(rC.coord[1], 'l');
+	}
+	
+	private static void setMarket(Map m, Coordinate rC){
+		m.charMap.get(rC.coord[0]).set(rC.coord[1], 'm');
+	}
+	
+	private static void setGrass(Map m, Coordinate rC){
+		m.charMap.get(rC.coord[0]).set(rC.coord[1], 'g');
+	}
+	
+	private static void setPlayer(Map m, Coordinate rC){
+		m.charMap.get(rC.coord[0]).set(rC.coord[1], 'p');
+	}
+	
+	private static void setPlayerOnBridge(Map m, Coordinate rC){
+		m.charMap.get(rC.coord[0]).set(rC.coord[1], 'k');
+	}
+	
+	private static void setStone(Map m, Coordinate rC){
+		m.charMap.get(rC.coord[0]).set(rC.coord[1], 's');
+	}
+	
+	private static void setTree(Map m, Coordinate rC){
+		m.charMap.get(rC.coord[0]).set(rC.coord[1], 't');
+	}
+	
 	private boolean availableRiverSpot(Coordinate rC){
 		Coordinate[] i = new Coordinate[] {
 				new Coordinate(rC.coord[0] - 1, rC.coord[1]),//Øvre nabo
 				new Coordinate(rC.coord[0] + 1, rC.coord[1]),//Nedre nabo
 				new Coordinate(rC.coord[0], rC.coord[1] - 1),//Venstre nabo
-				new Coordinate(rC.coord[0], rC.coord[1] + 1)};//Høyre nabo
+				new Coordinate(rC.coord[0], rC.coord[1] + 1),//Høyre nabo
+				new Coordinate(rC.coord[0] + 1, rC.coord[1] + 1),
+				new Coordinate(rC.coord[0] + 1, rC.coord[1] - 1),
+				new Coordinate(rC.coord[0] - 1, rC.coord[1] + 1),
+				new Coordinate(rC.coord[0] - 1, rC.coord[1] - 1)};
 		Boolean sjekk = true;
 		for (int x = 0; x < 4; x++){
 			if (!this.outsideOfMap(i[x])){
-				if(isWater(this, i[x])){
+				if(!isGrass(this, i[x])){
 					sjekk = false;
 					break;
 				}
@@ -276,7 +316,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		}
 		finalPath.add(new Coordinate(b.coord[0], b.coord[1]));
 		for (int i = 0; i < finalPath.size(); i++){
-			this.charMap.get(finalPath.get(i).coord[0]).set(finalPath.get(i).coord[1], 'v');
+			setWater(this, finalPath.get(i));
 		} //Printer elven
 		this.createBridge(finalPath, 0);
 	}//Lager en bro på måfå så ikke elven lukker av deler av kartet. Broen kan i verste fall være blokkert av noe annet.
@@ -305,7 +345,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 				isWater(this, naboer[3]) &&
 				isGrass(this, naboer[0]) &&
 				isGrass(this, naboer[1]))){
-				this.charMap.get(bridge.coord[0]).set(bridge.coord[1], 'c');
+				setBridge(this, bridge);
 			} 
 			for (int x = 0; x < river.size(); x++){
 				if (isBridge(this, river.get(x))){
@@ -336,11 +376,11 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		while (i < 10){
 			Coordinate randomCoordinate = randomCoordinates();
 			if (this.availableSpot(randomCoordinate)){
-				this.charMap.get(randomCoordinate.coord[0]).set(randomCoordinate.coord[1], 'l');
+				setVillage(this, randomCoordinate);
 				break;
 			} else {
 				i++;
-				this.createMarket(i);
+				this.createVillage(i);
 			}
 		}
 	}
@@ -351,9 +391,9 @@ public ArrayList<Player> players = new ArrayList<Player>();
 			double random = Math.random();
 			if (this.availableSpot(randomCoordinate)){
 				if (random < 0.5){
-					this.charMap.get(randomCoordinate.coord[0]).set(randomCoordinate.coord[1], 's');
+					setStone(this, randomCoordinate);
 				} else {
-					this.charMap.get(randomCoordinate.coord[0]).set(randomCoordinate.coord[1], 't');
+					setTree(this, randomCoordinate);
 				}
 				break;
 			} else {
@@ -367,7 +407,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		while (i < 10){
 			Coordinate randomCoordinate = randomCoordinates();
 			if (this.availableSpot(randomCoordinate)){
-				this.charMap.get(randomCoordinate.coord[0]).set(randomCoordinate.coord[1], 'm');
+				setMarket(this, randomCoordinate);
 				break;
 			} else {
 				i++;
