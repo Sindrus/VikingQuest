@@ -20,10 +20,13 @@ public ArrayList<Player> players = new ArrayList<Player>();
 				setBridge(this, player);
 				setPlayer(this, Coordinate.plus(c, player));
 			}
-			} else {
-				setGrass(this, player);
-				setPlayer(this, Coordinate.plus(c, player));
-			}
+		} else if (isBridge(this, Coordinate.plus(c, player))){
+			setGrass(this, player);
+			setPlayerOnBridge(this, Coordinate.plus(c, player));
+		} else {
+			setGrass(this, player);
+			setPlayer(this, Coordinate.plus(c, player));
+		}
 	}
 	
 	public void increaseRows(Player p){
@@ -359,6 +362,44 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		}
 	}
 	
+	private int amountOfSingleRivers(){
+		int amount = 0;
+		ArrayList<Coordinate> koords = new ArrayList<Coordinate>();
+		for (int i = 0; i < this.charMap.size(); i++){
+			for (int j = 0; j < this.charMap.get(0).size(); j++){
+				if (isWater(this, new Coordinate(i,j))){
+					koords.add(new Coordinate(i,j));
+				}
+			}
+		}
+		for (int i = 0; i < koords.size(); i++){
+			Coordinate naboer[] = new Coordinate[] {
+					new Coordinate(koords.get(i).coord[0] - 1, koords.get(i).coord[1]),//Øvre nabo
+					new Coordinate(koords.get(i).coord[0] + 1, koords.get(i).coord[1]),//Nedre nabo
+					new Coordinate(koords.get(i).coord[0], koords.get(i).coord[1] - 1),//Venstre nabo
+					new Coordinate(koords.get(i).coord[0], koords.get(i).coord[1] + 1)};//Høyre nabo
+			boolean[] sjekk = new boolean[4];
+			for (int j = 0; j < sjekk.length; j++){
+				sjekk[j] = true;
+			}
+			for (int j = 0; j < 4; j++){
+				if (this.outsideOfMap(naboer[j])){
+					sjekk[j] = false;
+				}
+			}
+			int a = 0;
+			for (int j = 0; j < 4; j++){
+				if (sjekk[j]  && !isWater(this, naboer[j])){
+					a++;
+				}
+			}
+			if (a == 4){
+				amount++;
+			}
+		}
+		return amount;
+	}
+	
 	private void randomObject(){
 		double random = Math.random();
 		if(random < this.riverChance){
@@ -434,6 +475,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		while(this.spaceAvailable() > (totalSpace - spaceToBeOccupied)){
 			this.randomObject();
 		}
+		System.out.println("Amount of single rivers: " + this.amountOfSingleRivers());
 	}
 	
 	public String toString(){
