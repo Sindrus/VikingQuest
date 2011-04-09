@@ -90,18 +90,9 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 			combat.villageCombar(p, new Village());
 			System.out.println("Da var det krig ja!");
 		}
-
+		
 		knapper.repaint();
 		graphicMap.repaint();
-		
-		Integer[] pos = p.getPlayerPos().coord;
-		for(int i=pos[0]-2;i<pos[0]+2;i++){
-			for(int j=pos[1]-2;j<pos[1]+2;j++){
-				System.out.print(m.charMap.get(i).get(j));
-			}
-			System.out.println();
-		}
-		
 	}
 	public void keyTyped(KeyEvent e) {}
 }

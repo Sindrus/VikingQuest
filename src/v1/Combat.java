@@ -28,10 +28,10 @@ public class Combat implements Kampsystem {
 			double random1 = Math.random();
 			double random2 = Math.random();
 			if (random1 > 0.5){
-				player.addSoldater(player.getSoldater() - 1);
+				player.addSoldater(-1);
 			}
 			if (random2 > 0.5){
-				village.addSoldater(player.getSoldater() - 1);
+				village.addSoldater(-1);
 			}
 		}
 		if (player.getSoldater() == 0){
