@@ -12,19 +12,19 @@ public ArrayList<Player> players = new ArrayList<Player>();
 
 	public void updateMap(Coordinate c, Player p){
 		Coordinate player = new Coordinate(p.getPlayerPos());
-		if (wasBridge(this, player)){
-			if (isBridge(this, Coordinate.plus(c, player))){
+		if (isBridge(this, Coordinate.plus(c, player))){
+			if (wasBridge(this, player)){
 				setBridge(this, player);
-				setPlayerOnBridge(this, Coordinate.plus(c, player));
 			} else {
-				setBridge(this, player);
-				setPlayer(this, Coordinate.plus(c, player));
+				setGrass(this, player);
 			}
-		} else if (isBridge(this, Coordinate.plus(c, player))){
-			setGrass(this, player);
 			setPlayerOnBridge(this, Coordinate.plus(c, player));
 		} else {
-			setGrass(this, player);
+			if (wasBridge(this, player)){
+				setBridge(this, player);
+			} else {
+				setGrass(this, player);	
+			}
 			setPlayer(this, Coordinate.plus(c, player));
 		}
 	}
