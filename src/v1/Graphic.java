@@ -7,6 +7,7 @@ import javax.swing.*;
 public class Graphic extends JPanel implements grensesnitt.Grafikk {
 	
 	private int height,width;
+	private Player play;
 	private Toolkit tk;
 	
 	private Image gress;
@@ -14,13 +15,17 @@ public class Graphic extends JPanel implements grensesnitt.Grafikk {
 	private Image village;
 	private Image marked;
 	private Image bridge;
+	private Image mat;
+	private Image gull;
+	private Image soldater;
 	private Map map;
 	
-	public Graphic(Map m){
+	public Graphic(Map m,Player p){
 		tk = Toolkit.getDefaultToolkit();
 		height = 615;
 		width =  700;
 		map = m;
+		play = p;
 	}
 	
 	public void paint(Graphics g){
@@ -46,6 +51,25 @@ public class Graphic extends JPanel implements grensesnitt.Grafikk {
 		village = tk.getImage(getClass().getResource("graphics/village.gif"));
 		marked = tk.getImage(getClass().getResource("graphics/marked.gif"));
 		bridge = tk.getImage(getClass().getResource("graphics/bridge.gif"));
+	
+
+/*		mat = tk.getImage(getClass().getResource("graphics/meat.gif"));
+		gull = tk.getImage(getClass().getResource("graphics/gold.gif"));
+		soldater = tk.getImage(getClass().getResource("graphics/statusViking.gif"));
+		
+		
+		String foodStatus="Food: "+Integer.toString(play.getMat());
+		String goldStatus="Gold: "+Integer.toString(play.getGull());
+		String soldierStatus="Soldater: " + Integer.toString(play.getSoldater());
+		
+		g.drawImage(mat,150,5,this);
+		g.drawString(foodStatus, 165, 20);
+		
+		g.drawImage(gull, 300, 5, this);
+		g.drawString(goldStatus, 315, 20);
+		
+		g.drawImage(soldater, 450, 5, this);
+		g.drawString(soldierStatus, 465, 20);*/
 		
 		for(int i=25, x=antx;i<height;i+=20, x++){
 			for(int j=0, y=anty;j<width;j+=20, y++){
