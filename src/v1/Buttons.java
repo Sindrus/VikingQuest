@@ -6,22 +6,25 @@ import java.awt.event.*;
 
 public class Buttons extends JPanel{
 	
-	JLabel exit;
-	JLabel lbl1;
-	JLabel lbl2;
-	JLabel lbl3;
-	JLabel lbl4;
-	Player p;
-	MouseListener ml1Reset;
-	MouseListener ml1Marked;
-	MouseListener ml2Reset;
-	MouseListener ml2Marked;
-	MouseListener ml3Reset;
-	MouseListener ml3Marked;
-	MouseListener ml4Reset;
-	MouseListener ml4Marked;
+	private JLabel exit;
+	private JLabel lbl1;
+	private JLabel lbl2;
+	private JLabel lbl3;
+	private JLabel lbl4;
+	private Player p;
+	private boolean enableMarked;
+	private MouseListener ml1;
+	private MouseListener ml2;
+	
+	public void setEnableMarked(boolean tf){
+		enableMarked = tf;
+	}
+	public boolean getEnableMarked(){
+		return enableMarked;
+	}
 	
 	public Buttons(Player player){
+		enableMarked = false;
 		p=player;
 		setBounds(700, 25, 100, 640);
 		
@@ -42,102 +45,37 @@ public class Buttons extends JPanel{
 		});
 		exit.setBorder(BorderFactory.createEmptyBorder(20, 50, 0, 50));
 		
-/*
- * ==Initialiserer de forskjellige mouseListener måtene==		
- */
-	//	Nullstiller
-		ml1Reset = new MouseListener(){
+		ml1 = new MouseListener(){
 			public void mouseClicked(MouseEvent e) {}
 			public void mouseEntered(MouseEvent e) {}
 			public void mouseExited(MouseEvent e) {}
 			public void mousePressed(MouseEvent e) {}
-			public void mouseReleased(MouseEvent e) {}
-		};
-		ml2Reset = new MouseListener(){
-			public void mouseClicked(MouseEvent e) {}
-			public void mouseEntered(MouseEvent e) {}
-			public void mouseExited(MouseEvent e) {}
-			public void mousePressed(MouseEvent e) {}
-			public void mouseReleased(MouseEvent e) {}
-		};
-		ml3Reset = new MouseListener(){
-			public void mouseClicked(MouseEvent e) {}
-			public void mouseEntered(MouseEvent e) {}
-			public void mouseExited(MouseEvent e) {}
-			public void mousePressed(MouseEvent e) {}
-			public void mouseReleased(MouseEvent e) {}
-		};
-		ml4Reset = new MouseListener(){
-			public void mouseClicked(MouseEvent e) {}
-			public void mouseEntered(MouseEvent e) {}
-			public void mouseExited(MouseEvent e) {}
-			public void mousePressed(MouseEvent e) {}
-			public void mouseReleased(MouseEvent e) {}
-		};
-	//	For Markeder
-		ml1Marked = new MouseListener(){
-			public void mouseClicked(MouseEvent e) {
-				p.addGull(-20);
-				p.addMat(10);
+			public void mouseReleased(MouseEvent e) {
+				if(enableMarked){
+					p.addGull(-20);
+					p.addMat(10);
+				}
 			}
+		};
+		ml2 = new MouseListener(){
+			public void mouseClicked(MouseEvent e) {}
 			public void mouseEntered(MouseEvent e) {}
 			public void mouseExited(MouseEvent e) {}
 			public void mousePressed(MouseEvent e) {}
-			public void mouseReleased(MouseEvent e) {}
-		};
-		ml2Marked = new MouseListener(){
-			public void mouseClicked(MouseEvent e) {
-				p.addGull(-20);
-				p.addSoldater(10);
+			public void mouseReleased(MouseEvent e) {
+				if(enableMarked){
+					p.addGull(-20);
+					p.addSoldater(10);
+				}
 			}
-			public void mouseEntered(MouseEvent e) {}
-			public void mouseExited(MouseEvent e) {}
-			public void mousePressed(MouseEvent e) {}
-			public void mouseReleased(MouseEvent e) {}
 		};
-		
-		lbl1.addMouseListener(ml1Reset);
-		lbl2.addMouseListener(ml2Reset);
-		lbl3.addMouseListener(ml3Reset);
-		lbl4.addMouseListener(ml4Reset);
-		
+		lbl1.addMouseListener(ml1);
+		lbl2.addMouseListener(ml2);
 
 		lbl1.setBorder(BorderFactory.createEmptyBorder(20, 50, 0, 50));
 		lbl2.setBorder(BorderFactory.createEmptyBorder(20, 50, 0, 50));
 		lbl3.setBorder(BorderFactory.createEmptyBorder(20, 50, 0, 50));
 		lbl4.setBorder(BorderFactory.createEmptyBorder(20, 50, 0, 50));
-		
-		labelsReset();
-		add(exit);
-	}
-	
-	public void labelsReset(){
-
-/*		remove(lbl1);
-		remove(lbl2);
-		remove(lbl3);
-		remove(lbl4);
-		remove(exit);*/
-		
-		lbl1.setText(" ");
-		lbl1.setBounds(5, 120, 100, 25);
-		lbl1.removeMouseListener(lbl1.getMouseListeners()[0]);
-		lbl1.addMouseListener(ml1Reset);
-		
-		lbl2.setText(" ");
-		lbl2.setBounds(5, 120, 100, 25);
-		lbl2.removeMouseListener(lbl2.getMouseListeners()[0]);
-		lbl2.addMouseListener(ml2Reset);
-		
-		lbl3.setText(" ");
-		lbl3.setBounds(5, 120, 100, 25);
-		lbl3.removeMouseListener(lbl3.getMouseListeners()[0]);
-		lbl3.addMouseListener(ml3Reset);
-		
-		lbl4.setText(" ");
-		lbl4.setBounds(5, 120, 100, 25);
-		lbl4.removeMouseListener(lbl4.getMouseListeners()[0]);
-		lbl4.addMouseListener(ml4Reset);
 		
 		add(lbl1);
 		add(lbl2);
@@ -146,35 +84,25 @@ public class Buttons extends JPanel{
 		add(exit);
 	}
 	
-	public void labelsMarket(){
+	public void updateButtons(){
 		
-	/*	remove(lbl1);
+		remove(lbl1);
 		remove(lbl2);
 		remove(lbl3);
 		remove(lbl4);
-		remove(exit);*/
-		
-		lbl1.setText("<html> kjøp " +
-				"<img src="+ Status.class.getResource("graphics/meat.gif") + " /> ");
-		lbl1.setBounds(5, 120, 100, 25);
-		lbl1.removeMouseListener(lbl1.getMouseListeners()[0]);
-		lbl1.addMouseListener(ml1Marked);
-		
-		lbl2.setText("<html> kjøp " +
-				"<img src="+ Status.class.getResource("graphics/statusViking.gif") + " /> ");
-		lbl2.setBounds(5, 120, 100, 25);
-		lbl2.removeMouseListener(lbl2.getMouseListeners()[0]);
-		lbl2.addMouseListener(ml2Marked);
-		
-/*		lbl3.setText(" ");
-		lbl3.setBounds(5, 120, 100, 25);
-		lbl3.removeMouseListener(lbl3.getMouseListeners()[0]);
-		lbl3.addMouseListener(ml3Marked);
-		
-		lbl4.setText(" ");
-		lbl4.setBounds(5, 120, 100, 25);
-		lbl4.removeMouseListener(lbl4.getMouseListeners()[0]);
-		lbl4.addMouseListener(ml4Marked);*/
+		remove(exit);
+
+		if(enableMarked){
+			lbl1.setText("<html> kjøp " +
+					"<img src="+ Status.class.getResource("graphics/meat.gif") + " /> ");
+			
+			lbl2.setText("<html> kjøp " +
+					"<img src="+ Status.class.getResource("graphics/statusViking.gif") + " /> ");
+		}
+		else{
+			lbl1.setText(" ");
+			lbl2.setText(" ");
+		}
 		
 		add(lbl1);
 		add(lbl2);

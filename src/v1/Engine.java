@@ -14,16 +14,16 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 	Graphic graphicMap;
 	
 	public static void main(String[] args){
-		Engine en = new Engine();
+		new Engine();
 	}
 	
-	public void input(char c){
+/*	public void input(char c){
 		if(c=='a' || c=='s' || c=='d' || c=='w'){
 			Move.executeMove(this.p, c);
 		}
 		else 
 			System.out.println(c);
-	}
+	}*/
 	
 	public Engine(){
 		
@@ -35,7 +35,7 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 		jf.setSize(800,640);
 		jf.setResizable(false);
 		
-		graphicMap = new Graphic(m);
+		graphicMap = new Graphic(m, p);
 		knapper = new Buttons(p);
 		stat = new Status(p);
 		
@@ -49,16 +49,19 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 
 		while(true){
 			
-			if(i>=6){
+			if(i>=30){
 				p.addGull(-10);
 				i=0;
 			}
 			i++;
 			
 			stat.updateStatus();
+			stat.repaint();
+			
+	//		graphicMap.repaint();
 			
 			try {
-				Thread.sleep(500);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -69,21 +72,22 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 	public void keyReleased(KeyEvent e) {
 		if(e.getKeyCode()==27)
 			System.exit(0);
-		
 
 		p.getcMap().increaseColoumns(p);
 		p.getcMap().increaseRows(p);
 		
-		
-		
 		Move.executeMove(p, e.getKeyChar());
 		
 		if(Move.isMarketNearby(p, e.getKeyChar())){
-			knapper.labelsMarket();
+			knapper.setEnableMarked(true);
+			knapper.updateButtons();
 		}
-		else
-			knapper.labelsReset();
-		
+		else{
+			knapper.setEnableMarked(false);
+			knapper.updateButtons();
+		}
+
+		knapper.repaint();
 		graphicMap.repaint();
 	}
 	public void keyTyped(KeyEvent e) {}

@@ -7,6 +7,7 @@ import javax.swing.*;
 public class Graphic extends JPanel implements grensesnitt.Grafikk {
 	
 	private int height,width;
+	private Player play;
 	private Toolkit tk;
 	
 	private Image gress;
@@ -14,13 +15,17 @@ public class Graphic extends JPanel implements grensesnitt.Grafikk {
 	private Image village;
 	private Image marked;
 	private Image bridge;
+	private Image vikingOnBridge;
+	private Image tree;
+	private Image stone;
 	private Map map;
 	
-	public Graphic(Map m){
+	public Graphic(Map m,Player p){
 		tk = Toolkit.getDefaultToolkit();
 		height = 615;
 		width =  700;
 		map = m;
+		play = p;
 	}
 	
 	public void paint(Graphics g){
@@ -46,17 +51,27 @@ public class Graphic extends JPanel implements grensesnitt.Grafikk {
 		village = tk.getImage(getClass().getResource("graphics/village.gif"));
 		marked = tk.getImage(getClass().getResource("graphics/marked.gif"));
 		bridge = tk.getImage(getClass().getResource("graphics/bridge.gif"));
+		vikingOnBridge = tk.getImage(getClass().getResource("graphics/vikingOnBridge.gif"));
+		tree = tk.getImage(getClass().getResource("graphics/tree.gif"));
+		stone = tk.getImage(getClass().getResource("graphics/stone.gif"));
 		
+	
 		for(int i=25, x=antx;i<height;i+=20, x++){
 			for(int j=0, y=anty;j<width;j+=20, y++){
 				if(map.charMap.get(x).get(y)=='p')
-					g.drawImage(viking,j,i,this);
+					g.drawImage(viking, j, i, this);
+				else if(map.charMap.get(x).get(y)=='k')
+					g.drawImage(vikingOnBridge, j, i, this);
 				else if(map.charMap.get(x).get(y)=='g')
 					g.drawImage(gress, j, i, this);
 				else if(map.charMap.get(x).get(y)=='l')
 					g.drawImage(village,j ,i, this);
 				else if(map.charMap.get(x).get(y)=='m')
 					g.drawImage(marked, j, i, this);
+				else if(map.charMap.get(x).get(y)=='t')
+					g.drawImage(tree, j, i, this);
+				else if(map.charMap.get(x).get(y)=='s')
+					g.drawImage(stone, j, i, this);
 				else if(map.charMap.get(x).get(y)=='c')
 					g.drawImage(bridge, j, i, this);
 				else if(map.charMap.get(x).get(y)=='v'){
