@@ -229,6 +229,10 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		m.charMap.get(rC.coord[0]).set(rC.coord[1], 't');
 	}
 	
+	private void setVillageDestroyed(Coordinate rC){
+		this.charMap.get(rC.coord[0]).set(rC.coord[1], '0');
+	}
+	
 	private boolean availableRiverSpot(Coordinate rC){
 		Coordinate[] i = new Coordinate[] {
 				new Coordinate(rC.coord[0] - 1, rC.coord[1]),//Øvre nabo
