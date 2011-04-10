@@ -18,28 +18,43 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 		new Engine();
 	}
 	
+	public void StartGame(){
+	}
+	
 	public void init(){
+		m=null;
+		p=null;
+		
+		try {
+			jf.remove(graphicMap);
+			jf.remove(knapper);
+			jf.remove(stat);
+		} catch (Exception nullPointerException) {}
+		
 		m = new Map(50, 50);
 		p = new Player(m, 50, 50);
+		graphicMap = new Graphic(m, p);
+		knapper = new Buttons(p);
+		stat = new Status(p);
+		
+		jf.add(stat);
+		jf.add(knapper);
+		jf.add(graphicMap);
+		jf.setVisible(true);
+		
 	}
 	
 	public Engine(){
-		init();
+		
 		
 		jf = new JFrame("VikingQuest");
 		jf.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		jf.setSize(800,640);
 		jf.setResizable(false);
-		
-		graphicMap = new Graphic(m, p);
-		knapper = new Buttons(p);
-		stat = new Status(p);
-		
 		jf.addKeyListener(this);
-		jf.add(stat);
-		jf.add(knapper);
-		jf.add(graphicMap);
-		jf.setVisible(true);
+		
+		init();
+		
 		
 		int i=0;
 		
@@ -86,19 +101,21 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 			Village village = new Village();
 			combat.villageCombar(p, village);
 		}
-		
+
 		if(!p.isDead()){
 			knapper.repaint();
 			graphicMap.repaint();
+			stat.repaint();
 		}
 		else{
-			m=null;
-			p=null;
-			m = new Map(50, 50);
-			p = new Player(m, 50, 50);
+			stat.repaint();
+			init();
 			graphicMap.repaint();
 			knapper.repaint();
+			stat.repaint();
+
 		}
+
 	}
 	public void keyReleased(KeyEvent e) {}
 	public void keyTyped(KeyEvent e) {}
