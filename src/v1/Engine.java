@@ -12,17 +12,21 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 	Status stat;
 	Buttons knapper;
 	Graphic graphicMap;
+	JFrame jf;
 	
 	public static void main(String[] args){
 		new Engine();
 	}
 	
-	public Engine(){
-		
+	public void init(){
 		m = new Map(50, 50);
 		p = new Player(m, 50, 50);
+	}
+	
+	public Engine(){
+		init();
 		
-		JFrame jf = new JFrame("VikingQuest");
+		jf = new JFrame("VikingQuest");
 		jf.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		jf.setSize(800,640);
 		jf.setResizable(false);
@@ -38,11 +42,11 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 		jf.setVisible(true);
 		
 		int i=0;
-
+		
 		while(true){
 			
 			if(i>=30){
-				p.addGull(-10);
+			//	p.addGull(-10);
 				i=0;
 			}
 			i++;
@@ -58,11 +62,10 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 		}
 	}
 	
-	public void keyPressed(KeyEvent e) {}
-	public void keyReleased(KeyEvent e) {
+	public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode()==27)
 			System.exit(0);
-
+		
 		p.getcMap().increaseColoumns(p);
 		p.getcMap().increaseRows(p);
 		
@@ -76,21 +79,27 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 			knapper.setEnableMarked(false);
 			knapper.updateButtons();
 		}
+		System.out.println(knapper.getEnableMarked());
 		
 		if(Move.isVillageNearby(p, e.getKeyChar())){
 			Combat combat = new Combat();
 			Village village = new Village();
 			combat.villageCombar(p, village);
-			
-		/*	Coordinate retning = new Coordinate(e.getKeyChar());
-			Coordinate player = new Coordinate(p.getPlayerPos());
-			if(village.isDestroyed())
-				p.getcMap().charMap.get(Coordinate.plus(player, retning).coord[0]).set(Coordinate.plus(player, retning).coord[1],'0');
-		*/
 		}
 		
-		knapper.repaint();
-		graphicMap.repaint();
+		if(!p.isDead()){
+			knapper.repaint();
+			graphicMap.repaint();
+		}
+		else{
+			m=null;
+			p=null;
+			m = new Map(50, 50);
+			p = new Player(m, 50, 50);
+			graphicMap.repaint();
+			knapper.repaint();
+		}
 	}
+	public void keyReleased(KeyEvent e) {}
 	public void keyTyped(KeyEvent e) {}
 }
