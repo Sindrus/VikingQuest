@@ -67,7 +67,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		//Fyll
 	}
 	
-	private void increaseColoumns2(int x){		
+	private void increaseColoumns2(int x){
 		if (x < 0){
 			for (int j = 0; j < this.charMap.size(); j++){
 				this.charMap.get(j).add(0, 'g');
