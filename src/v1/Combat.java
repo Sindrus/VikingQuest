@@ -2,13 +2,10 @@ package v1;
 
 import java.applet.Applet;
 import java.applet.AudioClip;
-import java.net.URL;
 
 import grensesnitt.Kampsystem;
 
 public class Combat implements Kampsystem {
-	
-	AudioClip fight;
 	
 	public void normalCombat(Player player, Barbarian barbar) {
 		playSound();
@@ -32,8 +29,7 @@ public class Combat implements Kampsystem {
 	}
 	
 	public void playSound(){
-		URL fightURL = getClass().getResource("graphics/fight.wav");
-		fight = Applet.newAudioClip(fightURL);
+		AudioClip fight = Applet.newAudioClip(getClass().getResource("graphics/fight.wav"));
 		fight.play();
 	}
 	
