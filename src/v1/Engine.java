@@ -29,7 +29,7 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 			jf.remove(graphicMap);
 			jf.remove(knapper);
 			jf.remove(stat);
-		} catch (Exception nullPointerException) {}
+		} catch (NullPointerException e) {}
 		
 		m = new Map(50, 50);
 		p = new Player(m, 50, 50);
@@ -42,7 +42,10 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 		jf.add(knapper);
 		jf.add(graphicMap);
 		jf.setVisible(true);
+		System.out.println("Is dead? " + p.isDead());
 		
+		
+	//	runGame();
 	}
 	
 	public Engine(){
@@ -63,11 +66,22 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 		
 		while(true){
 			
+			i++;
+			
 			if(i>=30){
-			//	p.addGull(-10);
+				if(p.getGull()>0)
+					p.addGull((int)(-p.getSoldater()*0.25));
+				if(p.getGull()<=0)
+					p.addSoldater(-5);
+				
+				if(p.getMat()>0)
+					p.addMat((int)(-p.getSoldater()*0.1));
+				if(p.getMat()<=0)
+					p.addSoldater(-5);
+				
 				i=0;
 			}
-			i++;
+			
 			
 			stat.updateStatus();
 			stat.repaint();
@@ -77,6 +91,9 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			
+			if(p.getSoldater()<=0)
+				p.setDead(true);
 		}
 	}
 	
@@ -86,7 +103,9 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 		else if(e.getKeyCode()==32 && p.isDead()){
 			menu.starting();
 			menu.repaint();
+			System.out.println("Restarting...");
 			init();
+//			runGame();
 		}
 		else if(!p.isDead()){
 			p.getcMap().increaseColoumns(p);
@@ -109,27 +128,28 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 				Village village = new Village();
 				combat.villageCombar(p, village);
 			}
-	
+			
 			if(!p.isDead()){
 				knapper.repaint();
 				graphicMap.repaint();
 				stat.repaint();
 			}
-			else{
-				stat.repaint();
-			//	init();
-				graphicMap.repaint();
-				knapper.repaint();
-				stat.repaint();
-				
-				menu = new Menu(p);
-				
-				jf.remove(knapper);
-				jf.remove(graphicMap);
-				jf.remove(stat);
-				jf.add(menu);
-			}
 		}
+
+		if(p.isDead()){
+			stat.repaint();
+			graphicMap.repaint();
+			knapper.repaint();
+			stat.repaint();
+			
+			menu = new Menu(p);
+			
+			jf.remove(knapper);
+			jf.remove(graphicMap);
+			jf.remove(stat);
+			jf.add(menu);
+		}
+		jf.repaint();
 		jf.setVisible(true);
 	}
 	public void keyReleased(KeyEvent e) {}

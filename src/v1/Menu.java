@@ -25,12 +25,14 @@ public class Menu extends JPanel{
 	}
 	
 	public void paint(Graphics g){
-		g.clearRect(0, 0, 800, 640);
+//		g.clearRect(0, 0, 800, 640);
 		
-		if(!starting)
+		if(!starting){
 			g.drawString("Game over! \n(press space to restart)", 400, 320);
-		else
-			g.drawString("Starter..." , 400, 320);
+		}
+/*		else if(starting){
+			g.drawString("Starter..." , 500, 320);
+		}*/
 	}
 	
 	
