@@ -15,6 +15,7 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 	Graphic graphicMap;
 	JFrame jf;
 	Menu menu;
+	Ticker teller;
 	
 	public static void main(String[] args){
 		new Engine();
@@ -31,8 +32,10 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 			jf.remove(stat);
 		} catch (NullPointerException e) {}
 		
+		
 		m = new Map(50, 50);
 		p = new Player(m, 50, 50);
+		
 		graphicMap = new Graphic(m, p);
 		knapper = new Buttons(p);
 		stat = new Status(p);
@@ -42,10 +45,9 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 		jf.add(knapper);
 		jf.add(graphicMap);
 		jf.setVisible(true);
-		System.out.println("Is dead? " + p.isDead());
+		teller.initialiser(p, jf, stat);
+		teller.kjor(true);
 		
-		
-	//	runGame();
 	}
 	
 	public Engine(){
@@ -56,45 +58,10 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 		jf.setResizable(false);
 		jf.addKeyListener(this);
 		
-		runGame();
-	}
-	
-	public void runGame(){
+		teller = new Ticker();
+		teller.start();
+		
 		init();
-		
-		int i=0;
-		
-		while(true){
-			
-			i++;
-			
-			if(i>=30){
-				if(p.getGull()>0)
-					p.addGull((int)(-p.getSoldater()*0.25));
-				if(p.getGull()<=0)
-					p.addSoldater(-5);
-				
-				if(p.getMat()>0)
-					p.addMat((int)(-p.getSoldater()*0.1));
-				if(p.getMat()<=0)
-					p.addSoldater(-5);
-				
-				i=0;
-			}
-			
-			
-			stat.updateStatus();
-			stat.repaint();
-			
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			
-			if(p.getSoldater()<=0)
-				p.setDead(true);
-		}
 	}
 	
 	public void keyPressed(KeyEvent e) {
@@ -137,10 +104,8 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 		}
 
 		if(p.isDead()){
-			stat.repaint();
-			graphicMap.repaint();
-			knapper.repaint();
-			stat.repaint();
+			
+			teller.kjor(false);
 			
 			menu = new Menu(p);
 			
@@ -149,6 +114,10 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 			jf.remove(stat);
 			jf.add(menu);
 		}
+		
+		stat.updateStatus();
+		stat.repaint();
+		
 		jf.repaint();
 		jf.setVisible(true);
 	}

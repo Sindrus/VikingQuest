@@ -42,7 +42,7 @@ public class Graphic extends JPanel implements grensesnitt.Grafikk {
 			}
 		}
 		
-		System.out.println("["+coords[0]+"],["+coords[1]+"]" + "BrettStørrelse: " + map.charMap.get(0).size()+ "X" + map.charMap.size());
+//		System.out.println("["+coords[0]+"],["+coords[1]+"]" + "BrettStørrelse: " + map.charMap.get(0).size()+ "X" + map.charMap.size());
 		int antx=coords[0]-(width/40);
 		int anty=coords[1]-(height/40);
 		
