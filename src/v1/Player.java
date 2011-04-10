@@ -6,7 +6,7 @@ private int gull;
 private int mat;
 private int soldater;
 private Map cMap;
-private boolean dead = false;
+private boolean dead;
 
 	public Coordinate getPlayerPos() {
 		this.setPlayerPos();
@@ -31,6 +31,7 @@ private boolean dead = false;
 			this.gull = 100;
 			this.mat = 50;
 			this.soldater = 100;
+			this.dead=false;
 	}
 	
 	public void removePlayerFromMap(Map oldMap){
