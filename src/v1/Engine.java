@@ -1,5 +1,6 @@
 package v1;
 
+import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -13,12 +14,10 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 	Buttons knapper;
 	Graphic graphicMap;
 	JFrame jf;
+	Menu menu;
 	
 	public static void main(String[] args){
 		new Engine();
-	}
-	
-	public void StartGame(){
 	}
 	
 	public void init(){
@@ -26,6 +25,7 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 		p=null;
 		
 		try {
+			jf.remove(menu);
 			jf.remove(graphicMap);
 			jf.remove(knapper);
 			jf.remove(stat);
@@ -36,6 +36,7 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 		graphicMap = new Graphic(m, p);
 		knapper = new Buttons(p);
 		stat = new Status(p);
+		menu = new Menu(p);
 		
 		jf.add(stat);
 		jf.add(knapper);
@@ -46,15 +47,17 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 	
 	public Engine(){
 		
-		
 		jf = new JFrame("VikingQuest");
 		jf.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		jf.setSize(800,640);
 		jf.setResizable(false);
 		jf.addKeyListener(this);
 		
+		runGame();
+	}
+	
+	public void runGame(){
 		init();
-		
 		
 		int i=0;
 		
@@ -80,42 +83,54 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode()==27)
 			System.exit(0);
-		
-		p.getcMap().increaseColoumns(p);
-		p.getcMap().increaseRows(p);
-		
-		Move.executeMove(p, e.getKeyChar());
-		
-		if(Move.isMarketNearby(p, e.getKeyChar())){
-			knapper.setEnableMarked(true);
-			knapper.updateButtons();
-		}
-		else{
-			knapper.setEnableMarked(false);
-			knapper.updateButtons();
-		}
-		System.out.println(knapper.getEnableMarked());
-		
-		if(Move.isVillageNearby(p, e.getKeyChar())){
-			Combat combat = new Combat();
-			Village village = new Village();
-			combat.villageCombar(p, village);
-		}
-
-		if(!p.isDead()){
-			knapper.repaint();
-			graphicMap.repaint();
-			stat.repaint();
-		}
-		else{
-			stat.repaint();
+		else if(e.getKeyCode()==32 && p.isDead()){
+			menu.starting();
+			menu.repaint();
 			init();
-			graphicMap.repaint();
-			knapper.repaint();
-			stat.repaint();
-
 		}
-
+		else if(!p.isDead()){
+			p.getcMap().increaseColoumns(p);
+			p.getcMap().increaseRows(p);
+			
+			Move.executeMove(p, e.getKeyChar());
+			
+			if(Move.isMarketNearby(p, e.getKeyChar())){
+				knapper.setEnableMarked(true);
+				knapper.updateButtons();
+			}
+			else{
+				knapper.setEnableMarked(false);
+				knapper.updateButtons();
+			}
+			System.out.println(knapper.getEnableMarked());
+			
+			if(Move.isVillageNearby(p, e.getKeyChar())){
+				Combat combat = new Combat();
+				Village village = new Village();
+				combat.villageCombar(p, village);
+			}
+	
+			if(!p.isDead()){
+				knapper.repaint();
+				graphicMap.repaint();
+				stat.repaint();
+			}
+			else{
+				stat.repaint();
+			//	init();
+				graphicMap.repaint();
+				knapper.repaint();
+				stat.repaint();
+				
+				menu = new Menu(p);
+				
+				jf.remove(knapper);
+				jf.remove(graphicMap);
+				jf.remove(stat);
+				jf.add(menu);
+			}
+		}
+		jf.setVisible(true);
 	}
 	public void keyReleased(KeyEvent e) {}
 	public void keyTyped(KeyEvent e) {}
