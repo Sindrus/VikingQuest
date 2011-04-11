@@ -1,6 +1,5 @@
 package v1;
 
-import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -72,7 +71,6 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 			menu.repaint();
 			System.out.println("Restarting...");
 			init();
-//			runGame();
 		}
 		else if(!p.isDead()){
 			p.getcMap().increaseColoumns(p);
@@ -88,12 +86,12 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 				knapper.setEnableMarked(false);
 				knapper.updateButtons();
 			}
-			System.out.println(knapper.getEnableMarked());
+//			System.out.println(knapper.getEnableMarked());
 			
 			if(Move.isVillageNearby(p, e.getKeyChar())){
 				Combat combat = new Combat();
 				Village village = new Village();
-				combat.villageCombar(p, village, m);
+				combat.villageCombar(p, village, m, e.getKeyChar());
 			}
 			
 			if(!p.isDead()){

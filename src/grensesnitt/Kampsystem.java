@@ -14,6 +14,6 @@ public interface Kampsystem {
 	
 	public void normalCombat(Player player, Barbarian barbar);
 	
-	public void villageCombar(Player player, Village village, Map map);
+	public void villageCombar(Player player, Village village, Map map, char c);
 	
 }
