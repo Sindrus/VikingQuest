@@ -12,8 +12,8 @@ public class Move{
 	public static boolean isSomethingBlocking(Player p, char c) {
 		Coordinate retning = new Coordinate(c);
 		Coordinate player = new Coordinate(p.getPlayerPos());
-		if (p.getcMap().charMap.get(Coordinate.plus(player, retning).coord[0]).get(Coordinate.plus(player, retning).coord[1]) == 'g' ||
-			p.getcMap().charMap.get(Coordinate.plus(player, retning).coord[0]).get(Coordinate.plus(player, retning).coord[1]) == 'c'){
+		if (Map.isGrass(p.getcMap(), (Coordinate.plus(player, retning))) ||
+			Map.isBridge(p.getcMap(), Coordinate.plus(player, retning))){
 			return false;
 		} else {
 			return true;
@@ -23,7 +23,7 @@ public class Move{
 	public static boolean isMarketNearby(Player p, char c) {
 		Coordinate retning = new Coordinate(c);
 		Coordinate player = new Coordinate(p.getPlayerPos());
-		if (p.getcMap().charMap.get(Coordinate.plus(player, retning).coord[0]).get(Coordinate.plus(player, retning).coord[1]) == 'm'){
+		if (Map.isMarket(p.getcMap(), Coordinate.plus(player, retning))){
 			return true;
 		} else {
 			return false;
@@ -33,7 +33,7 @@ public class Move{
 	public static boolean isVillageNearby(Player p, char c) {
 		Coordinate retning = new Coordinate(c);
 		Coordinate player = new Coordinate(p.getPlayerPos());
-		if (p.getcMap().charMap.get(Coordinate.plus(player, retning).coord[0]).get(Coordinate.plus(player, retning).coord[1]) == 'l'){
+		if (Map.isVillage(p.getcMap(), Coordinate.plus(player, retning))){
 			return true;
 		} else {
 			return false;

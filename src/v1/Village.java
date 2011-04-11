@@ -6,8 +6,8 @@ private boolean destroyed;
 
 	public Village() {
 		this.soldater = (int) (51*(Math.random()));
-		this.gull = (int) (soldater/4);
-		this.mat = (int) (soldater/2);
+		this.gull = (int) (soldater + (Math.random()*40));
+		this.mat = (int) (soldater/2 + (Math.random()*20));
 		destroyed = false;
 	}
 	
