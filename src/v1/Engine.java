@@ -24,11 +24,20 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener, Ac
 	}
 	
 	public void init(){
+		try {
+			jf.remove(menu);
+		} catch (Exception e) {}
+		menu.gameOver(false);
+		menu.loading(true);
+		menu.repaint();
+		jf.add(menu);
+		jf.repaint();
+		jf.setVisible(true);
+		
 		m=null;
 		p=null;
 		
 		try {
-			jf.remove(menu);
 			jf.remove(graphicMap);
 			jf.remove(knapper);
 			jf.remove(stat);
@@ -41,11 +50,15 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener, Ac
 		graphicMap = new Graphic(m, p);
 		knapper = new Buttons(p);
 		stat = new Status(p);
-		menu = new Menu(p);
 		
+
+		menu.loading(false);
+		menu.gameOver(false);
 		jf.add(stat);
 		jf.add(knapper);
 		jf.add(graphicMap);
+		jf.remove(menu);
+		jf.repaint();
 		jf.setVisible(true);
 
 		i=0;
@@ -60,11 +73,13 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener, Ac
 		jf.setResizable(false);
 		jf.addKeyListener(this);
 		
+		menu = new Menu();
 		
 		Timer timer = new Timer(100, this);
 		timer.start();
 		runTimer=false;
 		
+		jf.setVisible(true);
 		init();
 	}
 	
@@ -72,8 +87,6 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener, Ac
 		if(e.getKeyCode()==27)
 			System.exit(0);
 		else if(e.getKeyCode()==32 && p.isDead()){
-			menu.starting();
-			menu.repaint();
 			System.out.println("Restarting...");
 			init();
 		}
@@ -108,19 +121,19 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener, Ac
 		if(p.isDead()){
 			
 			runTimer=false;
-			
-			menu = new Menu(p);
-			
+			menu.gameOver(true);
+			menu.repaint();
 			jf.remove(knapper);
 			jf.remove(graphicMap);
 			jf.remove(stat);
 			jf.add(menu);
 		}
 		
+		menu.repaint();
 		stat.updateStatus();
 		stat.repaint();
 		jf.repaint();
-		jf.setVisible(true);
+//		jf.setVisible(true);
 	}
 	public void keyReleased(KeyEvent e) {}
 	public void keyTyped(KeyEvent e) {}
@@ -149,9 +162,12 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener, Ac
 				e.printStackTrace();
 			}
 			
-			if(p.getSoldater()<=0)
+			if(p.getSoldater()<=0){
 				p.setDead(true);
+				menu.gameOver(true);
+			}
 	
+			menu.repaint();
 			stat.updateStatus();
 			stat.repaint();
 			jf.repaint();
