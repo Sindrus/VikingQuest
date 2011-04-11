@@ -7,10 +7,10 @@ public class Ticker extends Thread{
 	private Player p;
 	private JFrame jf;
 	private Status stat;
-	private boolean start = false;
+	private boolean start;
 	
 	public Ticker(){
-		
+		start = false;
 	}
 	
 	public void initialiser(Player player,JFrame frame,Status status){
@@ -25,9 +25,15 @@ public class Ticker extends Thread{
 		System.out.println("Start: " + start);
 	}
 	
+	public boolean isRunning(){
+		return start;
+	}
+	
 	public void run(){
+		System.out.println("TEller startet");
 		while(true){
 			while(start){
+	//			System.out.println("Teller...");
 				i++;
 				
 				if(i>=30){

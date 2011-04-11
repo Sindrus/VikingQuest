@@ -46,6 +46,8 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 		jf.setVisible(true);
 		teller.initialiser(p, jf, stat);
 		teller.kjor(true);
+		
+		System.out.println("Teller: " + teller.isRunning());
 	}
 	
 	public Engine(){
