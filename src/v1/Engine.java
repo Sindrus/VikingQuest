@@ -46,7 +46,6 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 		jf.setVisible(true);
 		teller.initialiser(p, jf, stat);
 		teller.kjor(true);
-		
 	}
 	
 	public Engine(){
@@ -86,7 +85,6 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 				knapper.setEnableMarked(false);
 				knapper.updateButtons();
 			}
-//			System.out.println(knapper.getEnableMarked());
 			
 			if(Move.isVillageNearby(p, e.getKeyChar())){
 				Combat combat = new Combat();
