@@ -366,8 +366,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		}
 	}
 	
-	private int amountOfSingleRivers(){
-		int amount = 0;
+	private ArrayList<Coordinate> amountOfSingleRivers(){
 		ArrayList<Coordinate> koords = new ArrayList<Coordinate>();
 		for (int i = 0; i < this.charMap.size(); i++){
 			for (int j = 0; j < this.charMap.get(0).size(); j++){
@@ -391,17 +390,17 @@ public ArrayList<Player> players = new ArrayList<Player>();
 					sjekk[j] = false;
 				}
 			}
-			int a = 0;
+			int a = 4;
 			for (int j = 0; j < 4; j++){
 				if (sjekk[j]  && !isWater(this, naboer[j])){
-					a++;
+					a--;
 				}
 			}
-			if (a == 4){
-				amount++;
+			if (a < 4){
+				koords.remove(i);
 			}
 		}
-		return amount;
+		return koords;
 	}
 	
 	private void randomObject(){
@@ -479,7 +478,16 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		while(this.spaceAvailable() > (totalSpace - spaceToBeOccupied)){
 			this.randomObject();
 		}
-		System.out.println("Amount of single rivers: " + this.amountOfSingleRivers());
+		ArrayList<Coordinate> singleRivers = this.amountOfSingleRivers();
+		System.out.println("Amount of single rivers: " + singleRivers.size());
+		for (int i = 0; i < singleRivers.size(); i++){
+			double random = Math.random();
+			if (random < 0.6){
+				setVillage(this, singleRivers.get(i));
+			} else {
+				setMarket(this, singleRivers.get(i));
+			}
+		}
 	}
 	
 	public String toString(){

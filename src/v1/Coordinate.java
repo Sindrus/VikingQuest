@@ -10,9 +10,6 @@ Integer[] coord = new Integer[3];
 	
 	public static Coordinate plus(Coordinate a, Coordinate b){
 		Coordinate c = new Coordinate(0,0);
-		if (a.coord[0] == null) System.out.println("a er null");
-		if (b.coord[0] == null) System.out.println("b er null");
-		if (c.coord[0] == null) System.out.println("c er null");
 		c.coord[0] = b.coord[0] + a.coord[0];
 		c.coord[1] = b.coord[1] + a.coord[1];
 		return c;
