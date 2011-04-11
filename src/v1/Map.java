@@ -229,7 +229,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		m.charMap.get(rC.coord[0]).set(rC.coord[1], 't');
 	}
 	
-	private void setVillageDestroyed(Coordinate rC){
+	public void setVillageDestroyed(Coordinate rC){
 		this.charMap.get(rC.coord[0]).set(rC.coord[1], '0');
 	}
 	

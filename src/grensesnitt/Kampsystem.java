@@ -3,6 +3,7 @@ package grensesnitt;
 import v1.Barbarian;
 import v1.Player;
 import v1.Village;
+import v1.Map;
 
 /*
  * Move-klassen sjekker etter hver move om en fiendtlig village er i nærheten.
@@ -13,6 +14,6 @@ public interface Kampsystem {
 	
 	public void normalCombat(Player player, Barbarian barbar);
 	
-	public void villageCombar(Player player, Village village);
+	public void villageCombar(Player player, Village village, Map map);
 	
 }

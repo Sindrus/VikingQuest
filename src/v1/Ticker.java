@@ -28,41 +28,38 @@ public class Ticker extends Thread{
 	public void run(){
 		while(true){
 			while(start){
-		//		try{
-					i++;
+				i++;
+				
+				if(i>=30){
+					if(p.getGull()>0)
+						p.addGull((int)(-p.getSoldater()*0.25));
+					if(p.getGull()<=0)
+						p.addSoldater(-5);
 					
-					if(i>=30){
-						if(p.getGull()>0)
-							p.addGull((int)(-p.getSoldater()*0.25));
-						if(p.getGull()<=0)
-							p.addSoldater(-5);
-						
-						if(p.getMat()>0)
-							p.addMat((int)(-p.getSoldater()*0.1));
-						if(p.getMat()<=0)
-							p.addSoldater(-5);
-						
-						i=0;
-						
-						System.out.println("Tellertest!!!!!");
-					}
+					if(p.getMat()>0)
+						p.addMat((int)(-p.getSoldater()*0.1));
+					if(p.getMat()<=0)
+						p.addSoldater(-5);
 					
-					try {
-						Thread.sleep(100);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+					i=0;
 					
-					if(p.getSoldater()<=0)
-						p.setDead(true);
-			
-					stat.updateStatus();
-					stat.repaint();
-					jf.repaint();
-					jf.setVisible(true);
-	//			}catch(NullPointerException e){}
+					System.out.println("Tellertest!!!!!");
+				}
+				
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				
+				if(p.getSoldater()<=0)
+					p.setDead(true);
+		
+				stat.updateStatus();
+				stat.repaint();
+				jf.repaint();
+				jf.setVisible(true);
 			}
 		}
-	}
-		
+	}	
 }

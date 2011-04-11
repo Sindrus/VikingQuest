@@ -93,7 +93,7 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 			if(Move.isVillageNearby(p, e.getKeyChar())){
 				Combat combat = new Combat();
 				Village village = new Village();
-				combat.villageCombar(p, village);
+				combat.villageCombar(p, village, m);
 			}
 			
 			if(!p.isDead()){

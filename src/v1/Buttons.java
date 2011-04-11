@@ -52,8 +52,7 @@ public class Buttons extends JPanel{
 			public void mousePressed(MouseEvent e) {}
 			public void mouseReleased(MouseEvent e) {
 				if(enableMarked){
-					p.addGull(-20);
-					p.addMat(10);
+					Market.buyFood(p);
 				}
 			}
 		};
@@ -64,8 +63,7 @@ public class Buttons extends JPanel{
 			public void mousePressed(MouseEvent e) {}
 			public void mouseReleased(MouseEvent e) {
 				if(enableMarked){
-					p.addGull(-20);
-					p.addSoldater(10);
+					Market.buySoldiers(p);
 				}
 			}
 		};

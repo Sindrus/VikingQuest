@@ -33,7 +33,7 @@ public class Combat implements Kampsystem {
 		fight.play();
 	}
 	
-	public void villageCombar(Player player, Village village) {
+	public void villageCombar(Player player, Village village, Map map) {
 		playSound();
 		
 		while (player.getSoldater() > 0 && village.getSoldater() > 0){
@@ -51,7 +51,7 @@ public class Combat implements Kampsystem {
 		} else if (village.getSoldater() == 0){
 			player.addGull(village.getGull());
 			player.addMat(village.getMat());
-			village.setDestroyed(true);
+			map.setVillageDestroyed(player.getPlayerPos());
 		}
 	}
 }
