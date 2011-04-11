@@ -1,11 +1,13 @@
 package v1;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.*;
 
-public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
+public class Engine extends JFrame implements grensesnitt.Motor, KeyListener, ActionListener {
 	
 	Player p;
 	Map m;
@@ -14,7 +16,8 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 	Graphic graphicMap;
 	JFrame jf;
 	Menu menu;
-	Ticker teller;
+	boolean runTimer;
+	int i;
 	
 	public static void main(String[] args){
 		new Engine();
@@ -44,10 +47,9 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 		jf.add(knapper);
 		jf.add(graphicMap);
 		jf.setVisible(true);
-		teller.initialiser(p, jf, stat);
-		teller.kjor(true);
-		
-		System.out.println("Teller: " + teller.isRunning());
+
+		i=0;
+		runTimer = true;
 	}
 	
 	public Engine(){
@@ -58,8 +60,10 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 		jf.setResizable(false);
 		jf.addKeyListener(this);
 		
-		teller = new Ticker();
-		teller.start();
+		
+		Timer timer = new Timer(100, this);
+		timer.start();
+		runTimer=false;
 		
 		init();
 	}
@@ -103,7 +107,7 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 		
 		if(p.isDead()){
 			
-			teller.kjor(false);
+			runTimer=false;
 			
 			menu = new Menu(p);
 			
@@ -120,4 +124,37 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 	}
 	public void keyReleased(KeyEvent e) {}
 	public void keyTyped(KeyEvent e) {}
+	
+	public void actionPerformed(ActionEvent arg0) {
+		if(runTimer){
+			i++;
+			
+			if(i>=30){
+				if(p.getGull()>0)
+					p.addGull((int)(-p.getSoldater()*0.25));
+				if(p.getGull()<=0)
+					p.addSoldater(-5);
+				
+				if(p.getMat()>0)
+					p.addMat((int)(-p.getSoldater()*0.1));
+				if(p.getMat()<=0)
+					p.addSoldater(-5);
+				
+				i=0;
+			}
+			
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
+			if(p.getSoldater()<=0)
+				p.setDead(true);
+	
+			stat.updateStatus();
+			stat.repaint();
+			jf.repaint();
+		}
+	}
 }
