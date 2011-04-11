@@ -56,7 +56,7 @@ public class Ticker extends Thread{
 				stat.updateStatus();
 				stat.repaint();
 				jf.repaint();
-				jf.setVisible(true);
+	//			jf.setVisible(true);
 			}
 		}
 	}	

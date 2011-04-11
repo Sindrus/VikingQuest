@@ -1,7 +1,6 @@
 package v1;
 
 import java.awt.*;
-
 import javax.swing.*;
 
 public class Graphic extends JPanel implements grensesnitt.Grafikk {
