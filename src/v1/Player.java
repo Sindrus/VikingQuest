@@ -48,7 +48,9 @@ private boolean dead;
 	}
 	
 	public void addGull(int gold){
-		this.gull+=gold;
+			this.gull+=gold;
+			if(gull<0)
+				gull=0;
 	}
 	
 	public int getMat() {
@@ -61,6 +63,8 @@ private boolean dead;
 	
 	public void addMat(int food){
 		this.mat +=food;
+		if(mat<0)
+			mat=0;
 	}
 	
 	public int getSoldater() {

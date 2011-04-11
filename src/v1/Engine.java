@@ -100,7 +100,7 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 				stat.repaint();
 			}
 		}
-
+		
 		if(p.isDead()){
 			
 			teller.kjor(false);
@@ -115,7 +115,6 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener {
 		
 		stat.updateStatus();
 		stat.repaint();
-		
 		jf.repaint();
 		jf.setVisible(true);
 	}

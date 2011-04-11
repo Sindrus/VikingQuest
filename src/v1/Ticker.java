@@ -42,8 +42,6 @@ public class Ticker extends Thread{
 						p.addSoldater(-5);
 					
 					i=0;
-					
-					System.out.println("Tellertest!!!!!");
 				}
 				
 				try {
