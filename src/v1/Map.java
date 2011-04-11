@@ -366,7 +366,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		}
 	}
 	
-	private ArrayList<Coordinate> amountOfSingleRivers(){
+	private ArrayList<Coordinate> singleRiver(){
 		ArrayList<Coordinate> koords = new ArrayList<Coordinate>();
 		for (int i = 0; i < this.charMap.size(); i++){
 			for (int j = 0; j < this.charMap.get(0).size(); j++){
@@ -478,16 +478,16 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		while(this.spaceAvailable() > (totalSpace - spaceToBeOccupied)){
 			this.randomObject();
 		}
-		ArrayList<Coordinate> singleRivers = this.amountOfSingleRivers();
-		System.out.println("Amount of single rivers: " + singleRivers.size());
-		for (int i = 0; i < singleRivers.size(); i++){
-			double random = Math.random();
-			if (random < 0.6){
-				setVillage(this, singleRivers.get(i));
-			} else {
-				setMarket(this, singleRivers.get(i));
-			}
-		}
+//		ArrayList<Coordinate> singleRivers = this.singleRiver();
+//		System.out.println("Amount of single rivers: " + singleRivers.size());
+//		for (int i = 0; i < singleRivers.size(); i++){
+//			double random = Math.random();
+//			if (random < 0.6){
+//				setVillage(this, singleRivers.get(i));
+//			} else {
+//				setMarket(this, singleRivers.get(i));
+//			}
+//		}
 	}
 	
 	public String toString(){
