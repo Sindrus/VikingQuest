@@ -49,21 +49,29 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		
 	private void increaseRows2(int y){
 		if (y < 0){
-			this.charMap.add(0, new ArrayList<Character>());
-			for (int j = 0; j < this.charMap.get(1).size(); j++){
-				this.charMap.get(0).add('g');
+			for (int i = 0; i < 25; i++){
+				this.charMap.add(0, new ArrayList<Character>());//Legger til 25 nye rader
 			}
-			this.generateRow(0);
+			for (int i = 0; i < 25; i++){
+				for (int j = 0; j < this.charMap.get(25).size(); j++){//Legger til like mange kolonner som rad 25 har.
+					this.charMap.get(i).add(j, 'g'); //Legger til gress på dette koordinatet.
+				}
+			}
+			this.generateRow(0, this.charMap.get(0).size());
 		} else if (y > 0){
-			this.charMap.add(new ArrayList<Character>());
-			for (int j = 0; j < charMap.get(2).size(); j++){
-				this.charMap.get(charMap.size()-1).add('g');
+			for (int i = 0; i < 25; i++){
+				this.charMap.add(new ArrayList<Character>());//Legge til 25 nye rader
 			}
-			this.generateRow(this.charMap.size());
+			for (int i = (this.charMap.size() - 25); i < this.charMap.size(); i++){
+				for (int j = 0;  j < this.charMap.get(0).size(); j++){
+					this.charMap.get(i).add(j, 'g');//Legger til gress på dette koordinatet
+				}
+			}
+			this.generateRow(this.charMap.size() - 25, this.charMap.get(0).size());
 		}
 	}
 	
-	private void generateRow(int y){
+	private void generateRow(int y, int x){
 		//Fyll
 	}
 	
