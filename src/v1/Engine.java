@@ -47,7 +47,7 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener, Ac
 		m = new Map(50, 50);
 		p = new Player(m, 50, 50);
 		
-		graphicMap = new Graphic(m, p);
+		graphicMap = new Graphic(m);
 		knapper = new Buttons(p);
 		stat = new Status(p);
 		

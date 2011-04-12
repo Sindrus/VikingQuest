@@ -6,7 +6,6 @@ import javax.swing.*;
 public class Graphic extends JPanel implements grensesnitt.Grafikk {
 	
 	private int height,width;
-	private Player play;
 	private Toolkit tk;
 	
 	private Image gress;
@@ -17,14 +16,14 @@ public class Graphic extends JPanel implements grensesnitt.Grafikk {
 	private Image vikingOnBridge;
 	private Image tree;
 	private Image stone;
+	private Image destroyedVillage;
 	private Map map;
 	
-	public Graphic(Map m,Player p){
+	public Graphic(Map m){
 		tk = Toolkit.getDefaultToolkit();
 		height = 615;
 		width =  700;
 		map = m;
-		play = p;
 	}
 	
 	public void paint(Graphics g){
@@ -41,7 +40,6 @@ public class Graphic extends JPanel implements grensesnitt.Grafikk {
 			}
 		}
 		
-//		System.out.println("["+coords[0]+"],["+coords[1]+"]" + "BrettStørrelse: " + map.charMap.get(0).size()+ "X" + map.charMap.size());
 		int antx=coords[0]-(width/40);
 		int anty=coords[1]-(height/40);
 		
@@ -53,8 +51,8 @@ public class Graphic extends JPanel implements grensesnitt.Grafikk {
 		vikingOnBridge = tk.getImage(getClass().getResource("graphics/vikingOnBridge.gif"));
 		tree = tk.getImage(getClass().getResource("graphics/tree.gif"));
 		stone = tk.getImage(getClass().getResource("graphics/stone.gif"));
+		destroyedVillage = tk.getImage(getClass().getResource("graphics/destroyedVillage.gif"));
 		
-	
 		for(int i=25, x=antx;i<height;i+=20, x++){
 			for(int j=0, y=anty;j<width;j+=20, y++){
 				if(map.charMap.get(x).get(y)=='p')
@@ -73,6 +71,8 @@ public class Graphic extends JPanel implements grensesnitt.Grafikk {
 					g.drawImage(stone, j, i, this);
 				else if(map.charMap.get(x).get(y)=='c')
 					g.drawImage(bridge, j, i, this);
+				else if(map.charMap.get(x).get(y)=='0')
+					g.drawImage(destroyedVillage, j, i, this);
 				else if(map.charMap.get(x).get(y)=='v'){
 					g.setColor(Color.blue);
 					g.fillRect(j, i, 20, 20);
