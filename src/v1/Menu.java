@@ -10,10 +10,6 @@ public class Menu extends JPanel{
 	private boolean loading;
 	private boolean gameOver;
 	
-	public static void main(String[] args){
-		new Menu();
-	}
-	
 	public Menu(){
 		loading = false;
 		gameOver = false;
@@ -31,12 +27,13 @@ public class Menu extends JPanel{
 		Toolkit tk = Toolkit.getDefaultToolkit();
 
 		System.out.println("Loading: " + loading);
-		
+		System.out.println("GameOver:" + gameOver);
 		if(gameOver){
 			//g.drawString("Game over! \n(press space to restart)", 400, 320);
 			g.drawImage(tk.getImage(getClass().getResource("graphics/defeat.gif")), 0, 0, 800, 640, this);
 		}
 		else if(loading){
+			System.out.println("Skulle tegnet loadingscreen nå");
 			g.drawImage(tk.getImage(getClass().getResource("graphics/loading.gif")), 0, 0, 800, 640, this);
 		}
 /*		else if(starting){

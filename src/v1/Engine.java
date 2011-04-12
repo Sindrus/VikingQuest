@@ -88,6 +88,8 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener, Ac
 			System.exit(0);
 		else if(e.getKeyCode()==32 && p.isDead()){
 			System.out.println("Restarting...");
+			menu.loading(true);
+			menu.repaint();
 			init();
 		}
 		else if(!p.isDead()){
@@ -164,10 +166,15 @@ public class Engine extends JFrame implements grensesnitt.Motor, KeyListener, Ac
 			
 			if(p.getSoldater()<=0){
 				p.setDead(true);
+				runTimer=false;
 				menu.gameOver(true);
+				menu.repaint();
+				jf.remove(knapper);
+				jf.remove(graphicMap);
+				jf.remove(stat);
+				jf.add(menu);
 			}
 	
-			menu.repaint();
 			stat.updateStatus();
 			stat.repaint();
 			jf.repaint();
