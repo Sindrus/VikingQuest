@@ -57,7 +57,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 					this.charMap.get(i).add(j, 'g'); //Legger til gress på dette koordinatet.
 				}
 			}
-			this.generateRow(0, this.charMap.get(0).size());
+			this.generateYChunk(0, this.charMap.get(0).size());
 		} else if (y > 0){
 			for (int i = 0; i < 25; i++){
 				this.charMap.add(new ArrayList<Character>());//Legge til 25 nye rader
@@ -67,29 +67,35 @@ public ArrayList<Player> players = new ArrayList<Player>();
 					this.charMap.get(i).add(j, 'g');//Legger til gress på dette koordinatet
 				}
 			}
-			this.generateRow(this.charMap.size() - 25, this.charMap.get(0).size());
+			this.generateYChunk(this.charMap.size() - 25, this.charMap.get(0).size());
 		}
 	}
 	
-	private void generateRow(int y, int x){
+	private void generateYChunk(int y, int x){
 		//Fyll
 	}
 	
 	private void increaseColoumns2(int x){
 		if (x < 0){
-			for (int j = 0; j < this.charMap.size(); j++){
-				this.charMap.get(j).add(0, 'g');
+			for (int i = 0; i < 25; i ++){
+				for (int j = 0; j < this.charMap.size(); j++){
+					this.charMap.get(j).add(0, 'g');
+				}
+				i++;
 			}
-			this.generateColoumn(0);
+			this.generateXChunk(0, 25);
 		} else if (x > 0){
-			for (int j = 0; j < this.charMap.size(); j++){
-				this.charMap.get(j).add('g');
+			for (int i = 0; i < 25; i++){
+				for (int j = 0; j < this.charMap.size(); j++){
+					this.charMap.get(j).add('g');
+				}
+				i++;
 			}
-			this.generateColoumn(this.charMap.get(0).size());
+			this.generateXChunk(0, (this.charMap.get(0).size() - 25));
 		}
 	}
 	
-	private void generateColoumn(int x){
+	private void generateXChunk(int y, int x){
 		//Fyll
 	}
 
