@@ -50,31 +50,45 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		
 	private void increaseRows2(int y){
 		if (y < 0){
-			this.charMap.add(0, new ArrayList<Character>());
-			for (int j = 0; j < this.charMap.get(1).size(); j++){
-				this.charMap.get(0).add('g'); 
+			for (int i = 0; i < 25; i++){
+			this.charMap.add(0, new ArrayList<Character>());//Legger til 25 nye rader
 			}
-			this.generateChunk('w');
-		} else if (y > 0){
-			this.charMap.add(new ArrayList<Character>());
-			for (int j = 0;  j < this.charMap.get(2).size(); j++){
-				this.charMap.get(this.charMap.size() - 1).add('g');
+			for (int i = 0; i < 25; i++){
+			for (int j = 0; j < this.charMap.get(25).size(); j++){//Legger til like mange kolonner som rad 25 har.
+			this.charMap.get(i).add(j, 'g'); //Legger til gress pï¿½ dette koordinatet.
 			}
-			this.generateChunk('s');
-		}
+			}
+//			this.generateChunk(0, this.charMap.get(0).size());
+			} else if (y > 0){
+			for (int i = 0; i < 25; i++){
+			this.charMap.add(new ArrayList<Character>());//Legge til 25 nye rader
+			}
+			for (int i = (this.charMap.size() - 25); i < this.charMap.size(); i++){
+			for (int j = 0; j < this.charMap.get(0).size(); j++){
+			this.charMap.get(i).add(j, 'g');//Legger til gress pï¿½ dette koordinatet
+			}
+			}
+//			this.generateChunk(this.charMap.size() - 25, this.charMap.get(0).size());
+			}
 	}
 	
 	private void increaseColoumns2(int x){
 		if (x < 0){
-			for (int j = 0; j < this.charMap.size(); j++){
-				this.charMap.get(j).add(0, 'g');
+			for (int i = 0; i < 25; i ++){
+				for (int j = 0; j < this.charMap.size(); j++){
+					this.charMap.get(j).add(0, 'g');
+				}
+				i++;
 			}
-			this.generateChunk('a');
-		} else if (x > 0){
-			for (int j = 0; j < this.charMap.size(); j++){
-				this.charMap.get(j).add('g');
+//			this.generateChunk(0, 25);
+			} else if (x > 0){
+			for (int i = 0; i < 25; i++){
+				for (int j = 0; j < this.charMap.size(); j++){
+					this.charMap.get(j).add('g');
+				}
+				i++;
 			}
-			this.generateChunk('d');
+//			this.generateChunk(0, (this.charMap.get(0).size() - 25));
 		}
 	}
 	
@@ -121,11 +135,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 			}
 		}
 	}
-	
-	private void randomObject(ArrayList<Coordinate> a){
 		
-	}
-	
 	private int spaceAvailable(ArrayList<Coordinate> a){
 		int b = 0;
 		for (int i = 0; i < a.size(); i++){
@@ -156,17 +166,12 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		generateMap();
 	}
 	
-	private Coordinate randomCoordinate(){
-		Coordinate a = new Coordinate( (int) (this.charMap.size()*Math.random()), (int) (this.charMap.get(0).size()*Math.random()));
-		return a;
-	}
-	
 	private boolean availableSpot(Coordinate rC){
 		Coordinate[] i = new Coordinate[] {
-				new Coordinate(rC.coord[0] - 1, rC.coord[1]),//Øvre nabo
+				new Coordinate(rC.coord[0] - 1, rC.coord[1]),//Ã˜vre nabo
 				new Coordinate(rC.coord[0] + 1, rC.coord[1]),//Nedre nabo
 				new Coordinate(rC.coord[0], rC.coord[1] - 1),//Venstre nabo
-				new Coordinate(rC.coord[0], rC.coord[1] + 1),//Høyre nabo
+				new Coordinate(rC.coord[0], rC.coord[1] + 1),//HÃ¸yre nabo
 				new Coordinate(rC.coord[0] + 1, rC.coord[1] + 1),
 				new Coordinate(rC.coord[0] + 1, rC.coord[1] - 1),
 				new Coordinate(rC.coord[0] - 1, rC.coord[1] + 1),
@@ -296,10 +301,10 @@ public ArrayList<Player> players = new ArrayList<Player>();
 	
 	private boolean availableRiverSpot(Coordinate rC){
 		Coordinate[] i = new Coordinate[] {
-				new Coordinate(rC.coord[0] - 1, rC.coord[1]),//Øvre nabo
+				new Coordinate(rC.coord[0] - 1, rC.coord[1]),//Ã˜vre nabo
 				new Coordinate(rC.coord[0] + 1, rC.coord[1]),//Nedre nabo
 				new Coordinate(rC.coord[0], rC.coord[1] - 1),//Venstre nabo
-				new Coordinate(rC.coord[0], rC.coord[1] + 1),//Høyre nabo
+				new Coordinate(rC.coord[0], rC.coord[1] + 1),//HÃ¸yre nabo
 				new Coordinate(rC.coord[0] + 1, rC.coord[1] + 1),
 				new Coordinate(rC.coord[0] + 1, rC.coord[1] - 1),
 				new Coordinate(rC.coord[0] - 1, rC.coord[1] + 1),
@@ -325,11 +330,11 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		}
 	}
 	
-	private void createRiver(){
-		Coordinate riverStart = randomCoordinate(); //Startpunkt
-		Coordinate riverEnd = randomCoordinate(); //Endepunkt
+	private void createRiver(ArrayList<Coordinate> coorMap){
+		Coordinate riverStart = coorMap.get((int)(coorMap.size() * Math.random())); //Startpunkt
+		Coordinate riverEnd = coorMap.get((int)(coorMap.size() * Math.random()));  //Endepunkt
 		if (riverStart.compareYX(riverEnd)){
-			this.createRiver(); //Om startpunkt = endepunkt, prøv igjen.
+			this.createRiver(coorMap); //Om startpunkt = endepunkt, prÃ¸v igjen.
 		} else {
 			stretchRiver(riverStart, riverEnd);
 		}
@@ -341,7 +346,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		boolean incomplete = true;
 		int numberOfSteps = 0;
 		Loop:
-		for (int i = 0; i < Path.size() && incomplete; i++){ //Bredde-først søk algoritme
+		for (int i = 0; i < Path.size() && incomplete; i++){ //Bredde-fÃ¸rst sÃ¸k algoritme
 			boolean[] sjekk = new boolean[4];
 			for (int j = 0; j < sjekk.length; j++){
 				sjekk[j] = true;
@@ -355,13 +360,13 @@ public ArrayList<Player> players = new ArrayList<Player>();
 				for (int x = 0; x < Path.size(); x++){
 					if (this.outsideOfMap(naboer[j]) || //Her sjekker vi om punktet er utenfor kartet.	
 						Path.get(x).compareYX(naboer[j])){ //Her sjekker vi om punktet eksisterer i Path allerede.
-						sjekk[j] = false; //Setter en boolean-verdi til false som vi sjekker senere for å se om koordinatet skal legges i Path.
+						sjekk[j] = false; //Setter en boolean-verdi til false som vi sjekker senere for Ã¥ se om koordinatet skal legges i Path.
 						break; 
 					}
 				}
 			}
 			for (int x = 0; x < naboer.length; x++){ 
-				if (sjekk[x] && this.availableRiverSpot(naboer[x])){ //Her sjekker vi om vi kan legge koordinatet i Path, og gjør det om det blir godkjent.
+				if (sjekk[x] && this.availableRiverSpot(naboer[x])){ //Her sjekker vi om vi kan legge koordinatet i Path, og gjÃ¸r det om det blir godkjent.
 					Path.add(naboer[x]);
 					if (naboer[x].compareYX(a)){
 						numberOfSteps = naboer[x].coord[2];
@@ -370,16 +375,16 @@ public ArrayList<Player> players = new ArrayList<Player>();
 					}
 				}
 			}
-		} //Når While-løkka er ferdig skal Path inneholde koordinatene som lager en sti, blant mange andre koordinater.
+		} //NÃ¥r While-lÃ¸kka er ferdig skal Path inneholde koordinatene som lager en sti, blant mange andre koordinater.
 		ArrayList<Coordinate> finalPath = new ArrayList<Coordinate>(); //Ny ArrayList som skal kun inneholde riktig sti.
 		finalPath.add(new Coordinate(a.coord[0], a.coord[1], numberOfSteps)); //Den ene enden av elven.
 		for (int i = numberOfSteps; i >= 0; i--){
 			for (int j = 0; j < Path.size(); j++){
 				if (Path.get(j).coord[2] == (i - 1) && 
 					finalPath.get(numberOfSteps - i).distance(Path.get(j)) == 1.0){
-					finalPath.add(Path.get(j)); //Hvis koordinatet som vurderes er riktig nummer i rekka (antall skritt - nåværende skritt som vurderes),
+					finalPath.add(Path.get(j)); //Hvis koordinatet som vurderes er riktig nummer i rekka (antall skritt - nÃ¥vÃ¦rende skritt som vurderes),
 					break;
-				}// og avstanden mellom forrige sikre skritt og skrittet som vurderes er lik 1, så godkjennes den og blir det nye sikre skrittet.
+				}// og avstanden mellom forrige sikre skritt og skrittet som vurderes er lik 1, sÃ¥ godkjennes den og blir det nye sikre skrittet.
 			}
 		}
 		finalPath.add(new Coordinate(b.coord[0], b.coord[1]));
@@ -387,7 +392,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 			setWater(this, finalPath.get(i));
 		} //Printer elven
 		this.createBridge(finalPath, 0);
-	}//Lager en bro på måfå så ikke elven lukker av deler av kartet. Broen kan i verste fall være blokkert av noe annet.
+	}//Lager en bro pÃ¥ mÃ¥fÃ¥ sÃ¥ ikke elven lukker av deler av kartet. Broen kan i verste fall vÃ¦re blokkert av noe annet.
 	
 	private void createBridge(ArrayList<Coordinate> river, int i){
 		boolean needBridge = true;
@@ -395,10 +400,10 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		while (needBridge && i < 20){
 			Coordinate bridge = new Coordinate(river.get((int) (river.size()*Math.random())));
 			Coordinate naboer[] = new Coordinate[] {
-				new Coordinate(bridge.coord[0] - 1, bridge.coord[1]),//Øvre nabo
+				new Coordinate(bridge.coord[0] - 1, bridge.coord[1]),//Ã˜vre nabo
 				new Coordinate(bridge.coord[0] + 1, bridge.coord[1]),//Nedre nabo
 				new Coordinate(bridge.coord[0], bridge.coord[1] - 1),//Venstre nabo
-				new Coordinate(bridge.coord[0], bridge.coord[1] + 1)};//Høyre nabo
+				new Coordinate(bridge.coord[0], bridge.coord[1] + 1)};//HÃ¸yre nabo
 			for (int j = 0; j < naboer.length; j++){
 				if (this.outsideOfMap(naboer[j])){
 					i++;
@@ -426,73 +431,36 @@ public ArrayList<Player> players = new ArrayList<Player>();
 			}
 		}
 	}
-	
-	private ArrayList<Coordinate> singleRiver(){
-		ArrayList<Coordinate> koords = new ArrayList<Coordinate>();
-		for (int i = 0; i < this.charMap.size(); i++){
-			for (int j = 0; j < this.charMap.get(0).size(); j++){
-				if (isWater(this, new Coordinate(i,j))){
-					koords.add(new Coordinate(i,j));
-				}
-			}
-		}
-		for (int i = 0; i < koords.size(); i++){
-			Coordinate naboer[] = new Coordinate[] {
-					new Coordinate(koords.get(i).coord[0] - 1, koords.get(i).coord[1]),//Øvre nabo
-					new Coordinate(koords.get(i).coord[0] + 1, koords.get(i).coord[1]),//Nedre nabo
-					new Coordinate(koords.get(i).coord[0], koords.get(i).coord[1] - 1),//Venstre nabo
-					new Coordinate(koords.get(i).coord[0], koords.get(i).coord[1] + 1)};//Høyre nabo
-			boolean[] sjekk = new boolean[4];
-			for (int j = 0; j < sjekk.length; j++){
-				sjekk[j] = true;
-			}
-			for (int j = 0; j < 4; j++){
-				if (this.outsideOfMap(naboer[j])){
-					sjekk[j] = false;
-				}
-			}
-			int a = 4;
-			for (int j = 0; j < 4; j++){
-				if (sjekk[j]  && !isWater(this, naboer[j])){
-					a--;
-				}
-			}
-			if (a < 4){
-				koords.remove(i);
-			}
-		}
-		return koords;
-	}
-	
-	private void randomObject(){
+		
+	private void randomObject(ArrayList<Coordinate> coorMap){
 		double random = Math.random();
 		if(random < this.riverChance){
-			this.createRiver();		
+			this.createRiver(coorMap);		
 		} else if (random < this.marketChance){
-			createMarket(0);
+			createMarket(0, coorMap);
 		} else if (random < this.villageChance){
-			createVillage(0);
+			createVillage(0, coorMap);
 		} else {
-			createObstruction(0);
+			createObstruction(0, coorMap);
 		}
 	}
 	
-	private void createVillage(int i){
+	private void createVillage(int i, ArrayList<Coordinate> coorMap){
 		while (i < 10){
-			Coordinate randomCoordinate = randomCoordinate();
+			Coordinate randomCoordinate = coorMap.get((int)(coorMap.size() * Math.random()));
 			if (this.availableSpot(randomCoordinate)){
 				setVillage(this, randomCoordinate);
 				break;
 			} else {
 				i++;
-				this.createVillage(i);
+				this.createVillage(i, coorMap);
 			}
 		}
 	}
 	
-	private void createObstruction(int i){
+	private void createObstruction(int i, ArrayList<Coordinate> coorMap){
 		while (i < 10){
-			Coordinate randomCoordinate = randomCoordinate();
+			Coordinate randomCoordinate = coorMap.get((int)(coorMap.size() * Math.random()));
 			double random = Math.random();
 			if (this.availableSpot(randomCoordinate)){
 				if (random < 0.5){
@@ -503,20 +471,20 @@ public ArrayList<Player> players = new ArrayList<Player>();
 				break;
 			} else {
 				i++;
-				this.createObstruction(i);
+				this.createObstruction(i, coorMap);
 			}
 		}
 	}
 	
-	private void createMarket(int i){
+	private void createMarket(int i, ArrayList<Coordinate> coorMap){
 		while (i < 10){
-			Coordinate randomCoordinate = randomCoordinate();
+			Coordinate randomCoordinate = coorMap.get((int)(coorMap.size() * Math.random()));
 			if (this.availableSpot(randomCoordinate)){
 				setMarket(this, randomCoordinate);
 				break;
 			} else {
 				i++;
-				this.createMarket(i);
+				this.createMarket(i, coorMap);
 			}
 		}
 	}
@@ -536,19 +504,15 @@ public ArrayList<Player> players = new ArrayList<Player>();
 	private void generateMap(){
 		int spaceToBeOccupied = (int) (this.charMap.size()*this.charMap.get(0).size()*this.percentageOccupied - 1);
 		int totalSpace = (int) this.charMap.size()*this.charMap.get(0).size();
-		while(this.spaceAvailable() > (totalSpace - spaceToBeOccupied)){
-			this.randomObject();
+		ArrayList<Coordinate> coorList = new ArrayList<Coordinate>();
+		for (int y = 0; y < charMap.size(); y++){
+			for (int x = 0; x < charMap.get(0).size(); x++){
+				coorList.add(new Coordinate(y,x));
+			}
 		}
-//		ArrayList<Coordinate> singleRivers = this.singleRiver();
-//		System.out.println("Amount of single rivers: " + singleRivers.size());
-//		for (int i = 0; i < singleRivers.size(); i++){
-//			double random = Math.random();
-//			if (random < 0.6){
-//				setVillage(this, singleRivers.get(i));
-//			} else {
-//				setMarket(this, singleRivers.get(i));
-//			}
-//		}
+		while(this.spaceAvailable() > (totalSpace - spaceToBeOccupied)){
+			this.randomObject(coorList);
+		}
 	}
 	
 	public String toString(){
