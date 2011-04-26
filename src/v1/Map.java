@@ -100,7 +100,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 			}
 		}
 		this.generateMap(coorChunk);
-		System.out.println(this);
+//		System.out.println(this);
 	}
 		
 	private int spaceAvailable(ArrayList<Coordinate> a){
