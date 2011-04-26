@@ -66,4 +66,7 @@ Integer[] coord = new Integer[3];
 		}
 	}
 	
+	public String toString(){
+		return "("+this.coord[0]+","+this.coord[1]+")";
+	}
 }

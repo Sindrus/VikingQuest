@@ -51,25 +51,25 @@ public ArrayList<Player> players = new ArrayList<Player>();
 	private void increaseRows2(int y){
 		if (y < 0){
 			for (int i = 0; i < 25; i++){
-			this.charMap.add(0, new ArrayList<Character>());//Legger til 25 nye rader
+				this.charMap.add(0, new ArrayList<Character>());//Legger til 25 nye rader
 			}
 			for (int i = 0; i < 25; i++){
-			for (int j = 0; j < this.charMap.get(25).size(); j++){//Legger til like mange kolonner som rad 25 har.
-			this.charMap.get(i).add(j, 'g'); //Legger til gress p� dette koordinatet.
+				for (int j = 0; j < this.charMap.get(25).size(); j++){//Legger til like mange kolonner som rad 25 har.
+					this.charMap.get(i).add(j, 'g'); //Legger til gress p� dette koordinatet.
+				}
 			}
-			}
-//			this.generateChunk(0, this.charMap.get(0).size());
-			} else if (y > 0){
+			this.generateChunk(new Coordinate(0,0), new Coordinate(2,this.charMap.get(0).size()));
+		} else if (y > 0){
 			for (int i = 0; i < 25; i++){
-			this.charMap.add(new ArrayList<Character>());//Legge til 25 nye rader
+				this.charMap.add(new ArrayList<Character>());//Legge til 25 nye rader
 			}
 			for (int i = (this.charMap.size() - 25); i < this.charMap.size(); i++){
-			for (int j = 0; j < this.charMap.get(0).size(); j++){
-			this.charMap.get(i).add(j, 'g');//Legger til gress p� dette koordinatet
+				for (int j = 0; j < this.charMap.get(0).size(); j++){
+					this.charMap.get(i).add(j, 'g');//Legger til gress p� dette koordinatet
+				}
 			}
-			}
-//			this.generateChunk(this.charMap.size() - 25, this.charMap.get(0).size());
-			}
+			this.generateChunk(new Coordinate(this.charMap.size() - 25,0), new Coordinate(this.charMap.size(),this.charMap.get(0).size()));
+		}
 	}
 	
 	private void increaseColoumns2(int x){
@@ -80,7 +80,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 				}
 				i++;
 			}
-//			this.generateChunk(0, 25);
+			this.generateChunk(new Coordinate(0,0), new Coordinate(this.charMap.size(),25));
 			} else if (x > 0){
 			for (int i = 0; i < 25; i++){
 				for (int j = 0; j < this.charMap.size(); j++){
@@ -88,52 +88,18 @@ public ArrayList<Player> players = new ArrayList<Player>();
 				}
 				i++;
 			}
-//			this.generateChunk(0, (this.charMap.get(0).size() - 25));
+			this.generateChunk(new Coordinate(0,(this.charMap.get(0).size() - 25)), new Coordinate(this.charMap.size(),this.charMap.get(0).size()));
 		}
 	}
 	
-	private void generateChunk(char c){
-		if (c == 'w'){
-			ArrayList<Coordinate> path = new ArrayList<Coordinate>();
-			for (int i = 0; i < this.charMap.get(0).size(); i++){
-				path.add(new Coordinate(0,i));
-			}
-			int spaceToBeOccupied = (int) (path.size()*this.percentageOccupied);
-			int totalSpace = path.size();
-			while(this.spaceAvailable(path) > (totalSpace - spaceToBeOccupied)){
-				this.randomObject(path);
-			}
-		} else if (c == 'a'){
-			ArrayList<Coordinate> path = new ArrayList<Coordinate>();
-			for (int i = 0; i < this.charMap.size(); i++){
-				path.add(new Coordinate(i,0));
-			}
-			int spaceToBeOccupied = (int) (path.size()*this.percentageOccupied);
-			int totalSpace = path.size();
-			while(this.spaceAvailable(path) > (totalSpace - spaceToBeOccupied)){
-				this.randomObject(path);
-			}
-		} else if (c == 's'){
-			ArrayList<Coordinate> path = new ArrayList<Coordinate>();
-			for (int i = 0; i < this.charMap.get(0).size(); i++){
-				path.add(new Coordinate(this.charMap.size() - 1,i));
-			}
-			int spaceToBeOccupied = (int) (path.size()*this.percentageOccupied);
-			int totalSpace = path.size();
-			while(this.spaceAvailable(path) > (totalSpace - spaceToBeOccupied)){
-				this.randomObject(path);
-			}
-		} else if (c == 'd'){
-			ArrayList<Coordinate> path = new ArrayList<Coordinate>();
-			for (int i = 0; i < this.charMap.size(); i++){
-				path.add(new Coordinate(i,this.charMap.get(0).size() - 1));
-			}
-			int spaceToBeOccupied = (int) (path.size()*this.percentageOccupied);
-			int totalSpace = path.size();
-			while(this.spaceAvailable(path) > (totalSpace - spaceToBeOccupied)){
-				this.randomObject(path);
+	private void generateChunk(Coordinate a, Coordinate b){
+		ArrayList<Coordinate> coorChunk = new ArrayList<Coordinate>();
+		for (int i = a.coord[0]; i < b.coord[0] + 1; i++){
+			for (int j = a.coord[1]; j < b.coord[1] + 1; j++){
+				coorChunk.add(new Coordinate(i,j));
 			}
 		}
+		this.generateMap(coorChunk);		
 	}
 		
 	private int spaceAvailable(ArrayList<Coordinate> a){
@@ -146,16 +112,6 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		return b;
 	}
 	
-	public boolean outsideOfChunk(Coordinate rC, int y, int x){
-		if ((rC.coord[0] < 0) || (rC.coord[1] < 0) ||
-				(rC.coord[0] >= this.charMap.size()) ||
-				(rC.coord[1] >= this.charMap.get(rC.coord[0]).size())) {
-				return true;
-			} else {
-				return false;
-			}
-	}
-	
 	public Map(int x, int y){
 		for (int i = 0; i < y; i++){
 			this.charMap.add(new ArrayList<Character>());
@@ -163,7 +119,13 @@ public ArrayList<Player> players = new ArrayList<Player>();
 				this.charMap.get(i).add('g');
 			}
 		}
-		generateMap();
+		ArrayList<Coordinate> coorList = new ArrayList<Coordinate>();
+		for (int a = 0; a < y; a++){
+			for (int b = 0; b < x; b++){
+				coorList.add(new Coordinate(a,b));
+			}
+		}
+		this.generateMap(coorList);
 	}
 	
 	private boolean availableSpot(Coordinate rC){
@@ -446,7 +408,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 	}
 	
 	private void createVillage(int i, ArrayList<Coordinate> coorMap){
-		while (i < 10){
+		while (i < coorMap.size()){
 			Coordinate randomCoordinate = coorMap.get((int)(coorMap.size() * Math.random()));
 			if (this.availableSpot(randomCoordinate)){
 				setVillage(this, randomCoordinate);
@@ -459,7 +421,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 	}
 	
 	private void createObstruction(int i, ArrayList<Coordinate> coorMap){
-		while (i < 10){
+		while (i < coorMap.size()){
 			Coordinate randomCoordinate = coorMap.get((int)(coorMap.size() * Math.random()));
 			double random = Math.random();
 			if (this.availableSpot(randomCoordinate)){
@@ -477,7 +439,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 	}
 	
 	private void createMarket(int i, ArrayList<Coordinate> coorMap){
-		while (i < 10){
+		while (i < coorMap.size()){
 			Coordinate randomCoordinate = coorMap.get((int)(coorMap.size() * Math.random()));
 			if (this.availableSpot(randomCoordinate)){
 				setMarket(this, randomCoordinate);
@@ -489,29 +451,12 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		}
 	}
 	
-	private int spaceAvailable(){
-		int a = 0;
-		for (int i = 0; i < this.charMap.size(); i++){
-			for (int j = 0; j < this.charMap.get(0).size(); j++){
-				if (isGrass(this, new Coordinate(i, j))){
-					a += 1;
-				}
-			}
-		}
-		return a;
-	}
-	
-	private void generateMap(){
-		int spaceToBeOccupied = (int) (this.charMap.size()*this.charMap.get(0).size()*this.percentageOccupied - 1);
-		int totalSpace = (int) this.charMap.size()*this.charMap.get(0).size();
-		ArrayList<Coordinate> coorList = new ArrayList<Coordinate>();
-		for (int y = 0; y < charMap.size(); y++){
-			for (int x = 0; x < charMap.get(0).size(); x++){
-				coorList.add(new Coordinate(y,x));
-			}
-		}
-		while(this.spaceAvailable() > (totalSpace - spaceToBeOccupied)){
+	private void generateMap(ArrayList<Coordinate> coorList){
+		int spaceToBeOccupied = (int) (coorList.size()*this.percentageOccupied);
+		int totalSpace = coorList.size();
+		while(this.spaceAvailable(coorList) > (totalSpace - spaceToBeOccupied)){
 			this.randomObject(coorList);
+			System.out.println(this);
 		}
 	}
 	
