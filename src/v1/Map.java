@@ -27,7 +27,6 @@ public ArrayList<Player> players = new ArrayList<Player>();
 			}
 			setPlayer(this, Coordinate.plus(c, player));
 		}
-		System.out.println(this);
 	}
 	
 	public void increaseRows(Player p){
@@ -100,7 +99,6 @@ public ArrayList<Player> players = new ArrayList<Player>();
 			}
 		}
 		this.generateMap(coorChunk);
-//		System.out.println(this);
 	}
 		
 	private int spaceAvailable(ArrayList<Coordinate> a){
