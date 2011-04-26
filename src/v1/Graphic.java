@@ -43,8 +43,6 @@ public class Graphic extends JPanel implements grensesnitt.Grafikk {
 		int antx = coords[0]-14;
 		int anty = coords[1]-17;
 		
-		System.out.println("(width/35) = " + (width/35) + " (height/29) = " + (height/29));
-		
 		gress = tk.getImage(getClass().getResource("graphics/gress.jpg"));
 		viking = tk.getImage(getClass().getResource("graphics/vikings.jpg"));
 		village = tk.getImage(getClass().getResource("graphics/village.gif"));
