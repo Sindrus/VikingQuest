@@ -49,45 +49,45 @@ public ArrayList<Player> players = new ArrayList<Player>();
 		
 	private void increaseRows2(int y){
 		if (y < 0){
-			for (int i = 0; i < 30; i++){
+			for (int i = 0; i < 15; i++){
 				this.charMap.add(0, new ArrayList<Character>());//Legger til 25 nye rader
 			}
-			for (int i = 0; i < 30; i++){
-				for (int j = 0; j < this.charMap.get(30).size(); j++){//Legger til like mange kolonner som rad 25 har.
+			for (int i = 0; i < 15; i++){
+				for (int j = 0; j < this.charMap.get(15).size(); j++){//Legger til like mange kolonner som rad 25 har.
 					this.charMap.get(i).add(j, 'g'); //Legger til gress p� dette koordinatet.
 				}
 			}
-			this.generateChunk(new Coordinate(0,0), new Coordinate(30,this.charMap.get(0).size()));
+			this.generateChunk(new Coordinate(0,0), new Coordinate(15,this.charMap.get(0).size()));
 		} else if (y > 0){
-			for (int i = 0; i < 30; i++){
+			for (int i = 0; i < 15; i++){
 				this.charMap.add(new ArrayList<Character>());//Legge til 25 nye rader
 			}
-			for (int i = (this.charMap.size() - 30); i < this.charMap.size(); i++){
+			for (int i = (this.charMap.size() - 15); i < this.charMap.size(); i++){
 				for (int j = 0; j < this.charMap.get(0).size(); j++){
 					this.charMap.get(i).add(j, 'g');//Legger til gress p� dette koordinatet
 				}
 			}
-			this.generateChunk(new Coordinate(this.charMap.size() - 30,0), new Coordinate(this.charMap.size(),this.charMap.get(0).size()));
+			this.generateChunk(new Coordinate(this.charMap.size() - 15,0), new Coordinate(this.charMap.size(),this.charMap.get(0).size()));
 		}
 	}
 	
 	private void increaseColoumns2(int x){
 		if (x < 0){
-			for (int i = 0; i < 30; i ++){
+			for (int i = 0; i < 15; i ++){
 				for (int j = 0; j < this.charMap.size(); j++){
 					this.charMap.get(j).add(0, 'g');
 				}
 				i++;
 			}
-			this.generateChunk(new Coordinate(0,0), new Coordinate(this.charMap.size(),30));
+			this.generateChunk(new Coordinate(0,0), new Coordinate(this.charMap.size(),15));
 			} else if (x > 0){
-			for (int i = 0; i < 30; i++){
+			for (int i = 0; i < 15; i++){
 				for (int j = 0; j < this.charMap.size(); j++){
 					this.charMap.get(j).add('g');
 				}
 				i++;
 			}
-			this.generateChunk(new Coordinate(0,(this.charMap.get(0).size() - 30)), new Coordinate(this.charMap.size(),this.charMap.get(0).size()));
+			this.generateChunk(new Coordinate(0,(this.charMap.get(0).size() - 15)), new Coordinate(this.charMap.size(),this.charMap.get(0).size()));
 		}
 	}
 	
