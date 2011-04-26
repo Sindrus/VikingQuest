@@ -409,7 +409,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 	}
 	
 	private void createVillage(int i, ArrayList<Coordinate> coorMap){
-		while (i < 20){
+		while (i < 10){
 			Coordinate randomCoordinate = coorMap.get((int)(coorMap.size() * Math.random()));
 			if (this.availableSpot(randomCoordinate)){
 				setVillage(this, randomCoordinate);
@@ -423,7 +423,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 	}
 	
 	private void createObstruction(int i, ArrayList<Coordinate> coorMap){
-		while (i < 20){
+		while (i < 10){
 			Coordinate randomCoordinate = coorMap.get((int)(coorMap.size() * Math.random()));
 			double random = Math.random();
 			if (this.availableSpot(randomCoordinate)){
@@ -442,7 +442,7 @@ public ArrayList<Player> players = new ArrayList<Player>();
 	}
 	
 	private void createMarket(int i, ArrayList<Coordinate> coorMap){
-		while (i < 20){
+		while (i < 10){
 			Coordinate randomCoordinate = coorMap.get((int)(coorMap.size() * Math.random()));
 			if (this.availableSpot(randomCoordinate)){
 				setMarket(this, randomCoordinate);
